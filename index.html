@@ -110,11 +110,9 @@ async function checkServer() {
 
   try {
     const res = await fetch(
-      `https://api.mcstatus.io/v2/status/java/${ip}:${port}`,
+      `https://api.mcsrvstat.us/3/${ip}:${port}`,
       { cache: "no-store" }
     );
-
-    if (!res.ok) throw new Error("Offline");
 
     const data = await res.json();
 
@@ -125,7 +123,9 @@ async function checkServer() {
       playersEl.innerHTML =
         `👥 Oyuncular: ${data.players.online} / ${data.players.max}`;
     } else {
-      throw new Error("Offline");
+      statusEl.innerHTML = "🔴 Sunucu KAPALI";
+      statusEl.style.color = "#ff4c4c";
+      playersEl.innerHTML = "";
     }
 
   } catch {
@@ -136,7 +136,7 @@ async function checkServer() {
 }
 
 checkServer();
-setInterval(checkServer, 30000);
+setInterval(checkServer, 20000);
 
 function copyIP() {
   navigator.clipboard.writeText("ArxonNetwork.aternos.me:20659");
