@@ -31,7 +31,6 @@
 
     h1 {
       font-size: 42px;
-      margin-bottom: 5px;
     }
 
     p {
@@ -42,7 +41,7 @@
     #server-status {
       font-size: 20px;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     #players {
@@ -93,8 +92,8 @@
   </div>
 
   <div class="buttons">
-    <a href="https://discord.gg/pwfbYdMg9m" target="_blank">Discord</a>
-    <a href="#" target="_blank">Mağaza</a>
+    <a href="https://discord.gg/linkin" target="_blank">Discord</a>
+    <a href="magaza.html">Mağaza</a>
   </div>
 </div>
 
@@ -112,23 +111,19 @@ async function checkServer() {
       { cache: "no-store" }
     );
 
-    if (!res.ok) throw new Error("Offline");
+    if (!res.ok) throw new Error("API hata");
 
     const data = await res.json();
 
-    // 🔥 KRİTİK KONTROL
-    // Sunucu açık sayılması için:
-    // - online true olacak
-    // - ping olacak
-    if (data.online !== true || !data.latency) {
+    if (data.online === true) {
+      statusEl.innerHTML = "🟢 Sunucu AÇIK";
+      statusEl.style.color = "#00ff88";
+
+      playersEl.innerHTML =
+        `👥 Oyuncular: ${data.players.online} / ${data.players.max}`;
+    } else {
       throw new Error("Offline");
     }
-
-    statusEl.innerHTML = "🟢 Sunucu AÇIK";
-    statusEl.style.color = "#00ff88";
-
-    playersEl.innerHTML =
-      `👥 Oyuncular: ${data.players.online} / ${data.players.max}`;
 
   } catch (e) {
     statusEl.innerHTML = "🔴 Sunucu KAPALI";
@@ -138,7 +133,7 @@ async function checkServer() {
 }
 
 checkServer();
-setInterval(checkServer, 30000); // 30 saniyede bir yeniler
+setInterval(checkServer, 20000); // 20 saniye
 
 function copyIP() {
   navigator.clipboard.writeText("ArxonNetwork.aternos.me:20659");
