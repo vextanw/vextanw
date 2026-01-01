@@ -104,9 +104,27 @@
 </html>
 <script src="auth.js"></script>
 <script>
-if (isLoggedIn()) {
-  console.log("Giriş yapan:", getUser());
-} else {
-  console.log("Misafir");
+const currentUser = localStorage.getItem("loginUser");
+if (!currentUser) {
+  alert("Giriş yapmadan mağazaya bakamazsın");
+  location.href = "login.html";
+}
+
+function buy(item, price) {
+  const raw = localStorage.getItem("user_" + currentUser);
+  if (!raw) return alert("Kullanıcı datası yok");
+
+  const data = JSON.parse(raw);
+
+  if (data.credit < price) {
+    alert("Kredi yetmiyor amına koyim 💸");
+    return;
+  }
+
+  data.credit -= price;
+  data.rank = item; // VIP, VIP+, vs
+
+  localStorage.setItem("user_" + currentUser, JSON.stringify(data));
+  alert(item + " satın alındı 🎉");
 }
 </script>
