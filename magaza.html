@@ -61,6 +61,42 @@
       margin-top: 40px;
       display: inline-block;
     }
+
+    /* 🔥 TEŞEKKÜR ANİMASYONU */
+    #thanksOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    #thanksOverlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .thanksBox {
+      background: linear-gradient(135deg, #7b6cff, #4b3cff);
+      padding: 40px 60px;
+      border-radius: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 0 40px rgba(123,108,255,0.8);
+      animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
   </style>
 </head>
 
@@ -100,6 +136,13 @@
   </a>
 </div>
 
+<!-- 🔥 TEŞEKKÜR OVERLAY -->
+<div id="thanksOverlay">
+  <div class="thanksBox">
+    💜 Bizi Desteklediğin İçin Teşekkürler 💜
+  </div>
+</div>
+
 <script src="auth.js"></script>
 <script>
 const currentUser = localStorage.getItem("loginUser");
@@ -128,7 +171,16 @@ function buy(item, price) {
 
   localStorage.setItem("user_" + currentUser, JSON.stringify(data));
 
-  alert(item + " satın alındı 🎉\nKalan kredi: " + data.credit);
+  showThanks();
+}
+
+function showThanks() {
+  const overlay = document.getElementById("thanksOverlay");
+  overlay.classList.add("show");
+
+  setTimeout(() => {
+    overlay.classList.remove("show");
+  }, 2500);
 }
 </script>
 
