@@ -101,7 +101,10 @@ function unbanUser() {
   localStorage.setItem("user_" + u, JSON.stringify(data));
   alert("Kullanıcının banı kaldırıldı");
 }
-
+// admin kontrol
+if (!currentUser || !adminList.includes(currentUser.toLowerCase())) {
+  location.href = "index.html";
+}
 // çıkış
 function logout() {
   localStorage.removeItem("loginUser");
