@@ -18,7 +18,7 @@ body {
   color: white;
 }
 
-/* 🔥 SAĞ ÜST PANEL */
+/* SAĞ ÜST PANEL */
 .top-buttons {
   position: fixed;
   top: 20px;
@@ -28,23 +28,24 @@ body {
   z-index: 9999;
 }
 
-.top-buttons span {
-  padding: 10px 14px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.2);
-  font-weight: bold;
-}
-
+.top-buttons span,
 .top-buttons a {
   padding: 10px 14px;
   border-radius: 14px;
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
+}
+
+.top-buttons span {
+  background: rgba(255,255,255,0.2);
+}
+
+.top-buttons a {
   color: black;
   background: linear-gradient(135deg, #00c6ff, #0072ff);
 }
 
-/* 🔥 ORTA KUTU */
+/* ORTA KUTU */
 .container {
   position: absolute;
   top: 50%;
@@ -61,7 +62,7 @@ body {
   display: block;
   margin: 10px 0;
   padding: 12px;
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  background: linear-gradient(135deg, #00ffcc, #00b3ff);
   color: black;
   text-decoration: none;
   border-radius: 30px;
@@ -74,46 +75,40 @@ body {
 
 <div class="top-buttons" id="userPanel">
   <span id="userInfo"></span>
-
-  <a href="kredi.html" id="creditBtn">💳 Kredi Yükle</a>
-
-  <a href="magaza.html" id="shopBtn">🛒 Mağaza</a>
-
+  <a href="kredi.html">💳 Kredi Yükle</a>
+  <a href="magaza.html">🛒 Mağaza</a>
   <a id="adminBtn" href="yetkili.html" style="display:none;">Yetkili</a>
-
   <a href="#" onclick="logout()">Logout</a>
 </div>
 
-
 <div class="container">
   <h1>ArxonNetwork</h1>
-  <p>Tr nin En boKtaN SuUnUFUSFCUSU</p>
+  <p>TR'nin en saçma ama en eğlenceli sunucusu</p>
+
+  <p id="serverStatus" style="margin:15px 0;">🔄 Sunucu durumu bekleniyor...</p>
 
   <div class="buttons">
+    <a href="#" onclick="checkServer()">🌐 Sunucu Durumu</a>
+    <a href="#" onclick="copyIP()">📋 IP Kopyala</a>
     <a href="login.html" id="loginBtn">Login</a>
     <a href="register.html" id="registerBtn">Register</a>
   </div>
 </div>
 
 <script>
+const SERVER_IP = "193.164.4.244";
 const admins = ["syvex", "mehmety3232"];
 const currentUser = localStorage.getItem("loginUser");
 
-console.log("LOGIN USER:", currentUser);
-
+/* LOGIN PANEL */
 if (currentUser) {
   const raw = localStorage.getItem("user_" + currentUser);
-  console.log("USER DATA:", raw);
-
   if (raw) {
     const data = JSON.parse(raw);
 
     document.getElementById("userPanel").style.display = "flex";
-    let rankText = data.rank ? " | ⭐ " + data.rank : "";
-
-document.getElementById("userInfo").innerText =
-  "👤 " + currentUser + rankText + " | 💳 " + (data.credit || 0);
-
+    document.getElementById("userInfo").innerText =
+      "👤 " + currentUser + " | 💳 " + (data.credit || 0);
 
     document.getElementById("loginBtn").remove();
     document.getElementById("registerBtn").remove();
@@ -124,44 +119,37 @@ document.getElementById("userInfo").innerText =
   }
 }
 
+/* SERVER STATUS */
+function checkServer() {
+  const el = document.getElementById("serverStatus");
+  el.innerText = "🔄 Kontrol ediliyor...";
+
+  fetch("https://api.mcsrvstat.us/2/" + SERVER_IP)
+    .then(r => r.json())
+    .then(d => {
+      if (!d.online) {
+        el.innerText = "❌ Sunucu kapalı";
+        return;
+      }
+      el.innerText = "🛜 Açık | 👥 " + d.players.online + "/" + d.players.max;
+    })
+    .catch(() => {
+      el.innerText = "⚠️ API erişilemiyor";
+    });
+}
+
+/* IP COPY */
+function copyIP() {
+  navigator.clipboard.writeText(SERVER_IP);
+  alert("📋 IP kopyalandı: " + SERVER_IP);
+}
+
+/* LOGOUT */
 function logout() {
   localStorage.removeItem("loginUser");
   location.reload();
 }
-<script>
-const SERVER_IP = "193.164.4.244";
-
-function checkServer() {
-  const statusEl = document.getElementById("serverStatus");
-  statusEl.innerText = "🔄 Kontrol ediliyor...";
-
-  fetch("https://api.mcsrvstat.us/2/" + SERVER_IP)
-    .then(res => res.json())
-    .then(data => {
-      if (!data.online) {
-        statusEl.innerText = "❌ Sunucu kapalı";
-        return;
-      }
-
-      const online = data.players.online || 0;
-      const max = data.players.max || "?";
-
-      statusEl.innerText =
-        "🛜 Sunucu açık | 👥 Oyuncu: " + online + "/" + max;
-    })
-    .catch(() => {
-      statusEl.innerText = "⚠️ API hatası, internet mi öldü?";
-    });
-}
-
-function copyIP() {
-  navigator.clipboard.writeText(SERVER_IP)
-    .then(() => {
-      alert("📋 IP kopyalandı: " + SERVER_IP);
-    });
-}
 </script>
-
 
 </body>
 </html>
