@@ -1,99 +1,95 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <title>ArxonMC</title>
-
-  <style>
-    body {
-      background: #0e0e0e;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 40px;
-    }
-
-    h1 {
-      color: #7b6cff;
-    }
-
-    .card {
-      background: #1a1a1a;
-      padding: 20px;
-      border-radius: 12px;
-      width: 320px;
-      margin: auto;
-      box-shadow: 0 0 20px rgba(123,108,255,0.3);
-    }
-
-    button {
-      background: #7b6cff;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      background: #5f52ff;
-    }
-
-    .status {
-      margin-top: 15px;
-      font-size: 18px;
-    }
-  </style>
-</head>
-
-<body>
-
-  <h1>🔥 ArxonMC Network 🔥</h1>
-
-  <div class="card">
-    <p><b>IP:</b> ArxonNetwork.aternos.me:20659</p>
-
-    <div class="status">
-      <b>Sunucu:</b> <span id="status-text">Kontrol ediliyor...</span><br>
-      Oyuncu: <span id="player-count">-</span>
-    </div>
-
-    <a href="magaza.html">
-      <button>🛒 Mağaza</button>
-    </a>
-  </div>
-
-<script>
-const ip = "ArxonNetwork.aternos.me";
-const port = "20659";
-
-async function checkServer() {
-  try {
-    const res = await fetch(
-      `https://api.mcstatus.io/v2/status/java/${ip}:${port}`,
-      { cache: "no-store" }
-    );
-    const data = await res.json();
-
-    if (data.online === true) {
-      document.getElementById("status-text").innerHTML = "🟢 AÇIK";
-      document.getElementById("player-count").innerText =
-        data.players.online + " / " + data.players.max;
-    } else {
-      document.getElementById("status-text").innerHTML = "🔴 KAPALI";
-      document.getElementById("player-count").innerText = "0";
-    }
-  } catch {
-    document.getElementById("status-text").innerHTML = "🔴 KAPALI";
-    document.getElementById("player-count").innerText = "0";
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
-checkServer();
-setInterval(checkServer, 15000);
-</script>
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1a1f3c, #0a0a0a);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
 
-</body>
-</html>
+/* BAŞLIK */
+h1 {
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #8b7cff;
+  text-shadow: 0 0 15px rgba(139,124,255,0.6);
+}
+
+/* CAM EFEKTLİ KART */
+.card {
+  background: rgba(20, 20, 30, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 25px;
+  width: 340px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 0 30px rgba(139,124,255,0.35),
+    inset 0 0 20px rgba(255,255,255,0.02);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 45px rgba(139,124,255,0.6),
+    inset 0 0 25px rgba(255,255,255,0.05);
+}
+
+/* METİNLER */
+.card p {
+  font-size: 16px;
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+.status {
+  margin-top: 15px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* BUTON */
+button {
+  margin-top: 22px;
+  background: linear-gradient(135deg, #7b6cff, #5a4dff);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(123,108,255,0.5);
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(123,108,255,0.8);
+}
+
+/* LINKLER */
+a {
+  text-decoration: none;
+}
+
+/* MOBİL */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  .card {
+    width: 100%;
+  }
+}
