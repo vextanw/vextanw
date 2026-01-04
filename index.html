@@ -9,12 +9,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at top, #1e3c72, #0f2027);
+  background: radial-gradient(circle at top, #1a1f3c, #05080f);
   color: white;
 }
 
@@ -30,19 +30,28 @@ body {
 
 .top-buttons span,
 .top-buttons a {
-  padding: 10px 14px;
-  border-radius: 14px;
+  padding: 10px 16px;
+  border-radius: 16px;
   font-weight: bold;
   text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
 }
 
 .top-buttons span {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.15);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
 }
 
 .top-buttons a {
   color: black;
   background: linear-gradient(135deg, #00c6ff, #0072ff);
+  box-shadow: 0 0 18px rgba(0,114,255,0.6);
+}
+
+.top-buttons a:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 0 30px rgba(0,114,255,0.9);
 }
 
 /* ORTA KUTU */
@@ -51,22 +60,59 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0,0,0,0.45);
-  padding: 40px;
-  border-radius: 20px;
+  background: rgba(15, 15, 25, 0.65);
+  backdrop-filter: blur(14px);
+  padding: 42px;
+  border-radius: 24px;
   text-align: center;
-  width: 360px;
+  width: 380px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 0 40px rgba(0,114,255,0.45),
+    inset 0 0 25px rgba(255,255,255,0.04);
 }
 
+.container h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #8bdcff;
+  text-shadow: 0 0 18px rgba(139,220,255,0.8);
+}
+
+.container p {
+  opacity: 0.85;
+  margin-bottom: 14px;
+}
+
+/* BUTONLAR */
 .buttons a {
   display: block;
-  margin: 10px 0;
-  padding: 12px;
+  margin: 12px 0;
+  padding: 14px;
   background: linear-gradient(135deg, #00ffcc, #00b3ff);
   color: black;
   text-decoration: none;
   border-radius: 30px;
   font-weight: bold;
+  box-shadow: 0 0 22px rgba(0,255,204,0.6);
+  transition: all 0.25s ease;
+}
+
+.buttons a:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 40px rgba(0,255,204,0.9);
+}
+
+/* MOBİL */
+@media (max-width: 480px) {
+  .container {
+    width: 90%;
+    padding: 32px;
+  }
+
+  .container h1 {
+    font-size: 28px;
+  }
 }
 </style>
 </head>
@@ -85,7 +131,7 @@ body {
   <h1>ArxonNetwork</h1>
   <p>TR'nin en iyi sunucusu</p>
 
-  <p id="serverStatus" style="margin:15px 0;">🔄 Sunucu durumu bekleniyor...</p>
+  <p id="serverStatus" style="margin:18px 0;">🔄 Sunucu durumu bekleniyor...</p>
 
   <div class="buttons">
     <a href="#" onclick="checkServer()">🌐 Sunucu Durumu</a>
@@ -110,8 +156,8 @@ if (currentUser) {
     document.getElementById("userInfo").innerText =
       "👤 " + currentUser + " | 💳 " + (data.credit || 0);
 
-    document.getElementById("loginBtn").remove();
-    document.getElementById("registerBtn").remove();
+    document.getElementById("loginBtn")?.remove();
+    document.getElementById("registerBtn")?.remove();
 
     if (admins.includes(currentUser.toLowerCase())) {
       document.getElementById("adminBtn").style.display = "inline-block";
@@ -131,7 +177,7 @@ function checkServer() {
         el.innerText = "❌ Sunucu kapalı";
         return;
       }
-      el.innerText = "🛜 Açık | 👥 " + d.players.online + "/" + d.players.max;
+      el.innerText = "🟢 Açık | 👥 " + d.players.online + "/" + d.players.max;
     })
     .catch(() => {
       el.innerText = "⚠️ API erişilemiyor";
