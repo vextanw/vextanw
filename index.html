@@ -30,13 +30,12 @@
   </div>
 
   <div class="buttons">
-  <button onclick="openShop()">🛒 Mağaza</button>
-  <button onclick="openAAC()">🛡 AAC Başvuru</button>
-  <button onclick="openRehber()">📘 Rehber Başvuru</button>
- <button onclick="location.href='basvurularınız.html'">📄 Başvurularım</button>
-
+    <button onclick="openShop()">🛒 Mağaza</button>
+    <button onclick="openAAC()">🛡 AAC Başvuru</button>
+    <button onclick="openRehber()">📘 Rehber Başvuru</button>
+    <button onclick="location.href='basvurularim.html'">📄 Başvurularım</button>
+  </div>
 </div>
-
 
 <script>
 /* ================== LOGIN ================== */
@@ -46,7 +45,17 @@ if (currentUser) {
   const raw = localStorage.getItem("user_" + currentUser);
   if (raw) {
     const data = JSON.parse(raw);
-<script>
+
+    document.getElementById("profileBar").style.display = "flex";
+    document.getElementById("mc-name").innerText = currentUser;
+    document.getElementById("mc-credit").innerText =
+      "💎 " + (data.credit || 0) + " Kredi";
+    document.getElementById("mc-head").src =
+      "https://mc-heads.net/avatar/" + currentUser + "/64";
+  }
+}
+
+/* ================== NAV ================== */
 function openAAC() {
   location.href = "aac-basvuru.html";
 }
@@ -54,29 +63,19 @@ function openAAC() {
 function openRehber() {
   location.href = "rehber-basvuru.html";
 }
-</script>
 
-    document.getElementById("profileBar").style.display = "flex";
-    document.getElementById("mc-name").innerText = currentUser;
-    document.getElementById("mc-credit").innerText = "💎 " + (data.credit || 0) + " Kredi";
-    document.getElementById("mc-head").src =
-      "https://mc-heads.net/avatar/" + currentUser + "/64";
-  }
-}
-
-/* ================== LOGOUT ================== */
-function logout() {
-  localStorage.removeItem("loginUser");
-  location.reload();
-}
-
-/* ================== SHOP ANIM ================== */
 function openShop() {
   document.body.style.transition = "transform 0.6s ease";
   document.body.style.transform = "translateY(-120%)";
   setTimeout(() => {
     location.href = "magaza.html";
   }, 600);
+}
+
+/* ================== LOGOUT ================== */
+function logout() {
+  localStorage.removeItem("loginUser");
+  location.reload();
 }
 
 /* ================== SERVER STATUS ================== */
