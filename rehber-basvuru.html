@@ -3,43 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <title>Rehber Başvuru | ArxonNetwork</title>
+
 <style>
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
 body {
-  background:#0f2027;
-  color:white;
-  font-family:Arial;
-  padding:40px;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.9)),
+    url("https://images.wallpapersden.com/image/download/minecraft-village_bGZlZ2mUmZqaraWkpJRmZ21lrWxnZQ.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 60px 20px;
 }
-.box {
-  max-width:800px;
-  margin:auto;
-  background:rgba(0,0,0,0.5);
-  padding:30px;
-  border-radius:20px;
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: rgba(20,20,30,0.75);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  padding: 40px;
+  box-shadow: 0 0 45px rgba(139,124,255,0.6);
 }
-h1 { color:#7b6cff; }
-li { margin:10px 0; }
+
+h1 {
+  text-align: center;
+  color: #8b7cff;
+  margin-bottom: 30px;
+  text-shadow: 0 0 20px rgba(139,124,255,0.8);
+}
+
+.rules {
+  margin-bottom: 35px;
+}
+
+.rules li {
+  margin: 10px 0;
+  opacity: 0.9;
+}
+
+form {
+  display: grid;
+  gap: 18px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-size: 15px;
+}
+
+textarea {
+  resize: none;
+  min-height: 120px;
+}
+
+button {
+  margin-top: 10px;
+  background: linear-gradient(135deg, #7b6cff, #5a4dff);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(123,108,255,0.8);
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.success {
+  display: none;
+  margin-top: 20px;
+  background: rgba(0,255,0,0.15);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  color: #7CFF9B;
+}
 </style>
 </head>
 
 <body>
-<div class="box">
-  <h1>📘 Rehber Kuralları</h1>
 
-  <ul>
-    <li>Saygılı ve tarafsız davranmak zorunludur.</li>
-    <li>Yetki kişisel çıkar için kullanılamaz.</li>
-    <li>Oyunculara doğru ve net bilgi verilmelidir.</li>
-    <li>Küfür, toxic davranış yasaktır.</li>
-    <li>Yetkili bilgileri oyuncularla paylaşılmaz.</li>
-    <li>Aktif olmayan rehberin yetkisi alınabilir.</li>
-    <li>Sunucuyu her ortamda temsil ettiğini unutma.</li>
-  </ul>
+<div class="container">
+  <h1>📘 Rehber Başvurusu</h1>
 
-  <p>
-    📌 Başvuru için Discord:<br>
-    <a href="https://dsc.gg/arxonnw" style="color:#7b6cff;">dsc.gg/arxonnw</a>
-  </p>
+  <div class="rules">
+    <ul>
+      <li>Saygılı ve tarafsız olmak zorunludur.</li>
+      <li>Yetki kişisel çıkar için kullanılamaz.</li>
+      <li>Oyunculara doğru bilgi verilir.</li>
+      <li>Toxic davranış, küfür yasaktır.</li>
+      <li>Sunucuyu her ortamda temsil ettiğini unutma.</li>
+    </ul>
+  </div>
+
+  <form onsubmit="sendForm(event)">
+    <input id="nick" placeholder="Minecraft Nick">
+    <input id="discord" placeholder="Discord (isim#0000)">
+    <input id="age" type="number" placeholder="Yaş">
+    <textarea id="why" placeholder="Neden rehber olmak istiyorsun?"></textarea>
+    <textarea id="exp" placeholder="Daha önce yetkililik tecrüben var mı?"></textarea>
+
+    <button type="submit">📨 Başvuruyu Gönder</button>
+  </form>
+
+  <div class="success" id="success">
+    ✅ Başvurun alındı. Yetkililer inceleyecek.
+  </div>
 </div>
+
+<script>
+function sendForm(e) {
+  e.preventDefault();
+
+  const data = {
+    nick: nick.value,
+    discord: discord.value,
+    age: age.value,
+    why: why.value,
+    exp: exp.value,
+    time: new Date().toLocaleString()
+  };
+
+  if (!data.nick || !data.discord || !data.why) {
+    alert("Boş alan bırakma");
+    return;
+  }
+
+  const list = JSON.parse(localStorage.getItem("rehber_basvurular") || "[]");
+  list.push(data);
+  localStorage.setItem("rehber_basvurular", JSON.stringify(list));
+
+  document.getElementById("success").style.display = "block";
+  e.target.reset();
+}
+</script>
+
 </body>
 </html>
