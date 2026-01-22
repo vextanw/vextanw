@@ -4,47 +4,23 @@
   <meta charset="UTF-8">
   <title>ArxonMC</title>
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    /* sağ üst kullanıcı paneli */
-    .top-buttons {
-      position: fixed;
-      top: 20px;
-      right: 25px;
-      display: none;
-      gap: 12px;
-      z-index: 9999;
-    }
-
-    .top-buttons span,
-    .top-buttons a {
-      padding: 10px 16px;
-      border-radius: 16px;
-      font-weight: bold;
-      text-decoration: none;
-      backdrop-filter: blur(10px);
-      background: rgba(255,255,255,0.15);
-      color: white;
-      cursor: pointer;
-    }
-
-    .top-buttons a {
-      background: linear-gradient(135deg, #ff5f6d, #ffc371);
-      color: black;
-    }
-  </style>
 </head>
 
 <body>
 
-<!-- KULLANICI PANELİ -->
-<div class="top-buttons" id="userPanel">
-  <span id="userInfo"></span>
-  <a onclick="logout()">🚪 Logout</a>
-</div>
-
 <h1>🔥 ArxonMC Network 🔥</h1>
 
+<!-- PROFİL BAR -->
+<div class="profile-bar" id="profileBar" style="display:none;">
+  <img id="mc-head" src="">
+  <div class="profile-info">
+    <span id="mc-name"></span>
+    <span id="mc-credit"></span>
+  </div>
+  <button onclick="logout()" style="margin-left:15px;">Çıkış</button>
+</div>
+
+<!-- ANA KART -->
 <div class="card">
   <p><b>IP:</b> 193.164.4.244</p>
 
@@ -53,35 +29,49 @@
     Oyuncu: <span id="player-count">-</span>
   </div>
 
-  <a href="magaza.html">
-    <button>🛒 Mağaza</button>
-  </a>
+  <button onclick="openShop()">🛒 Mağaza</button>
 </div>
 
 <script>
-const ip = "193.164.4.244";
-const port = "";
-
-// LOGIN OLAN KULLANICI
+/* ================== LOGIN ================== */
 const currentUser = localStorage.getItem("loginUser");
 
-// PROFİL + LOGOUT GÖSTER
 if (currentUser) {
-  document.getElementById("userPanel").style.display = "flex";
-  document.getElementById("userInfo").innerText = "👤 " + currentUser;
+  const raw = localStorage.getItem("user_" + currentUser);
+  if (raw) {
+    const data = JSON.parse(raw);
+
+    document.getElementById("profileBar").style.display = "flex";
+    document.getElementById("mc-name").innerText = currentUser;
+    document.getElementById("mc-credit").innerText = "💎 " + (data.credit || 0) + " Kredi";
+    document.getElementById("mc-head").src =
+      "https://mc-heads.net/avatar/" + currentUser + "/64";
+  }
 }
 
-// LOGOUT
+/* ================== LOGOUT ================== */
 function logout() {
   localStorage.removeItem("loginUser");
   location.reload();
 }
 
-// SERVER DURUMU
+/* ================== SHOP ANIM ================== */
+function openShop() {
+  document.body.style.transition = "transform 0.6s ease";
+  document.body.style.transform = "translateY(-120%)";
+  setTimeout(() => {
+    location.href = "magaza.html";
+  }, 600);
+}
+
+/* ================== SERVER STATUS ================== */
+const ip = "193.164.4.244";
+const port = "";
+
 async function checkServer() {
   try {
     const res = await fetch(
-      `https://api.mcstatus.io/v2/status/java/${ip}`,
+      `https://api.mcstatus.io/v2/status/java/${ip}:${port}`,
       { cache: "no-store" }
     );
     const data = await res.json();
@@ -91,8 +81,7 @@ async function checkServer() {
       document.getElementById("player-count").innerText =
         data.players.online + " / " + data.players.max;
     } else {
-      document.getElementById("status-text").innerHTML = "🔴 KAPALI";
-      document.getElementById("player-count").innerText = "0";
+      throw "kapali";
     }
   } catch {
     document.getElementById("status-text").innerHTML = "🔴 KAPALI";
