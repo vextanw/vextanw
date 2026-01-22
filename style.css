@@ -1,151 +1,92 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <title>ArxonMC</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", Arial, sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #1a1f3c, #050505);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-    }
-
-    h1 {
-      font-size: 38px;
-      margin-bottom: 35px;
-      color: #8b7cff;
-      text-shadow: 0 0 20px rgba(139,124,255,0.7);
-      letter-spacing: 1px;
-    }
-
-    .card {
-      background: rgba(20, 20, 30, 0.65);
-      backdrop-filter: blur(14px);
-      border-radius: 20px;
-      padding: 28px;
-      width: 360px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow:
-        0 0 35px rgba(139,124,255,0.4),
-        inset 0 0 25px rgba(255,255,255,0.03);
-      transition: all 0.35s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow:
-        0 0 55px rgba(139,124,255,0.75),
-        inset 0 0 30px rgba(255,255,255,0.05);
-    }
-
-    .card p {
-      font-size: 16px;
-      margin-bottom: 12px;
-      opacity: 0.9;
-    }
-
-    .status {
-      margin-top: 18px;
-      font-size: 18px;
-      line-height: 1.6;
-    }
-
-    button {
-      margin-top: 26px;
-      background: linear-gradient(135deg, #7b6cff, #5a4dff);
-      color: white;
-      border: none;
-      padding: 15px 28px;
-      border-radius: 14px;
-      font-size: 16px;
-      cursor: pointer;
-      letter-spacing: 0.5px;
-      box-shadow: 0 0 25px rgba(123,108,255,0.6);
-      transition: all 0.25s ease;
-    }
-
-    button:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 45px rgba(123,108,255,0.9);
-    }
-
-    a {
-      text-decoration: none;
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 28px;
-        text-align: center;
-      }
-
-      .card {
-        width: 100%;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <h1>🔥 ArxonMC Network 🔥</h1>
-
-  <div class="card">
-    <p><b>IP:</b> ArxonNetwork.aternos.me:20659</p>
-
-    <div class="status">
-      <b>Sunucu:</b> <span id="status-text">Kontrol ediliyor...</span><br>
-      Oyuncu: <span id="player-count">-</span>
-    </div>
-
-    <a href="magaza.html">
-      <button>🛒 Mağaza</button>
-    </a>
-  </div>
-
-<script>
-const ip = "ArxonNetwork.aternos.me";
-const port = "20659";
-
-async function checkServer() {
-  try {
-    const res = await fetch(
-      `https://api.mcstatus.io/v2/status/java/${ip}:${port}`,
-      { cache: "no-store" }
-    );
-    const data = await res.json();
-
-    if (data.online === true) {
-      document.getElementById("status-text").innerHTML = "🟢 AÇIK";
-      document.getElementById("player-count").innerText =
-        data.players.online + " / " + data.players.max;
-    } else {
-      document.getElementById("status-text").innerHTML = "🔴 KAPALI";
-      document.getElementById("player-count").innerText = "0";
-    }
-  } catch {
-    document.getElementById("status-text").innerHTML = "🔴 KAPALI";
-    document.getElementById("player-count").innerText = "0";
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
-checkServer();
-setInterval(checkServer, 15000);
-</script>
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1a1f3c, #050505);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
 
-</body>
-</html>
+h1 {
+  font-size: 38px;
+  margin-bottom: 35px;
+  color: #8b7cff;
+  text-shadow: 0 0 20px rgba(139,124,255,0.7);
+  letter-spacing: 1px;
+}
+
+.card {
+  background: rgba(20, 20, 30, 0.65);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 28px;
+  width: 360px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 0 35px rgba(139,124,255,0.4),
+    inset 0 0 25px rgba(255,255,255,0.03);
+  transition: all 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 0 55px rgba(139,124,255,0.75),
+    inset 0 0 30px rgba(255,255,255,0.05);
+}
+
+.card p {
+  font-size: 16px;
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+.status {
+  margin-top: 18px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+button {
+  margin-top: 26px;
+  background: linear-gradient(135deg, #7b6cff, #5a4dff);
+  color: white;
+  border: none;
+  padding: 15px 28px;
+  border-radius: 14px;
+  font-size: 16px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 25px rgba(123,108,255,0.6);
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 45px rgba(123,108,255,0.9);
+}
+
+a {
+  text-decoration: none;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .card {
+    width: 100%;
+  }
+}
