@@ -72,12 +72,13 @@ button {
 <div id="rehberList"></div>
 
 <script>
-function loadAllApplications() {
+document.addEventListener("DOMContentLoaded", () => {
+
   const aacEl = document.getElementById("aacList");
   const rehberEl = document.getElementById("rehberList");
 
-  aacEl.innerHTML = "";
-  rehberEl.innerHTML = "";
+  let foundAAC = false;
+  let foundRehber = false;
 
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
@@ -85,10 +86,10 @@ function loadAllApplications() {
     if (!key.startsWith("applications_")) continue;
 
     const nick = key.replace("applications_", "");
-    const list = JSON.parse(localStorage.getItem(key)) || [];
+    const apps = JSON.parse(localStorage.getItem(key)) || [];
 
-    list.forEach((a, index) => {
-      const html = `
+    apps.forEach((a, index) => {
+      const box = `
         <div class="app">
           <b>Nick:</b> ${nick}<br>
           <b>Tür:</b> ${a.type}<br>
@@ -102,41 +103,44 @@ function loadAllApplications() {
       `;
 
       if (a.type === "AAC") {
-        aacEl.innerHTML += html;
-      } else if (a.type === "REHBER") {
-        rehberEl.innerHTML += html;
+        foundAAC = true;
+        aacEl.innerHTML += box;
+      }
+
+      if (a.type === "REHBER") {
+        foundRehber = true;
+        rehberEl.innerHTML += box;
       }
     });
   }
 
-  if (!aacEl.innerHTML) aacEl.innerHTML = "<p>AAC başvurusu yok.</p>";
-  if (!rehberEl.innerHTML) rehberEl.innerHTML = "<p>Rehber başvurusu yok.</p>";
-}
+  if (!foundAAC) aacEl.innerHTML = "<p>AAC başvurusu yok.</p>";
+  if (!foundRehber) rehberEl.innerHTML = "<p>Rehber başvurusu yok.</p>";
+});
 
-/* ===== DURUM FONKSİYONLARI ===== */
+/* ==== DURUM ==== */
 function approve(key, i) {
   const list = JSON.parse(localStorage.getItem(key));
   list[i].status = "Onaylandı";
   localStorage.setItem(key, JSON.stringify(list));
-  loadAllApplications();
+  location.reload();
 }
 
 function reject(key, i) {
   const list = JSON.parse(localStorage.getItem(key));
   list[i].status = "Reddedildi";
   localStorage.setItem(key, JSON.stringify(list));
-  loadAllApplications();
+  location.reload();
 }
 
 function removeApp(key, i) {
   const list = JSON.parse(localStorage.getItem(key));
   list.splice(i, 1);
   localStorage.setItem(key, JSON.stringify(list));
-  loadAllApplications();
+  location.reload();
 }
-
-loadAllApplications();
 </script>
+
 
 </body>
 </html>
