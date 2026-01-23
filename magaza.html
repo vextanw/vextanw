@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>ArxonMC | Mağaza</title>
+  <title>ArxonMC | Kullanıcı Hakları & Gizlilik</title>
 
   <style>
     body {
@@ -16,31 +16,50 @@
     h1 {
       color: #7b6cff;
       margin-bottom: 30px;
+      animation: glow 2s infinite alternate;
     }
 
-    .shop {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #7b6cff, 0 0 10px #7b6cff; }
+      100% { text-shadow: 0 0 20px #4b3cff, 0 0 30px #7b6cff; }
     }
 
-    .item {
+    .section {
       background: #1a1a1a;
-      padding: 20px;
+      padding: 25px;
       border-radius: 14px;
-      width: 220px;
+      margin-bottom: 20px;
       box-shadow: 0 0 15px rgba(123,108,255,0.25);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
     }
 
-    .item h2 {
+    .section:nth-child(1) { animation-delay: 0.2s; }
+    .section:nth-child(2) { animation-delay: 0.4s; }
+    .section:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
       color: #7b6cff;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
-    .price {
-      font-size: 18px;
-      margin-bottom: 15px;
+    p, ul {
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    ul li {
+      margin-bottom: 8px;
+    }
+
+    .back {
+      margin-top: 30px;
+      display: inline-block;
     }
 
     button {
@@ -57,12 +76,7 @@
       background: #5f52ff;
     }
 
-    .back {
-      margin-top: 40px;
-      display: inline-block;
-    }
-
-    /* 🔥 TEŞEKKÜR ANİMASYONU */
+    /* 🔥 TEŞEKKÜR OVERLAY */
     #thanksOverlay {
       position: fixed;
       inset: 0;
@@ -70,7 +84,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 99999;
+      z-index: 9999;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.4s ease;
@@ -102,32 +116,31 @@
 
 <body>
 
-<h1>🛒 ArxonMC Mağaza</h1>
+<h1>📜 ArxonMC Kullanıcı Hakları & Gizlilik</h1>
 
-<div class="shop">
-  <div class="item">
-    <h2>VIP</h2>
-    <div class="price">30 Kredi</div>
-    <button onclick="buy('VIP', 30)">Satın Al</button>
-  </div>
+<div class="section">
+  <h2>Kullanıcı Hakları</h2>
+  <ul>
+    <li>Hesap bilgilerini görüntüleme ve güncelleme hakkı</li>
+    <li>Kendi içeriklerini yönetme ve paylaşma hakkı</li>
+    <li>Gizlilik ve veri güvenliği hakları</li>
+  </ul>
+</div>
 
-  <div class="item">
-    <h2>VIP+</h2>
-    <div class="price">50 Kredi</div>
-    <button onclick="buy('VIP+', 50)">Satın Al</button>
-  </div>
+<div class="section">
+  <h2>Gizlilik Politikası</h2>
+  <p>ArxonMC kullanıcılarının bilgilerini korur. Toplanan bilgiler:</p>
+  <ul>
+    <li>Hesap adı ve iletişim bilgileri</li>
+    <li>Platform içi etkinlik ve oyun verileri</li>
+  </ul>
+  <p>Bu bilgiler yalnızca kullanıcı deneyimi ve güvenliği için kullanılır. Üçüncü taraflarla paylaşılmaz.</p>
+</div>
 
-  <div class="item">
-    <h2>ArxonVIP</h2>
-    <div class="price">70 Kredi</div>
-    <button onclick="buy('ArxonVIP', 70)">Satın Al</button>
-  </div>
-
-  <div class="item">
-    <h2>ArxonVIP+</h2>
-    <div class="price">100 Kredi</div>
-    <button onclick="buy('ArxonVIP+', 100)">Satın Al</button>
-  </div>
+<div class="section">
+  <h2>İletişim</h2>
+  <p>Gizlilik veya haklar ile ilgili sorularınız için:</p>
+  <a href="mailto:support@arxonnetwork.com"><button>📧 Bize Yazın</button></a>
 </div>
 
 <div class="back">
@@ -139,41 +152,11 @@
 <!-- 🔥 TEŞEKKÜR OVERLAY -->
 <div id="thanksOverlay">
   <div class="thanksBox">
-    💜 Bizi Desteklediğin İçin Teşekkürler 💜
+    💜 Okuduğun İçin Teşekkürler 💜
   </div>
 </div>
 
-<script src="auth.js"></script>
 <script>
-const currentUser = localStorage.getItem("loginUser");
-
-if (!currentUser) {
-  alert("Giriş yapmadan mağazaya giremezsin");
-  location.href = "login.html";
-}
-
-function buy(item, price) {
-  const raw = localStorage.getItem("user_" + currentUser);
-  if (!raw) {
-    alert("Kullanıcı datası yok");
-    return;
-  }
-
-  const data = JSON.parse(raw);
-
-  if (data.credit < price) {
-    alert("Kredi yetmiyor amına koyim 💸");
-    return;
-  }
-
-  data.credit -= price;
-  data.rank = item;
-
-  localStorage.setItem("user_" + currentUser, JSON.stringify(data));
-
-  showThanks();
-}
-
 function showThanks() {
   const overlay = document.getElementById("thanksOverlay");
   overlay.classList.add("show");
@@ -181,6 +164,11 @@ function showThanks() {
   setTimeout(() => {
     overlay.classList.remove("show");
   }, 2500);
+}
+
+// Sayfa yüklendiğinde kısa bir teşekkür animasyonu göstermek için
+window.onload = () => {
+  showThanks();
 }
 </script>
 
