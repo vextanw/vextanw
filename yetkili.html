@@ -65,16 +65,16 @@ button {
 
 <div class="section">
   <h2>🛡 AAC Başvuruları</h2>
-  <div id="aacList"></div>
+  <div id="aac_basvurular"></div>
 </div>
 
 <h2>📘 Rehber Başvuruları</h2>
-<div id="rehberList"></div>
+<div id="rehber_basvurular"></div>
 
 <script>
 function loadAAC() {
   const list = JSON.parse(localStorage.getItem("aac_basvurular") || "[]");
-  const el = document.getElementById("aacList");
+  const el = document.getElementById("aac_basvurular");
 
   if (list.length === 0) {
     el.innerHTML = "<p>AAC başvurusu yok.</p>";
@@ -101,7 +101,7 @@ function loadAAC() {
 function approveAAC(i) {
   const list = JSON.parse(localStorage.getItem("aac_basvuru"));
   list[i].status = "Onaylandı";
-  localStorage.setItem("aac_basvuru", JSON.stringify(list));
+  localStorage.setItem("aac_basvurular", JSON.stringify(list));
   location.reload();
 }
 
