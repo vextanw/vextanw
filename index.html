@@ -2,270 +2,178 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Arxon Network</title>
+<title>Arxon NW</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+body{
+  margin:0;
+  font-family:Arial;
+  background:#020617;
+  color:white;
 }
-
-body {
-  height: 100vh;
-  background: url("https://i.imgur.com/gIxuS6G.png") center/cover no-repeat fixed;
-  overflow: hidden;
-  color: white;
+nav{
+  background:rgba(0,0,0,.6);
+  padding:15px 25px;
+  display:flex;
+  justify-content:space-between;
 }
-
-/* PARTİCLES */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
+input,button{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:8px;
+  border:none;
 }
-
-/* NAVBAR */
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 60px;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 25px;
-  z-index: 10;
+button{
+  background:#0ea5e9;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
 }
-
-.nav-left, .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+button:hover{opacity:.9}
+.box{
+  max-width:400px;
+  margin:40px auto;
+  background:#020617;
+  border:1px solid #0ea5e9;
+  padding:20px;
+  border-radius:12px;
 }
-
-.navbar button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-/* CENTER */
-.center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 5;
-  text-align: center;
-}
-
-.logo {
-  width: 200px;
-  margin-bottom: 20px;
-}
-
-.ip-box {
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.copy-alert {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: black;
-  padding: 15px 25px;
-  border-radius: 8px;
-  display: none;
-  z-index: 999;
-}
-
-/* POPUP */
-.popup {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 20;
-}
-
-.popup-box {
-  background: #111;
-  padding: 25px;
-  width: 300px;
-  border-radius: 10px;
-}
-
-.popup-box input {
-  width: 100%;
-  margin: 8px 0;
-  padding: 8px;
-}
-
-.popup-box button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-}
-
-/* DUYURULAR */
-.announcements {
-  position: fixed;
-  inset: 0;
-  background: #0b0b0b;
-  display: none;
-  z-index: 15;
-  padding: 80px 20px;
-}
-
-.back-btn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-}
-
-/* DISCORD */
-.discord {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.discord img {
-  width: 32px;
+.hidden{display:none}
+.card{
+  border:1px solid #0ea5e9;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:8px;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="particles"></canvas>
+<nav>
+  <b>Arxon NW</b>
+  <div id="navBtn"></div>
+</nav>
 
-<div class="navbar">
-  <div class="nav-left">
-    <button onclick="openAnnouncements()">Duyurular</button>
-  </div>
+<!-- AUTH -->
+<div id="auth" class="box">
+  <h2>Giriş</h2>
+  <input id="loginUser" placeholder="Kullanıcı adı">
+  <input id="loginPass" type="password" placeholder="Şifre">
+  <button onclick="login()">Giriş Yap</button>
 
-  <div class="nav-right" id="authButtons">
-    <button onclick="openLogin()">Giriş</button>
-    <button onclick="openRegister()">Kayıt</button>
-  </div>
+  <hr style="margin:20px 0;border-color:#0ea5e9">
 
-  <div class="nav-right" id="logoutBtn" style="display:none">
-    <button onclick="logout()">Çıkış Yap</button>
-  </div>
+  <h2>Kayıt Ol</h2>
+  <input id="regUser" placeholder="Kullanıcı adı">
+  <input id="regPass" type="password" placeholder="Şifre">
+  <button onclick="register()">Kayıt Ol</button>
+
+  <p id="msg"></p>
 </div>
 
-<div class="center">
-  <img class="logo" src="https://i.imgur.com/g8QXjvO.png">
-  <div class="ip-box" onclick="copyIP()">play.boxmining.xyz</div>
-  <div>Online: 123 kişi</div>
+<!-- PANEL -->
+<div id="panel" class="box hidden">
+  <h2>Hoş geldin <span id="who"></span></h2>
 
-  <div class="discord" style="margin-top:20px">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png">
-    <a href="https://discord.gg/HEEPr9k9uD" target="_blank">Discord’a Katıl</a>
-    <small>Discord Daveti: discord.gg/HEEPr9k9uD</small>
+  <div id="adminPanel" class="hidden">
+    <h3>Duyuru At (syvex)</h3>
+    <input id="annText" placeholder="Duyuru yaz">
+    <button onclick="addAnn()">Gönder</button>
   </div>
-</div>
 
-<div class="copy-alert" id="copyAlert">IP KOPYALANDI</div>
+  <h3>Duyurular</h3>
+  <div id="anns"></div>
 
-<!-- LOGIN -->
-<div class="popup" id="login">
-  <div class="popup-box">
-    <h3>Giriş</h3>
-    <input placeholder="Kullanıcı Adı">
-    <input type="password" placeholder="Şifre">
-    <button onclick="login()">Giriş Yap</button>
-  </div>
-</div>
-
-<!-- REGISTER -->
-<div class="popup" id="register">
-  <div class="popup-box">
-    <h3>Kayıt Ol</h3>
-    <input placeholder="Kullanıcı Adı">
-    <input type="password" placeholder="Şifre">
-    <button onclick="login()">Kayıt Ol</button>
-  </div>
-</div>
-
-<!-- DUYURULAR -->
-<div class="announcements" id="announcements">
-  <button class="back-btn" onclick="closeAnnouncements()">← Geri</button>
-  <h2>Duyurular</h2>
-  <p>BoxMining Season başladı. Gir oyna, kaz.</p>
+  <button onclick="logout()">Çıkış</button>
 </div>
 
 <script>
-function copyIP() {
-  navigator.clipboard.writeText("play.boxmining.xyz");
-  document.getElementById("copyAlert").style.display = "block";
-  setTimeout(()=>{document.getElementById("copyAlert").style.display="none"},1500);
+// -------- INIT --------
+if(!localStorage.users){
+  localStorage.users = JSON.stringify({
+    syvex:{password:"1234",role:"admin"}
+  });
+}
+if(!localStorage.anns){
+  localStorage.anns="[]";
 }
 
-function openLogin(){document.getElementById("login").style.display="flex"}
-function openRegister(){document.getElementById("register").style.display="flex"}
-
+// -------- AUTH --------
 function login(){
-  document.getElementById("login").style.display="none";
-  document.getElementById("register").style.display="none";
-  document.getElementById("authButtons").style.display="none";
-  document.getElementById("logoutBtn").style.display="flex";
+  const u=loginUser.value;
+  const p=loginPass.value;
+  const users=JSON.parse(localStorage.users);
+
+  if(!users[u] || users[u].password!==p){
+    msg.innerText="Hatalı kullanıcı veya şifre";
+    return;
+  }
+  localStorage.currentUser=u;
+  loadPanel();
+}
+
+function register(){
+  const u=regUser.value;
+  const p=regPass.value;
+  const users=JSON.parse(localStorage.users);
+
+  if(!u || !p){
+    msg.innerText="Boş bırakma";
+    return;
+  }
+  if(users[u]){
+    msg.innerText="Bu kullanıcı var";
+    return;
+  }
+
+  users[u]={password:p,role:"user"};
+  localStorage.users=JSON.stringify(users);
+  localStorage.currentUser=u;
+  loadPanel();
 }
 
 function logout(){
-  document.getElementById("authButtons").style.display="flex";
-  document.getElementById("logoutBtn").style.display="none";
+  localStorage.removeItem("currentUser");
+  location.reload();
 }
 
-function openAnnouncements(){
-  document.getElementById("announcements").style.display="block";
+// -------- PANEL --------
+function loadPanel(){
+  auth.classList.add("hidden");
+  panel.classList.remove("hidden");
+
+  const u=localStorage.currentUser;
+  who.innerText=u;
+
+  const users=JSON.parse(localStorage.users);
+  if(users[u].role==="admin"){
+    adminPanel.classList.remove("hidden");
+  }
+
+  loadAnns();
 }
 
-function closeAnnouncements(){
-  document.getElementById("announcements").style.display="none";
-}
-
-/* PARTICLES */
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-
-let particles = Array.from({length:60},()=>({
-  x: Math.random()*canvas.width,
-  y: Math.random()*canvas.height,
-  r: Math.random()*2+1,
-  dx: Math.random()-0.5,
-  dy: Math.random()-0.5
-}));
-
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="rgba(255,255,255,0.6)";
-  particles.forEach(p=>{
-    p.x+=p.dx; p.y+=p.dy;
-    if(p.x<0||p.x>canvas.width) p.dx*=-1;
-    if(p.y<0||p.y>canvas.height) p.dy*=-1;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fill();
+function loadAnns(){
+  anns.innerHTML="";
+  JSON.parse(localStorage.anns).forEach(a=>{
+    anns.innerHTML+=`<div class="card">${a}</div>`;
   });
-  requestAnimationFrame(animate);
 }
-animate();
+
+function addAnn(){
+  const arr=JSON.parse(localStorage.anns);
+  arr.unshift(annText.value);
+  localStorage.anns=JSON.stringify(arr);
+  annText.value="";
+  loadAnns();
+}
+
+// -------- AUTO --------
+if(localStorage.currentUser){
+  loadPanel();
+}
 </script>
 
 </body>
