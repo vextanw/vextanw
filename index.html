@@ -1,149 +1,61 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Arxon NW</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body{margin:0;font-family:Arial;background:#020617;color:white}
-nav{display:flex;justify-content:space-between;align-items:center;
-background:rgba(0,0,0,.6);padding:15px 25px}
-a,button{color:white;background:none;border:none;cursor:pointer;font-size:16px}
-button.primary{background:#0ea5e9;color:black;padding:8px 14px;border-radius:8px}
-section{padding:40px;text-align:center}
-.hidden{display:none}
-.modal{
-position:fixed;inset:0;background:rgba(0,0,0,.7);
-display:flex;align-items:center;justify-content:center
-}
-.box{
-background:#020617;border:1px solid #0ea5e9;
-padding:25px;border-radius:12px;width:320px
-}
-input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none}
-.card{border:1px solid #0ea5e9;padding:10px;border-radius:8px;margin:10px 0}
-</style>
+  <meta charset="UTF-8" />
+  <title>Ana Sayfa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: Arial, sans-serif; background:#0f0f12; color:#eaeaf0; }
+    .container { max-width: 900px; margin: 60px auto; padding: 24px; }
+    .nav { display:flex; gap:12px; justify-content:flex-end; }
+    .btn {
+      padding:10px 16px; border-radius:8px; border:0; cursor:pointer;
+      background:#6c5ce7; color:#fff; text-decoration:none;
+    }
+    .btn.secondary { background:#2d3436; }
+    .hero { margin-top:40px; }
+    .hidden { display:none; }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <div class="nav">
+      <!-- Giriş yapmamışsa -->
+      <a id="loginBtn" class="btn secondary" href="/login">Giriş Yap</a>
+      <a id="registerBtn" class="btn" href="/register">Kayıt Ol</a>
 
-<nav>
-  <b>Arxon NW</b>
-  <div id="navBtns">
-    <button onclick="openLogin()">Giriş Yap</button>
-    <button class="primary" onclick="openRegister()">Kayıt Ol</button>
+      <!-- Giriş yapmışsa -->
+      <button id="logoutBtn" class="btn hidden">Çıkış Yap</button>
+    </div>
+
+    <div class="hero">
+      <h1>Sunucuya Hoş Geldin</h1>
+      <p>
+        Burası ana sayfa. Herkes bakabilir.
+        Mağaza ve duyurular? Yok. Onlar yetki işi.
+      </p>
+    </div>
   </div>
-</nav>
 
-<!-- ANA SAYFA -->
-<section>
-  <h1>Arxon NW Minecraft Sunucusu</h1>
-  <p>IP: <b>193.164.4.244</b></p>
-</section>
+  <script>
+    // ÖRNEK: session kontrolü
+    // Gerçekte bunu backend’den kontrol edeceksin.
+    const isLoggedIn = Boolean(localStorage.getItem("session"));
 
-<!-- MAĞAZA -->
-<section id="store" class="hidden">
-  <h2>Mağaza</h2>
-  <div class="card">VIP+ – 110 Kredi</div>
-</section>
+    const loginBtn = document.getElementById("loginBtn");
+    const registerBtn = document.getElementById("registerBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
 
-<!-- DUYURULAR -->
-<section id="ann" class="hidden">
-  <h2>Duyurular</h2>
-  <div id="annList"></div>
-  <div id="adminBox" class="hidden">
-    <input id="annText" placeholder="Duyuru yaz">
-    <button class="primary" onclick="addAnn()">Gönder</button>
-  </div>
-</section>
+    if (isLoggedIn) {
+      loginBtn.classList.add("hidden");
+      registerBtn.classList.add("hidden");
+      logoutBtn.classList.remove("hidden");
+    }
 
-<!-- LOGIN -->
-<div id="loginModal" class="modal hidden">
-  <div class="box">
-    <h3>Giriş Yap</h3>
-    <input id="loginUser" placeholder="Kullanıcı">
-    <input id="loginPass" type="password" placeholder="Şifre">
-    <button class="primary" onclick="login()">Giriş</button>
-    <button onclick="closeAll()">İptal</button>
-  </div>
-</div>
-
-<!-- REGISTER -->
-<div id="registerModal" class="modal hidden">
-  <div class="box">
-    <h3>Kayıt Ol</h3>
-    <input id="regUser" placeholder="Kullanıcı">
-    <input id="regPass" type="password" placeholder="Şifre">
-    <button class="primary" onclick="register()">Kayıt</button>
-    <button onclick="closeAll()">İptal</button>
-  </div>
-</div>
-
-<script>
-// INIT
-if(!localStorage.users){
-  localStorage.users=JSON.stringify({
-    syvex:{password:"1234",role:"admin"}
-  })
-}
-if(!localStorage.anns){localStorage.anns="[]"}
-
-// MODALS
-function openLogin(){loginModal.classList.remove("hidden")}
-function openRegister(){registerModal.classList.remove("hidden")}
-function closeAll(){
-  loginModal.classList.add("hidden")
-  registerModal.classList.add("hidden")
-}
-
-// AUTH
-function login(){
-  const u=loginUser.value,p=loginPass.value
-  const users=JSON.parse(localStorage.users)
-  if(!users[u]||users[u].password!==p)return alert("Hatalı")
-  localStorage.currentUser=u
-  location.reload()
-}
-
-function register(){
-  const u=regUser.value,p=regPass.value
-  const users=JSON.parse(localStorage.users)
-  if(users[u])return alert("Var")
-  users[u]={password:p,role:"user"}
-  localStorage.users=JSON.stringify(users)
-  localStorage.currentUser=u
-  location.reload()
-}
-
-function logout(){
-  localStorage.removeItem("currentUser")
-  location.reload()
-}
-
-// PANEL
-const u=localStorage.currentUser
-if(u){
-  navBtns.innerHTML=`<button onclick="logout()">Çıkış Yap</button>`
-  store.classList.remove("hidden")
-  ann.classList.remove("hidden")
-
-  const users=JSON.parse(localStorage.users)
-  if(users[u].role==="admin"){
-    adminBox.classList.remove("hidden")
-  }
-
-  JSON.parse(localStorage.anns).forEach(a=>{
-    annList.innerHTML+=`<div class="card">${a}</div>`
-  })
-}
-
-function addAnn(){
-  const arr=JSON.parse(localStorage.anns)
-  arr.unshift(annText.value)
-  localStorage.anns=JSON.stringify(arr)
-  location.reload()
-}
-</script>
-
+    logoutBtn?.addEventListener("click", () => {
+      localStorage.removeItem("session");
+      location.reload();
+    });
+  </script>
 </body>
 </html>
