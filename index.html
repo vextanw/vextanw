@@ -1,317 +1,116 @@
-"<!DOCTYPE html>
-<html lang=\"tr\">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
-    <meta charset=\"UTF-8\">
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-    <meta name=\"description\" content=\"Arxon NW - Minecraft Sunucusu. Topluluğumuza katılın ve eğlenceli maceralar yaşayın!\">
-    <meta name=\"keywords\" content=\"Minecraft, Sunucu, Arxon NW, Oyun\">
-    <title>Arxon NW - Minecraft Sunucusu</title>
-    
-    <!-- Tailwind CSS -->
-    <script src=\"https://cdn.tailwindcss.com\"></script>
-    
-    <!-- Google Fonts -->
-    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">
-    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>
-    <link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap\" rel=\"stylesheet\">
-    
-    <!-- Custom CSS -->
-    <link rel=\"stylesheet\" href=\"style.css\">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arxon NW - Minecraft Sunucusu</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Inter', sans-serif; }
+.hero-bg { background: url('https://images.unsplash.com/photo-1611078489191-9f5e3173c31d?fit=crop&w=1920&h=1080') center/cover no-repeat; }
+.pulse { animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100%{ transform: scale(1);} 50%{ transform: scale(1.1); } }
+.toast { position: fixed; top: 20px; right: -400px; background: #111; color:white; padding:15px 25px; border-radius:12px; z-index:9999; transition: right 0.3s; border-left:4px solid #43b581;}
+.toast.show { right:20px; }
+</style>
 </head>
-<body>
-    
-    <!-- Navigation -->
-    <nav class=\"fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800\">
-        <div class=\"container mx-auto px-4\">
-            <div class=\"flex items-center justify-between h-16\">
-                <!-- Logo -->
-                <a href=\"#\" class=\"flex items-center space-x-3\">
-                    <div class=\"w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center font-bold text-white\">
-                        A
-                    </div>
-                    <span class=\"text-white font-bold text-xl hidden md:block\">Arxon NW</span>
-                </a>
+<body class="bg-black text-white">
 
-                <!-- Desktop Navigation -->
-                <div class=\"hidden md:flex items-center space-x-1\">
-                    <a href=\"#\" class=\"flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 rounded-lg transition-all\">
-                        <span>🏠</span>
-                        <span>Anasayfa</span>
-                    </a>
-                    <a href=\"#store\" class=\"flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 rounded-lg transition-all\">
-                        <span>🛒</span>
-                        <span>Mağaza</span>
-                    </a>
-                    <a href=\"#help\" class=\"flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 rounded-lg transition-all\">
-                        <span>❓</span>
-                        <span>Yardım</span>
-                    </a>
-                    <a href=\"#support\" class=\"flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 rounded-lg transition-all\">
-                        <span>🎧</span>
-                        <span>Destek</span>
-                    </a>
-                </div>
+<!-- Navbar -->
+<nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
+<div class="container mx-auto px-4 flex justify-between items-center h-16">
+  <a href="#" class="flex items-center space-x-3">
+    <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center font-bold text-white">A</div>
+    <span class="hidden md:block font-bold text-xl">Arxon NW</span>
+  </a>
+  <div class="hidden md:flex space-x-3">
+    <a href="#" class="px-3 py-2 rounded hover:bg-gray-800/50 transition">🏠 Anasayfa</a>
+    <a href="#store" class="px-3 py-2 rounded hover:bg-gray-800/50 transition">🛒 Mağaza</a>
+    <a href="#help" class="px-3 py-2 rounded hover:bg-gray-800/50 transition">❓ Yardım</a>
+    <a href="#support" class="px-3 py-2 rounded hover:bg-gray-800/50 transition">🎧 Destek</a>
+  </div>
+  <div class="hidden md:flex space-x-2">
+    <button onclick="showToast('Giriş sayfası yakında!')" class="px-3 py-2 rounded hover:bg-gray-800/50">Giriş Yap</button>
+    <button onclick="showToast('Kayıt sayfası yakında!')" class="px-3 py-2 rounded bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600">Kayıt Ol</button>
+  </div>
+  <button onclick="toggleMobileMenu()" class="md:hidden">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+</div>
+<div id="mobileMenu" class="md:hidden hidden bg-black/90 border-t border-gray-800">
+  <a href="#" class="block px-4 py-2 hover:bg-gray-800">🏠 Anasayfa</a>
+  <a href="#store" class="block px-4 py-2 hover:bg-gray-800">🛒 Mağaza</a>
+  <a href="#help" class="block px-4 py-2 hover:bg-gray-800">❓ Yardım</a>
+  <a href="#support" class="block px-4 py-2 hover:bg-gray-800">🎧 Destek</a>
+  <button onclick="showToast('Giriş sayfası yakında!')" class="w-full text-left px-4 py-2 hover:bg-gray-800">Giriş Yap</button>
+  <button onclick="showToast('Kayıt sayfası yakında!')" class="w-full text-left px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white">Kayıt Ol</button>
+</div>
+</nav>
 
-                <!-- Auth Buttons -->
-                <div class=\"hidden md:flex items-center space-x-3\">
-                    <button onclick=\"showToast('Giriş sayfası yakında!')\" class=\"text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 px-4 py-2 rounded-lg transition-all\">
-                        🔑 Giriş Yap
-                    </button>
-                    <button onclick=\"showToast('Kayıt sayfası yakında!')\" class=\"bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-4 py-2 rounded-lg transition-all\">
-                        ✨ Kayıt Ol
-                    </button>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button onclick=\"toggleMobileMenu()\" class=\"md:hidden text-gray-300 hover:text-white\">
-                    <svg class=\"w-6 h-6\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
-                        <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 6h16M4 12h16M4 18h16\"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div id=\"mobileMenu\" class=\"mobile-menu md:hidden border-t border-gray-800\">
-                <div class=\"py-4 space-y-2\">
-                    <a href=\"#\" class=\"flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 rounded-lg\">
-                        <span>🏠 Anasayfa</span>
-                    </a>
-                    <a href=\"#store\" class=\"flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 rounded-lg\">
-                        <span>🛒 Mağaza</span>
-                    </a>
-                    <a href=\"#help\" class=\"flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 rounded-lg\">
-                        <span>❓ Yardım</span>
-                    </a>
-                    <a href=\"#support\" class=\"flex items-center space-x-2 px-4 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 rounded-lg\">
-                        <span>🎧 Destek</span>
-                    </a>
-                    <div class=\"flex flex-col space-y-2 pt-2\">
-                        <button onclick=\"showToast('Giriş sayfası yakında!')\" class=\"text-gray-300 hover:text-cyan-400 px-4 py-2 rounded-lg text-left\">
-                            🔑 Giriş Yap
-                        </button>
-                        <button onclick=\"showToast('Kayıt sayfası yakında!')\" class=\"bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-lg text-left\">
-                            ✨ Kayıt Ol
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class=\"relative min-h-screen flex items-center justify-center overflow-hidden\">
-        <!-- Background -->
-        <div class=\"hero-bg absolute inset-0 z-0\">
-            <div class=\"absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black\"></div>
-        </div>
-
-        <!-- Server Status - Top Left -->
-        <div class=\"absolute top-24 left-4 md:left-8 z-20\">
-            <div id=\"serverStatus\" class=\"backdrop-blur-md border rounded-lg px-4 py-3 flex items-center space-x-3 transition-all cursor-pointer group bg-gray-500/20 border-gray-500/30\">
-                <span class=\"text-2xl pulse\">⏳</span>
-                <div>
-                    <div class=\"text-gray-400 font-bold text-lg\">YÜKLENIYOR...</div>
-                    <div class=\"text-gray-300 text-sm\">193.164.4.244</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Discord Widget - Top Right -->
-        <a href=\"https://discord.gg/waREnQHqzj\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"absolute top-24 right-4 md:right-8 z-20\">
-            <div class=\"bg-blue-600/90 backdrop-blur-md border border-blue-500/30 rounded-lg px-4 py-3 flex items-center space-x-3 hover:bg-blue-500 transition-all group\">
-                <svg class=\"w-6 h-6 text-white group-hover:scale-110 transition-transform\" fill=\"currentColor\" viewBox=\"0 0 24 24\">
-                    <path d=\"M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z\"/>
-                </svg>
-                <div>
-                    <div class=\"text-white font-bold\">BİZE KATIL</div>
-                    <div class=\"text-blue-200 text-sm\">DISCORD.GG/WARENQHQZJ</div>
-                </div>
-            </div>
-        </a>
-
-        <!-- Main Content -->
-        <div class=\"relative z-10 text-center px-4 max-w-4xl mx-auto\">
-            <!-- Logo -->
-            <div class=\"mb-8 flex justify-center\">
-                <div class=\"relative group\">
-                    <div class=\"absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity\"></div>
-                    <div class=\"relative w-32 h-32 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform\">
-                        <span class=\"text-white font-bold text-5xl\">A</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Minecraft Avatar -->
-            <div class=\"mb-6 flex justify-center\">
-                <img src=\"https://api.dicebear.com/7.x/pixel-art/svg?seed=arxonnw&scale=80\" alt=\"Minecraft Avatar\" class=\"w-40 h-40 rounded-lg shadow-2xl hover:scale-105 transition-transform\">
-            </div>
-
-            <!-- Title -->
-            <h1 class=\"text-5xl md:text-6xl font-bold text-white mb-4\">Arxon NW</h1>
-            <p class=\"text-xl text-gray-300 mb-8\">Topluluğumuza katılmak için lütfen giriş yapın veya kaydolun.</p>
-
-            <!-- CTA Buttons -->
-            <div class=\"flex flex-col sm:flex-row gap-4 justify-center mb-8\">
-                <button onclick=\"showToast('Giriş sayfası yakında!')\" class=\"bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-6 text-lg font-semibold rounded-lg shadow-lg hover:shadow-cyan-500/50 transition-all\">
-                    Giriş Yap
-                </button>
-                <button onclick=\"showToast('Kayıt sayfası yakında!')\" class=\"border-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 px-8 py-6 text-lg font-semibold rounded-lg shadow-lg hover:shadow-cyan-500/50 transition-all\">
-                    Kayıt Ol
-                </button>
-            </div>
-
-            <!-- Server Address Copy -->
-            <div onclick=\"copyServerAddress()\" class=\"inline-flex items-center space-x-3 bg-gray-900/80 backdrop-blur-md border border-gray-700 rounded-lg px-6 py-3 cursor-pointer hover:bg-gray-800/80 transition-all group\">
-                <span class=\"text-gray-300 font-mono text-sm\">Sunucu Adresini Kopyala:</span>
-                <span class=\"text-cyan-400 font-bold\">193.164.4.244</span>
-                <span id=\"copyIcon\">📋</span>
-            </div>
-        </div>
+<!-- Hero -->
+<section class="relative min-h-screen flex items-center justify-center hero-bg">
+  <div class="absolute inset-0 bg-black/60"></div>
+  <div class="relative text-center z-10 px-4 max-w-2xl">
+    <div class="mb-6 flex justify-center">
+      <div class="w-32 h-32 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-full flex items-center justify-center shadow-2xl">
+        <span class="text-white text-5xl font-bold">A</span>
+      </div>
     </div>
-
-    <!-- Store Section -->
-    <div id=\"store\" class=\"container mx-auto px-4 py-8 -mt-16 relative z-20\">
-        <div class=\"max-w-md ml-auto\">
-            <div class=\"bg-gradient-to-br from-cyan-900/30 to-blue-900/30 backdrop-blur-md border border-cyan-500/30 p-6 rounded-lg hover:shadow-lg hover:shadow-cyan-500/20 transition-all\">
-                <div class=\"flex items-center justify-between mb-4\">
-                    <h3 class=\"text-2xl font-bold text-white flex items-center\">
-                        <span class=\"mr-2\">🛒</span>
-                        MAĞAZA
-                    </h3>
-                </div>
-                <p class=\"text-gray-300 mb-6\">Alışverişe Başla!</p>
-                
-                <div class=\"bg-black/40 rounded-lg p-4 mb-4\">
-                    <div class=\"text-cyan-400 font-semibold mb-2\">Fırsat Ürünü</div>
-                    <img src=\"https://images.unsplash.com/photo-1579547621113-e4bb2a19bdd6?w=400&h=400&fit=crop\" alt=\"ArxonVIP+\" class=\"w-full h-32 object-cover rounded-lg mb-3\">
-                    <div class=\"flex items-center justify-between\">
-                        <span class=\"text-white font-bold text-lg\">ArxonVIP+</span>
-                        <span class=\"text-cyan-400 font-bold\">110 Kredi</span>
-                    </div>
-                </div>
-
-                <button onclick=\"showToast('Mağaza sayfası yakında!')\" class=\"w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold py-3 rounded-lg transition-all\">
-                    Mağazayı Görüntüle
-                </button>
-            </div>
-        </div>
+    <h1 class="text-5xl md:text-6xl font-bold mb-4">Arxon NW</h1>
+    <p class="text-gray-300 mb-8">Topluluğumuza katılmak için giriş yapın veya kaydolun.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button onclick="showToast('Giriş sayfası yakında!')" class="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-lg shadow-lg">Giriş Yap</button>
+      <button onclick="showToast('Kayıt sayfası yakında!')" class="px-8 py-4 border-2 border-cyan-500 text-cyan-400 rounded-lg hover:bg-cyan-500/10 shadow-lg">Kayıt Ol</button>
     </div>
-
-    <!-- Blog Section -->
-    <div class=\"py-16\">
-        <div class=\"container mx-auto px-4\">
-            <h2 class=\"text-3xl font-bold text-white mb-8\">Son Haberler</h2>
-            <div class=\"grid grid-cols-1 gap-6\">
-                <div class=\"bg-gray-900/80 backdrop-blur-md border border-gray-800 overflow-hidden rounded-lg hover:border-cyan-500/50 transition-all group\">
-                    <div class=\"md:flex\">
-                        <div class=\"md:w-1/3\">
-                            <img src=\"https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=400&fit=crop\" alt=\"Blog\" class=\"w-full h-48 md:h-full object-cover group-hover:scale-105 transition-transform duration-300\">
-                        </div>
-                        <div class=\"md:w-2/3 p-6\">
-                            <h3 class=\"text-2xl font-bold text-cyan-400 mb-3 group-hover:text-cyan-300 transition-colors\">
-                                Boxmining Düello Güncellemesi!
-                            </h3>
-                            <p class=\"text-gray-300 mb-4\">⚔️ Duel Sistemi Güncellemesi Sunucuda yepyeni 1v1 düello sistemi aktif edildi! 🎮 Nasıl Çalışıyor? /duel &lt;oyuncu&gt; Düello menüsünü açar ve davet gönderir...</p>
-                            <div class=\"flex items-center space-x-6 text-sm text-gray-400 mb-4\">
-                                <div class=\"flex items-center space-x-2\">
-                                    <span>👤</span>
-                                    <span>Cebels</span>
-                                </div>
-                                <div class=\"flex items-center space-x-2\">
-                                    <span>📅</span>
-                                    <span>2 Ara 2025 18:26</span>
-                                </div>
-                            </div>
-                            <button onclick=\"showToast('Blog sayfası yakında!')\" class=\"bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-lg transition-all\">
-                                Devamını Oku →
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div onclick="copyServerAddress()" class="mt-8 inline-flex items-center space-x-2 bg-gray-900/80 px-6 py-3 rounded-lg cursor-pointer hover:bg-gray-800/80">
+      <span>Sunucu Adresi:</span>
+      <span class="text-cyan-400 font-bold">193.164.4.244</span>
+      <span id="copyIcon">📋</span>
     </div>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer class=\"bg-black border-t border-gray-800 py-12\">
-        <div class=\"container mx-auto px-4\">
-            <div class=\"grid grid-cols-1 md:grid-cols-4 gap-8 mb-8\">
-                <!-- About -->
-                <div>
-                    <h4 class=\"text-cyan-400 font-bold text-lg mb-4 flex items-center\">
-                        <div class=\"w-2 h-6 bg-cyan-500 mr-2 rounded\"></div>
-                        Hakkımızda
-                    </h4>
-                    <p class=\"text-gray-400 text-sm\">Bu yazı yönetim paneli üzerinden değiştirebilirsiniz.</p>
-                </div>
-
-                <!-- Quick Menu -->
-                <div>
-                    <h4 class=\"text-cyan-400 font-bold text-lg mb-4 flex items-center\">
-                        <div class=\"w-2 h-6 bg-cyan-500 mr-2 rounded\"></div>
-                        Hızlı Menü
-                    </h4>
-                    <ul class=\"space-y-2\">
-                        <li><a href=\"#\" class=\"text-gray-400 hover:text-cyan-400 transition-colors text-sm\">Anasayfa</a></li>
-                        <li><a href=\"#store\" class=\"text-gray-400 hover:text-cyan-400 transition-colors text-sm\">Mağaza</a></li>
-                        <li><a href=\"#help\" class=\"text-gray-400 hover:text-cyan-400 transition-colors text-sm\">Yardım</a></li>
-                        <li><a href=\"#support\" class=\"text-gray-400 hover:text-cyan-400 transition-colors text-sm\">Destek</a></li>
-                    </ul>
-                </div>
-
-                <!-- Social Media -->
-                <div>
-                    <h4 class=\"text-cyan-400 font-bold text-lg mb-4 flex items-center\">
-                        <div class=\"w-2 h-6 bg-cyan-500 mr-2 rounded\"></div>
-                        Sosyal Medya
-                    </h4>
-                    <ul class=\"space-y-3\">
-                        <li><a href=\"#\" class=\"text-gray-400 hover:text-cyan-400 transition-colors text-sm flex items-center\">📺 YouTube</a></li>
-                        <li><a href=\"https://discord.gg/waREnQHqzj\" class=\"text-gray-400 hover:text-cyan-400 transition-colors text-sm flex items-center\">💬 Discord</a></li>
-                    </ul>
-                </div>
-
-                <!-- Connections -->
-                <div>
-                    <h4 class=\"text-cyan-400 font-bold text-lg mb-4 flex items-center\">
-                        <div class=\"w-2 h-6 bg-cyan-500 mr-2 rounded\"></div>
-                        Bağlantılar
-                    </h4>
-                    <ul class=\"space-y-2\">
-                        <li><a href=\"#\" class=\"text-gray-400 hover:text-cyan-400 transition-colors text-sm\">Hizmet Şartları</a></li>
-                        <li><a href=\"#\" class=\"text-gray-400 hover:text-cyan-400 transition-colors text-sm\">İptal / İade Sözleşmesi</a></li>
-                        <li><a href=\"#\" class=\"text-gray-400 hover:text-cyan-400 transition-colors text-sm\">KVKK</a></li>
-                        <li><a href=\"#\" class=\"text-gray-400 hover:text-cyan-400 transition-colors text-sm\">Gizlilik Sözleşmesi</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Bottom Bar -->
-            <div class=\"border-t border-gray-800 pt-8\">
-                <div class=\"flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0\">
-                    <div class=\"text-gray-400 text-sm\">
-                        <span class=\"text-cyan-400 font-semibold\">Türkçe</span>
-                    </div>
-                    <div class=\"text-gray-400 text-sm text-center\">
-                        © 2025 <span class=\"text-cyan-400 font-semibold\">Arxon NW</span>. Tüm hakları saklıdır.
-                    </div>
-                    <div class=\"text-gray-500 text-xs\">
-                        Powered by ArxonNW
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Toast Notification -->
-    <div id=\"toast\" class=\"toast\">
-        <div class=\"font-semibold mb-1\" id=\"toastTitle\">Bildirim</div>
-        <div class=\"text-sm text-gray-400\" id=\"toastMessage\">Mesaj</div>
+<!-- Store -->
+<section id="store" class="container mx-auto px-4 py-16">
+  <h2 class="text-3xl font-bold mb-6">Mağaza</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-gray-900/80 p-4 rounded-lg hover:shadow-lg transition-all">
+      <img src="https://images.unsplash.com/photo-1579547621113-e4bb2a19bdd6?w=400" class="w-full h-40 object-cover rounded mb-3">
+      <h3 class="text-lg font-bold text-white">ArxonVIP+</h3>
+      <p class="text-cyan-400 font-semibold">110 Kredi</p>
+      <button onclick="showToast('Mağaza sayfası yakında!')" class="mt-3 w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white py-2 rounded-lg">Satın Al</button>
     </div>
+  </div>
+</section>
 
-    <!-- JavaScript -->
-    <script src=\"script.js\"></script>
+<!-- Footer -->
+<footer class="bg-black border-t border-gray-800 py-12">
+<div class="container mx-auto px-4 text-gray-400 text-sm text-center">
+  © 2025 Arxon NW. Tüm hakları saklıdır.
+</div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="toast">Mesaj</div>
+
+<script>
+function toggleMobileMenu(){
+  document.getElementById('mobileMenu').classList.toggle('hidden');
+}
+function showToast(msg){
+  const toast = document.getElementById('toast');
+  toast.innerText = msg;
+  toast.classList.add('show');
+  setTimeout(()=>{ toast.classList.remove('show'); }, 2500);
+}
+function copyServerAddress(){
+  navigator.clipboard.writeText('193.164.4.244');
+  showToast('Sunucu adresi kopyalandı!');
+}
+</script>
 
 </body>
 </html>
-"
