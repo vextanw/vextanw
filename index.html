@@ -1,144 +1,155 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Sunucu Ana Sayfa</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url("https://images.alphacoders.com/132/1325305.jpeg") no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<title>Sunucu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .overlay {
-      background: rgba(0,0,0,0.55);
-      min-height: 100vh;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 32px;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(6px);
-    }
+body {
+  min-height: 100vh;
+  color: white;
+  background:
+    radial-gradient(circle at top left, #6d28d9, transparent 40%),
+    radial-gradient(circle at bottom right, #4c1d95, transparent 40%),
+    linear-gradient(180deg, #0b0216, #05010a);
+}
 
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 16px;
-      font-weight: bold;
-    }
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background: rgba(20, 10, 40, 0.55);
+  backdrop-filter: blur(10px);
+}
 
-    .center {
-      text-align: center;
-      margin-top: 140px;
-    }
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: bold;
+}
 
-    .ip {
-      font-size: 22px;
-      cursor: pointer;
-      background: rgba(0,0,0,0.6);
-      display: inline-block;
-      padding: 12px 20px;
-      border-radius: 10px;
-    }
+.container {
+  text-align: center;
+  margin-top: 140px;
+}
 
-    .status {
-      margin-top: 10px;
-      font-size: 18px;
-    }
+h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
 
-    .discord {
-      margin-top: 30px;
-    }
+.ip {
+  font-size: 22px;
+  padding: 14px 26px;
+  border: 1px solid rgba(255,255,255,0.25);
+  display: inline-block;
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(0,0,0,0.25);
+}
 
-    .discord a {
-      background: #5865F2;
-      padding: 12px 20px;
-      border-radius: 10px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-    }
+.status {
+  margin-top: 14px;
+  font-size: 18px;
+  opacity: 0.9;
+}
 
-    .toast {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #000;
-      padding: 14px 24px;
-      border-radius: 10px;
-      display: none;
-    }
-  </style>
+.discord {
+  margin-top: 40px;
+}
+
+.discord a {
+  text-decoration: none;
+  color: white;
+  border: 1px solid #5865F2;
+  padding: 12px 22px;
+  border-radius: 10px;
+}
+
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.85);
+  padding: 14px 26px;
+  border-radius: 10px;
+  display: none;
+}
+</style>
 </head>
+
 <body>
-  <div class="overlay">
-    <nav>
-      <div>Sunucu</div>
-      <div>
-        <a href="#">Ana Sayfa</a>
-        <a href="#">Duyurular</a>
-        <a href="#">Mağaza</a>
-      </div>
-    </nav>
 
-    <div class="center">
-      <h1>Hoş Geldin</h1>
+<nav>
+  <div>Sunucu</div>
+  <div>
+    <a href="#">Ana Sayfa</a>
+    <a href="#">Duyurular</a>
+    <a href="#">Mağaza</a>
+  </div>
+</nav>
 
-      <div class="ip" onclick="copyIP()">
-        IP: 193.164.4.244
-      </div>
+<div class="container">
+  <h1>Sunucumuza Hoş Geldin</h1>
 
-      <div class="status" id="status">
-        ⏳ Sunucu kontrol ediliyor...
-      </div>
-
-      <div class="discord">
-        <p>Discord daveti:</p>
-        <a href="https://discord.gg/HEEPr9k9uD" target="_blank">
-          Discord'a Katıl
-        </a>
-      </div>
-    </div>
-
-    <div class="toast" id="toast">IP kopyalandı</div>
+  <div class="ip" onclick="copyIP()">
+    IP: 193.164.4.244
   </div>
 
-  <script>
-    const ip = "193.164.4.244";
+  <div class="status" id="status">
+    Kontrol ediliyor...
+  </div>
 
-    function copyIP() {
-      navigator.clipboard.writeText(ip);
-      const toast = document.getElementById("toast");
-      toast.style.display = "block";
-      setTimeout(() => toast.style.display = "none", 1500);
+  <div class="discord">
+    <p>Discord daveti:</p><br>
+    <a href="https://discord.gg/HEEPr9k9uD" target="_blank">
+      Discord’a Katıl
+    </a>
+  </div>
+</div>
+
+<div class="toast" id="toast">IP kopyalandı</div>
+
+<script>
+const ip = "193.164.4.244";
+
+function copyIP() {
+  navigator.clipboard.writeText(ip);
+  const t = document.getElementById("toast");
+  t.style.display = "block";
+  setTimeout(() => t.style.display = "none", 1500);
+}
+
+async function checkServer() {
+  try {
+    const res = await fetch(`https://api.mcstatus.io/v2/status/java/${ip}`);
+    const data = await res.json();
+    const s = document.getElementById("status");
+
+    if (data.online) {
+      s.innerHTML = "ᯤ Açık | Oyuncular: " + data.players.online;
+    } else {
+      s.innerHTML = "ᯤ̶ Kapalı";
     }
+  } catch {
+    document.getElementById("status").innerHTML = "ᯤ̶ Bilgi alınamadı";
+  }
+}
 
-    async function checkServer() {
-      try {
-        const res = await fetch(`https://api.mcstatus.io/v2/status/java/${ip}`);
-        const data = await res.json();
-        const status = document.getElementById("status");
+checkServer();
+setInterval(checkServer, 10000);
+</script>
 
-        if (data.online) {
-          status.innerHTML = "ᯤ Açık | Oyuncular: " + data.players.online;
-        } else {
-          status.innerHTML = "ᯤ̶ Kapalı";
-        }
-      } catch {
-        document.getElementById("status").innerHTML = "ᯤ̶ Bilgi alınamadı";
-      }
-    }
-
-    checkServer();
-    setInterval(checkServer, 10000);
-  </script>
 </body>
 </html>
