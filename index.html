@@ -254,7 +254,11 @@ footer {
   <span id="server-status">Yükleniyor...</span>
 </div>
 
-  <div class="card">Toplam Kayıt<span>47.892</span></div>
+  <div class="card">
+  Toplam Kayıt
+  <span id="total-register">Yükleniyor...</span>
+</div>
+
   <div class="card">En Yüksek Bağış<span>14.750 TL</span></div>
   <div class="card">Uptime<span>99.98%</span></div>
 </section>
@@ -326,6 +330,26 @@ async function fetchServerStatus() {
 
 fetchServerStatus();
 setInterval(fetchServerStatus, 10000);
+</script>
+<script>
+const REGISTER_KEY = "arxon-network-register";
+
+async function updateRegisterCount() {
+  if (!localStorage.getItem(REGISTER_KEY)) {
+    await fetch("https://api.countapi.xyz/hit/arxonnetwork.com/register");
+    localStorage.setItem(REGISTER_KEY, "true");
+  }
+
+  const res = await fetch("https://api.countapi.xyz/get/arxonnetwork.com/register");
+  const data = await res.json();
+
+  const el = document.getElementById("total-register");
+  el.textContent = data.value.toLocaleString("tr-TR");
+  el.style.color = "#a855f7";
+  el.style.textShadow = "0 0 12px #c084fc";
+}
+
+updateRegisterCount();
 </script>
 
 
