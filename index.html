@@ -21,6 +21,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:Montserrat,sans-serif;
+
   background:linear-gradient(180deg,var(--bg),var(--bg2));
   color:var(--text);
 }
@@ -180,8 +181,28 @@ footer{
 
 @media(max-width:900px){
   .menu{display:none}
+    #cursor-glow{
+  position:fixed;
+  top:0;
+  left:0;
+  width:300px;
+  height:300px;
+  pointer-events:none;
+  background:radial-gradient(
+    circle,
+    rgba(168,85,247,0.25) 0%,
+    rgba(96,165,250,0.15) 40%,
+    rgba(0,0,0,0) 70%
+  );
+  transform:translate(-50%,-50%);
+  filter:blur(20px);
+  z-index:1;
+  transition:background .3s ease;
+
 }
 </style>
+
+
 </head>
 
 <body>
@@ -199,6 +220,7 @@ footer{
   <div class="auth">
     <a href="#login" class="btn login">Giriş Yap</a>
     <a href="#register" class="btn register">Kayıt Ol</a>
+    <div id="cursor-glow"></div>
   </div>
 </nav>
 
