@@ -2,102 +2,160 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Arxon MC</title>
+<title>ValeronMC Server</title>
 
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0b0b;
-  color: #fff;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#050505;
+  color:#fff;
 }
 
 /* NAVBAR */
-.navbar {
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px;
-  background: #000;
+.navbar{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+  background:#000;
+  border-bottom:1px solid #111;
+}
+.nav-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.logo{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  background:linear-gradient(135deg,#1ecbff,#1b6cff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+.nav-center a{
+  margin:0 15px;
+  color:#ccc;
+  text-decoration:none;
+}
+.nav-center a:hover{color:#1ecbff}
+.nav-right a{
+  margin-left:10px;
+  text-decoration:none;
+  padding:7px 14px;
+  border-radius:6px;
+  font-size:14px;
+}
+.login{background:#111;color:#fff}
+.register{background:#1ecbff;color:#000}
+
+/* HERO */
+.hero{
+  min-height:calc(100vh - 70px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  background:
+    radial-gradient(circle at center,#222 0%,#050505 60%);
 }
 
-/* SOL */
-.nav-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+/* STATUS BOX */
+.status-box{
+  position:absolute;
+  top:40px;
+  left:40px;
+  background:#0b2a33;
+  border:1px solid #0ff;
+  padding:15px 20px;
+  border-radius:10px;
+  font-size:14px;
+}
+.status-box b{color:#00eaff}
+
+/* DISCORD */
+.discord{
+  position:absolute;
+  top:40px;
+  right:40px;
+  background:#2f5be6;
+  padding:14px 18px;
+  border-radius:10px;
+  text-decoration:none;
+  color:#fff;
 }
 
-.logo {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg,#00c6ff,#0072ff);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
+/* CENTER */
+.center{
+  text-align:center;
 }
-
-.site-name {
-  font-size: 18px;
-  font-weight: 600;
+.big-logo{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#1ecbff,#1b6cff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:36px;
+  margin:0 auto 15px;
 }
-
-/* ORTA */
-.nav-center a {
-  margin: 0 14px;
-  color: #ddd;
-  text-decoration: none;
-  font-size: 15px;
+.center h1{
+  font-size:40px;
+  margin:10px 0;
 }
+.center p{color:#aaa}
 
-.nav-center a:hover {
-  color: #00c6ff;
+/* BUTTONS */
+.main-buttons{
+  margin-top:25px;
 }
-
-/* SAĞ */
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.main-buttons button{
+  padding:12px 25px;
+  margin:0 8px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:15px;
 }
+.btn-login{background:#1ecbff;color:#000}
+.btn-register{background:transparent;color:#1ecbff;border:1px solid #1ecbff}
 
-.nav-right a {
-  color: #ddd;
-  text-decoration: none;
-  font-size: 14px;
+/* IP COPY */
+.ip-box{
+  margin-top:25px;
+  background:#0c0c0c;
+  border:1px solid #222;
+  padding:12px 20px;
+  border-radius:8px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
 }
-
-.btn-login {
-  padding: 7px 14px;
-  border-radius: 6px;
-  background: #111;
-}
-
-.btn-register {
-  padding: 7px 16px;
-  border-radius: 6px;
-  background: #1da1ff;
-  color: #fff;
+.ip-box span{color:#1ecbff}
+.ip-box button{
+  background:none;
+  border:none;
+  color:#fff;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
+<!-- NAVBAR -->
 <div class="navbar">
-
-  <!-- SOL -->
   <div class="nav-left">
-    <div class="logo">A</div>
-    <div class="site-name">Arxon MC</div>
+    <div class="logo">V</div>
+    <b>ValeronMC</b>
   </div>
 
-  <!-- ORTA -->
   <div class="nav-center">
     <a href="#">🏠 Anasayfa</a>
     <a href="#">🛒 Mağaza</a>
@@ -105,13 +163,70 @@ body {
     <a href="#">🔒 Destek</a>
   </div>
 
-  <!-- SAĞ -->
   <div class="nav-right">
-    <a class="btn-login" href="#">↪ Giriş Yap</a>
-    <a class="btn-register" href="#">👤 Kayıt Ol</a>
+    <a class="login" href="#">Giriş Yap</a>
+    <a class="register" href="#">Kayıt Ol</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+
+  <!-- STATUS -->
+  <div class="status-box">
+    <div><b id="online">●</b> <span id="status">Kontrol ediliyor</span></div>
+    <div id="players">Oyuncu: -</div>
+    <div style="font-size:12px;color:#aaa">193.164.4.244</div>
+  </div>
+
+  <!-- DISCORD -->
+  <a class="discord" href="#">BİZE KATIL<br><small>DISCORD</small></a>
+
+  <!-- CENTER -->
+  <div class="center">
+    <div class="big-logo">V</div>
+    <h1>ValeronMC Server</h1>
+    <p>Topluluğumuza katılmak için giriş yap veya kayıt ol</p>
+
+    <div class="main-buttons">
+      <button class="btn-login">Giriş Yap</button>
+      <button class="btn-register">Kayıt Ol</button>
+    </div>
+
+    <div class="ip-box">
+      <span id="ip">193.164.4.244</span>
+      <button onclick="copyIP()">📋</button>
+    </div>
   </div>
 
 </div>
+
+<script>
+const IP="193.164.4.244";
+const PORT="25565";
+
+async function checkServer(){
+  try{
+    const r=await fetch(`https://api.mcstatus.io/v2/status/java/${IP}:${PORT}`,{cache:"no-store"});
+    const d=await r.json();
+    if(d.online){
+      online.style.color="#00ff9c";
+      status.innerText="Sunucu Açık";
+      players.innerText=`Oyuncu: ${d.players.online} / ${d.players.max}`;
+    }else throw "";
+  }catch{
+    online.style.color="red";
+    status.innerText="Sunucu Kapalı";
+    players.innerText="Oyuncu: 0";
+  }
+}
+checkServer();
+setInterval(checkServer,15000);
+
+function copyIP(){
+  navigator.clipboard.writeText(IP);
+}
+</script>
 
 </body>
 </html>
