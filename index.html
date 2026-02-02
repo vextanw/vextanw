@@ -2,155 +2,166 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Güvenlik Kontrolü</title>
+<title>Arxon Network</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
+/* ===== GENEL ===== */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #020617;
+  color: #e5e7eb;
 }
 
-body {
-  background: radial-gradient(circle at top, #0f2027, #000);
-  color: #fff;
-  height: 100vh;
+/* ===== ANA İÇERİK ===== */
+#main-content {
+  opacity: 0;
+  transition: opacity .8s ease;
+  padding: 60px;
+  text-align: center;
+}
+#main-content.show {
+  opacity: 1;
+}
+
+/* ===== KONTROL OVERLAY ===== */
+#security-check {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, #1e1b4b, #020617 75%);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  z-index: 99999;
 }
 
-.container {
+.check-box {
+  width: 90%;
+  max-width: 420px;
+  background: rgba(15,23,42,.9);
+  border: 1px solid rgba(99,102,241,.25);
+  border-radius: 20px;
+  padding: 40px 30px;
   text-align: center;
-  width: 420px;
-  padding: 40px;
-  border-radius: 16px;
-  background: rgba(0,0,0,0.7);
-  box-shadow: 0 0 40px rgba(0,255,255,0.15);
-  animation: fadeIn 1s ease;
+  box-shadow: 0 0 80px rgba(99,102,241,.2);
+  animation: pop .6s ease;
 }
 
-h1 {
-  font-size: 26px;
+@keyframes pop {
+  from {transform: scale(.85); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
+}
+
+.spinner {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  border: 4px solid rgba(255,255,255,.15);
+  border-top-color: #6366f1;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.check-title {
+  font-size: 20px;
+  font-weight: 700;
   margin-bottom: 10px;
-  letter-spacing: 1px;
 }
 
-.sub {
-  color: #aaa;
+.check-text {
   font-size: 14px;
-  margin-bottom: 30px;
-}
-
-.eye {
-  width: 90px;
-  height: 90px;
-  margin: 0 auto 25px;
-  border: 4px solid cyan;
-  border-radius: 50%;
-  position: relative;
-  animation: pulse 2s infinite;
-}
-
-.eye::after {
-  content: "";
-  width: 18px;
-  height: 18px;
-  background: cyan;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: scan 1.5s infinite alternate;
+  color: #c7d2fe;
+  min-height: 22px;
 }
 
 .progress {
-  width: 100%;
-  height: 14px;
-  background: #111;
-  border-radius: 10px;
-  overflow: hidden;
   margin-top: 20px;
+  height: 8px;
+  background: rgba(255,255,255,.1);
+  border-radius: 999px;
+  overflow: hidden;
 }
 
-.bar {
+.progress-bar {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, cyan, #00ffaa);
-  animation: load 6s forwards;
+  background: linear-gradient(90deg, #6366f1, #22d3ee);
+  transition: width .4s ease;
 }
 
-.status {
-  margin-top: 20px;
-  font-size: 15px;
-  color: #7fffd4;
-  min-height: 20px;
+.fade-out {
+  animation: fadeOut .7s ease forwards;
 }
 
-@keyframes load {
-  to { width: 100%; }
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 10px cyan; }
-  50% { box-shadow: 0 0 25px cyan; }
-  100% { box-shadow: 0 0 10px cyan; }
-}
-
-@keyframes scan {
-  from { transform: translate(-50%, -50%) translateX(-12px); }
-  to { transform: translate(-50%, -50%) translateX(12px); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 </style>
 </head>
+
 <body>
 
-<div class="container">
-  <div class="eye"></div>
-  <h1>Kontrol Ediliyorsun</h1>
-  <div class="sub">Güvenlik doğrulaması yapılıyor</div>
-
-  <div class="progress">
-    <div class="bar"></div>
+<!-- ===== KONTROL EKRANI ===== -->
+<div id="security-check">
+  <div class="check-box">
+    <div class="spinner"></div>
+    <div class="check-title">Güvenlik Kontrolü</div>
+    <div class="check-text" id="checkText">Bağlantı başlatılıyor...</div>
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
   </div>
+</div>
 
-  <div class="status" id="status">IP analiz ediliyor...</div>
+<!-- ===== ANA SAYFA ===== -->
+<div id="main-content">
+  <h1>Arxon Network</h1>
+  <p>BoxPvP • Survival • Event</p>
+  <p>Buraya senin ASIL site içeriğin gelir.</p>
 </div>
 
 <script>
-const messages = [
-  "IP analiz ediliyor...",
-  "Paket davranışları inceleniyor...",
-  "Bot imzaları kontrol ediliyor...",
+const steps = [
+  "IP adresi analiz ediliyor...",
+  "Şüpheli paketler taranıyor...",
+  "Bot davranışı kontrol ediliyor...",
   "DDoS paterni aranıyor...",
-  "Tarayıcı doğrulanıyor...",
-  "İnsan olduğun varsayılıyor..."
+  "Bağlantı doğrulandı."
 ];
 
-let i = 0;
-const status = document.getElementById("status");
+let step = 0;
+const text = document.getElementById("checkText");
+const bar = document.getElementById("progressBar");
+const overlay = document.getElementById("security-check");
+const main = document.getElementById("main-content");
 
-const interval = setInterval(() => {
-  status.textContent = messages[i];
-  i++;
-  if (i >= messages.length) {
-    clearInterval(interval);
-    setTimeout(() => {
-      status.textContent = "✔ Erişim izni verildi";
-      status.style.color = "#00ff88";
-      setTimeout(() => {
-        window.location.href = "home.html"; // ana sayfan
-      }, 1500);
-    }, 800);
+function runCheck() {
+  if (step < steps.length) {
+    text.textContent = steps[step];
+    bar.style.width = ((step + 1) / steps.length * 100) + "%";
+    step++;
+    setTimeout(runCheck, 700 + Math.random() * 600);
+  } else {
+    overlay.classList.add("fade-out");
+    main.classList.add("show");
+    setTimeout(() => overlay.remove(), 800);
   }
-}, 1000);
+}
+
+window.addEventListener("load", () => {
+  setTimeout(runCheck, 600);
+});
 </script>
 
 </body>
