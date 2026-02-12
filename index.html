@@ -1,253 +1,173 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>VOIDMC | BoxPvP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamer Hub | Pro Dashboard</title>
+    <style>
+        /* CSS Başlangıcı */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #050507; /* Derin siyah/lacivert arka plan */
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden; /* Kaydırma çubuğunu gizler */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-<style>
-/* ================== RESET ================== */
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-    font-family: Inter, system-ui, sans-serif;
-    background:#050505;
-    color:#e5e5e5;
-    overflow-x:hidden;
-}
+        /* Arka plandaki hareketli ışık */
+        .cursor-glow {
+            position: fixed;
+            width: 800px;
+            height: 800px;
+            /* Merkeze parlak cyan, dışa doğru şeffaf */
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.08) 0%, rgba(0, 255, 255, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            transition: transform 0.1s ease-out;
+        }
 
-/* ================== BACKGROUND ANIMATION ================== */
-.bg-grid{
-    position:fixed;
-    inset:0;
-    background:
-      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-    background-size:60px 60px;
-    animation: moveBg 40s linear infinite;
-    z-index:-1;
-}
-@keyframes moveBg{
-    from{background-position:0 0}
-    to{background-position:600px 600px}
-}
+        /* Navigasyon Barı */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+        }
 
-/* ================== HEADER ================== */
-header{
-    position:fixed;
-    top:0;
-    width:100%;
-    backdrop-filter: blur(10px);
-    background:rgba(5,5,5,.7);
-    border-bottom:1px solid rgba(255,255,255,.06);
-    z-index:10;
-}
-nav{
-    max-width:1300px;
-    margin:auto;
-    padding:18px 30px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-.logo{
-    font-weight:900;
-    letter-spacing:3px;
-    color:#ff7a18;
-}
-.menu a{
-    margin-left:30px;
-    color:#aaa;
-    text-decoration:none;
-    font-weight:600;
-    transition:.3s;
-}
-.menu a:hover{color:#ff7a18}
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
 
-/* ================== HERO ================== */
-.hero{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:0 20px;
-}
-.hero h1{
-    font-size:64px;
-    letter-spacing:6px;
-    animation: glow 2s infinite alternate;
-}
-@keyframes glow{
-    from{text-shadow:0 0 10px #ff7a18}
-    to{text-shadow:0 0 35px #ff9a3c}
-}
-.hero p{
-    margin-top:20px;
-    max-width:600px;
-    color:#aaa;
-}
-.hero button{
-    margin-top:40px;
-    padding:16px 40px;
-    border:none;
-    border-radius:14px;
-    background:linear-gradient(135deg,#ff7a18,#ff9a3c);
-    color:#000;
-    font-weight:800;
-    cursor:pointer;
-    transition:.3s;
-}
-.hero button:hover{transform:scale(1.05)}
+        .logo span {
+            color: #00ffff;
+            text-shadow: 0 0 15px #00ffff;
+        }
 
-/* ================== SECTIONS ================== */
-section{
-    max-width:1200px;
-    margin:120px auto;
-    padding:0 20px;
-}
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:25px;
-}
-.card{
-    background:#0b0b0b;
-    border-radius:20px;
-    padding:30px;
-    border:1px solid rgba(255,255,255,.06);
-    transition:.3s;
-}
-.card:hover{
-    transform:translateY(-8px);
-    border-color:#ff7a18;
-}
+        ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
 
-/* ================== LOGIN ================== */
-#loginBox{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.8);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:20;
-}
-.login{
-    background:#0c0c0c;
-    padding:40px;
-    border-radius:20px;
-    width:320px;
-}
-.login input{
-    width:100%;
-    padding:12px;
-    margin-bottom:15px;
-    border-radius:12px;
-    border:none;
-    background:#111;
-    color:#fff;
-}
-.login button{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:12px;
-    background:#ff7a18;
-    font-weight:700;
-    cursor:pointer;
-}
+        ul li {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s;
+            color: #aaa;
+        }
 
-/* ================== COOKIE ================== */
-#cookie{
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#0c0c0c;
-    padding:20px 25px;
-    border-radius:18px;
-    display:none;
-    gap:15px;
-    align-items:center;
-    border:1px solid rgba(255,255,255,.06);
-}
-#cookie button{
-    padding:8px 18px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-}
-.accept{background:#ff7a18;font-weight:700}
-.reject{background:#222;color:#aaa}
-</style>
+        ul li:hover {
+            color: #00ffff;
+        }
+
+        /* Ana İçerik Alanı */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin: 0;
+            line-height: 1;
+            background: linear-gradient(to bottom, #fff, #444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: #888;
+            max-width: 500px;
+            margin: 20px 0 40px 0;
+            font-size: 18px;
+        }
+
+        .btn {
+            padding: 18px 50px;
+            background: transparent;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s;
+        }
+
+        .btn:hover {
+            background: #00ffff;
+            color: #000;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+        }
+
+        /* Dekoratif Çizgiler */
+        .grid-lines {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+        }
+    </style>
 </head>
-
 <body>
-<div class="bg-grid"></div>
 
-<header>
-<nav>
-<div class="logo">VOIDMC</div>
-<div class="menu">
-<a href="#features">Özellikler</a>
-<a href="#login" onclick="openLogin()">Giriş</a>
-</div>
-</nav>
-</header>
+    <div class="cursor-glow" id="glow"></div>
+    <div class="grid-lines"></div>
 
-<div class="hero">
-<h1>VOID BOX</h1>
-<p>Bu bir sunucu sitesi değil. Bu bir arena.  
-Lag yok, saçmalık yok, sadece PvP.</p>
-<button onclick="openLogin()">GİRİŞ YAP</button>
-</div>
+    <nav>
+        <div class="logo">CS<span>PRO</span></div>
+        <ul>
+            <li>İSTATİSTİKLER</li>
+            <li>REHBERLER</li>
+            <li>PAZAR</li>
+            <li>DESTEK</li>
+        </ul>
+    </nav>
 
-<section id="features">
-<div class="cards">
-<div class="card">⚔ Özel BoxPvP Mekanikleri</div>
-<div class="card">🛡 Client-side Anti Cheat</div>
-<div class="card">🔥 Ultra Performans</div>
-<div class="card">👑 Clan Dominance Sistemi</div>
-</div>
-</section>
+    <main>
+        <section class="hero">
+            <h1>GELECEĞİN <br>OYUN SİSTEMİ</h1>
+            <p>En yeni stratejiler ve topluluk odaklı analizlerle oyun yeteneklerini bir üst seviyeye taşı.</p>
+            <button class="btn">ŞİMDİ KATIL</button>
+        </section>
+    </main>
 
-<!-- LOGIN -->
-<div id="loginBox">
-<div class="login">
-<h3 style="margin-bottom:20px">Giriş</h3>
-<input placeholder="Kullanıcı adı">
-<input type="password" placeholder="Şifre">
-<button onclick="fakeLogin()">Giriş Yap</button>
-</div>
-</div>
+    <script>
+        // JavaScript ile fare takibi
+        const glow = document.getElementById('glow');
 
-<!-- COOKIE -->
-<div id="cookie">
-<span>Bu site çerez kullanır. Ne işe yaradığını biz de tam bilmiyoruz.</span>
-<button class="accept" onclick="cookieAccept()">Kabul</button>
-<button class="reject" onclick="cookieReject()">Reddet</button>
-</div>
-
-<script>
-function openLogin(){
-    document.getElementById("loginBox").style.display="flex";
-}
-function fakeLogin(){
-    localStorage.setItem("login","1");
-    document.getElementById("loginBox").style.display="none";
-}
-function cookieAccept(){
-    localStorage.setItem("cookie","ok");
-    document.getElementById("cookie").style.display="none";
-}
-function cookieReject(){
-    document.getElementById("cookie").style.display="none";
-}
-if(!localStorage.getItem("cookie")){
-    document.getElementById("cookie").style.display="flex";
-}
-</script>
-
+        document.addEventListener('mousemove', (e) => {
+            // Işığın akıcı hareket etmesi için koordinatları güncelliyoruz
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            glow.style.left = x + 'px';
+            glow.style.top = y + 'px';
+        });
+    </script>
 </body>
 </html>
