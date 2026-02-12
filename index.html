@@ -3,115 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS PRO | Elite Access</title>
+    <title>CS PRO | Global Gaming Services</title>
     <style>
-        /* Önceki stiller korunuyor, yeniler ekleniyor */
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: #000; color: white;
+            font-family: 'Segoe UI', sans-serif; overflow: hidden;
         }
 
+        /* Arka Plan Videosu */
         .video-wrapper {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; overflow: hidden;
         }
-
         video {
             min-width: 100%; min-height: 100%;
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            object-fit: cover;
-            filter: brightness(0.3);
+            object-fit: cover; filter: brightness(0.3);
         }
 
+        /* Mouse Işık Efekti */
         .cursor-glow {
-            position: fixed;
-            width: 600px; height: 600px;
+            position: fixed; width: 600px; height: 600px;
             background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 0;
+            border-radius: 50%; pointer-events: none;
+            transform: translate(-50%, -50%); z-index: 0;
         }
 
+        /* Navigasyon */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 8%; position: relative; z-index: 10;
         }
-
-        .logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
+        .logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; cursor: default; }
         .logo span { color: #00ffff; text-shadow: 0 0 10px #00ffff; }
+        
+        .nav-links { list-style: none; display: flex; gap: 30px; }
+        .nav-links li { cursor: pointer; color: #aaa; transition: 0.3s; font-weight: 500; }
+        .nav-links li:hover { color: #00ffff; }
 
+        /* Ana İçerik */
         main {
-            height: 80vh; display: flex; flex-direction: column;
+            height: 75vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             text-align: center; position: relative; z-index: 5;
         }
-
-        h1 { font-size: 4rem; letter-spacing: 5px; margin-bottom: 10px; }
+        h1 { font-size: 4rem; letter-spacing: 8px; margin-bottom: 5px; }
+        p { color: #888; margin-bottom: 30px; letter-spacing: 1px; }
 
         .btn {
             padding: 15px 35px; border: 1px solid #00ffff;
             background: rgba(0, 255, 255, 0.05); color: #00ffff;
             font-weight: bold; cursor: pointer; transition: 0.3s;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px); text-transform: uppercase;
         }
-
         .btn:hover { background: #00ffff; color: #000; box-shadow: 0 0 30px #00ffff; }
 
-        /* MODAL (Hile Listesi Paneli) */
+        /* MODAL (Paneller) */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: none; /* Başlangıçta gizli */
+            background: rgba(0, 0, 0, 0.9); display: none;
             justify-content: center; align-items: center;
-            z-index: 100;
-            backdrop-filter: blur(10px);
+            z-index: 100; backdrop-filter: blur(15px);
         }
-
         .modal-content {
-            background: #111;
-            border: 1px solid #00ffff;
-            padding: 40px;
-            width: 400px;
-            text-align: left;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.2);
-            animation: slideUp 0.4s ease-out;
+            background: #0a0a0a; border: 1px solid #00ffff;
+            padding: 40px; width: 450px; position: relative;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.1);
+            animation: fadeIn 0.3s ease-out;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-content h2 {
-            color: #00ffff; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px;
-        }
-
-        .cheat-item {
+        .modal-content h2 { color: #00ffff; margin-top: 0; border-bottom: 1px solid #222; padding-bottom: 15px; }
+        
+        /* Hile Listesi Itemları */
+        .item-row {
             display: flex; justify-content: space-between;
-            padding: 15px 0; border-bottom: 1px solid #222;
-            font-size: 18px; transition: 0.2s;
+            padding: 15px 0; border-bottom: 1px solid #1a1a1a;
         }
+        .price { color: #00ffff; font-weight: bold; }
 
-        .cheat-item:hover { color: #00ffff; padding-left: 10px; }
+        /* Hakkımızda Yazısı */
+        .about-text { line-height: 1.6; color: #ccc; font-size: 1.1rem; }
 
-        .price { font-weight: bold; color: #fff; }
-
-        .close-btn {
-            position: absolute; top: 10px; right: 15px;
-            font-size: 25px; cursor: pointer; color: #555;
+        .close-x {
+            position: absolute; top: 15px; right: 20px;
+            font-size: 24px; cursor: pointer; color: #444;
         }
-        .close-btn:hover { color: #fff; }
-
+        .close-x:hover { color: #fff; }
     </style>
 </head>
 <body>
@@ -126,66 +106,62 @@
 
     <nav>
         <div class="logo">CS<span>PRO</span></div>
+        <ul class="nav-links">
+            <li onclick="openModal('aboutModal')">BİZİM HAKKIMIZDA</li>
+            <li>TOPLULUK</li>
+            <li>DESTEK</li>
+        </ul>
     </nav>
 
     <main>
         <h1>ELITE ACCESS</h1>
-        <p>En gelişmiş yazılımlar ile performansını zirveye taşı.</p>
-        <button class="btn" onclick="openModal()">DETAYLARI GÖR</button>
+        <p>Geleceğin teknolojisiyle rakiplerinin bir adım önünde ol.</p>
+        <button class="btn" onclick="openModal('listModal')">DETAYLARI GÖR</button>
     </main>
 
-    <div class="modal-overlay" id="modal">
+    <div class="modal-overlay" id="listModal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-x" onclick="closeModal('listModal')">&times;</span>
             <h2>AKTİF PAKETLER</h2>
-            
-            <div class="cheat-item">
-                <span>ExHack</span>
-                <span class="price">140 TL</span>
-            </div>
-            
-            <div class="cheat-item">
-                <span>SharkHack</span>
-                <span class="price">200 TL</span>
-            </div>
-            
-            <div class="cheat-item">
-                <span>Enigma Legit</span>
-                <span class="price">235 TL</span>
-            </div>
-            
-            <div class="cheat-item">
-                <span>Enigma HVH</span>
-                <span class="price">210 TL</span>
-            </div>
+            <div class="item-row"><span>ExHack</span> <span class="price">140 TL</span></div>
+            <div class="item-row"><span>SharkHack</span> <span class="price">200 TL</span></div>
+            <div class="item-row"><span>Enigma Legit</span> <span class="price">235 TL</span></div>
+            <div class="item-row"><span>Enigma HVH</span> <span class="price">210 TL</span></div>
+            <button class="btn" style="width: 100%; margin-top: 20px;" onclick="closeModal('listModal')">KAPAT</button>
+        </div>
+    </div>
 
-            <button class="btn" style="width: 100%; margin-top: 20px;" onclick="closeModal()">KAPAT</button>
+    <div class="modal-overlay" id="aboutModal">
+        <div class="modal-content">
+            <span class="close-x" onclick="closeModal('aboutModal')">&times;</span>
+            <h2>BİZ KİMİZ?</h2>
+            <p class="about-text">
+                Biz Counter Strike 2 için ve diğer oyunlar için hile geliştiren bir ekibiz. 
+                Yazılımlarımızda hız, gizlilik ve kullanıcı deneyimini ön planda tutuyoruz.
+            </p>
+            <button class="btn" style="width: 100%; margin-top: 10px;" onclick="closeModal('aboutModal')">ANLADIM</button>
         </div>
     </div>
 
     <script>
-        // Mouse Işık Takibi
         const glow = document.getElementById('glow');
         window.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
         });
 
-        // Modal Fonksiyonları
-        const modal = document.getElementById('modal');
-        
-        function openModal() {
-            modal.style.display = 'flex';
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
         }
 
-        function closeModal() {
-            modal.style.display = 'none';
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
         }
 
-        // Dışarı tıklayınca kapatma
+        // Dışarı tıklayınca kapatma özelliği
         window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
+            if (event.target.className === 'modal-overlay') {
+                event.target.style.display = 'none';
             }
         }
     </script>
