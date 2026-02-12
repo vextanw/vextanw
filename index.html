@@ -1,545 +1,257 @@
 
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-	<meta name="generator" content="Hugo 0.145.0">  
-    
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Feather Client</title>
- 
-    <meta property="og:site_name" content="Feather Client">
-    <meta property="og:title" content="Feather Client">
-    <meta name="twitter:card" content="summary">
-    <meta property="og:locale" content="en">
-    <meta property="og:type" content="website">
-    <meta property="og:description" content="Best Minecraft launcher and client">
-    <meta name="description" content="Best Minecraft launcher and client">
-    <meta property="og:url" content="https://feathermc.com/">
-    <meta property="og:image" content="/favicon/favicon-og.png">
+<html lang="tr">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
-    <link rel="manifest" href="./favicon/site.webmanifest">
-    <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#000000">
-    <link rel="shortcut icon" href="./favicon/favicon.ico">
-    <meta name="msapplication-TileColor" content="#000000">
-    <meta name="msapplication-config" content="/favicon/browserconfig.xml"> 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Firebox BoxPvP - Karamsar Dark Tema">
+    <meta name="author" content="Firebox">
+    <link rel="Shortcut Icon" href="img/favicon.ico" type="image/x-icon">
 
-       
-    
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css2?family=Nunito+Sans:wght@400;700&family=Oswald:wght@500&display=swap" rel="stylesheet">
+    <title>Firebox | Dark BoxPvP</title>
 
-    <link href="./sass/_gen.min.css" rel="stylesheet"> 
-      
-    <meta name="canonical" content="https://feathermc.com/">
-    
-    <meta name="theme-color" content="#000000"> 
-  </head>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/animate.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet">
 
-<body class="index" xmlns="http://www.w3.org/1999/html">
+    <style>
+        /* KARAMSAR DARK TEMA ÖZEL CSS */
+        body {
+            background-color: #080808 !important;
+            color: #b0b0b0 !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        /* Arka Plan ve Karartma */
+        .intro {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('img/bg.jpg') no-repeat center center !important;
+            background-size: cover !important;
+            height: 100vh;
+        }
 
+        /* Navigasyon */
+        .navbar-custom {
+            background-color: rgba(10, 10, 10, 0.95) !important;
+            border-bottom: 2px solid #D46C49 !important;
+            padding: 10px 0 !important;
+        }
 
+        .navbar-custom .nav li a {
+            color: #fff !important;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
 
+        .navbar-custom .nav li a:hover {
+            color: #BD9861 !important;
+        }
 
-<nav class="nav">
-  <div class="padd-m"></div>
-  <div class="container padd-l row-mobile"> 
-    <div class="flex-strong center">
-      <a href="./" class="nav__logo" aria-label="Logo / Go home">
-        <svg width="226" height="64" viewBox="0 0 226 64" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<rect width="43.1429" height="64" fill="url(#pattern0)"/>
-<path d="M83.424 26V17.584H93.344V12.784H83.424V9.456H93.568V4.656H77.92V26H83.424ZM113.793 26V21.2H103.649V17.584H113.569V12.784H103.649V9.456H113.793V4.656H98.145V26H113.793ZM139.325 26L131.261 4.656H124.349L116.317 26H122.557L123.613 22.928H132.029L133.085 26H139.325ZM130.525 18.128H125.085L127.805 10.096L130.525 18.128ZM150.804 26V9.456H156.757V4.656H139.316V9.456H145.3V26H150.804ZM180.848 26V4.656H175.344V12.624H166.48V4.656H160.976V26H166.48V17.424H175.344V26H180.848ZM201.943 26V21.2H191.799V17.584H201.719V12.784H191.799V9.456H201.943V4.656H186.295V26H201.943ZM224.947 26L220.595 18.16C222.579 17.456 224.851 15.472 224.851 11.76C224.851 7.792 222.163 4.656 217.427 4.656H206.739V26H212.243V18.832H215.059L218.643 26H224.947ZM216.595 14.032H212.243V9.456H216.595C218.035 9.456 219.251 10.288 219.251 11.728C219.251 13.232 218.035 14.032 216.595 14.032ZM88.512 58.384C92.832 58.384 95.456 56.144 97.088 53.584L93.888 51.952C92.864 53.744 90.816 55.056 88.512 55.056C84.288 55.056 81.152 51.824 81.152 47.344C81.152 42.864 84.288 39.632 88.512 39.632C90.816 39.632 92.864 40.976 93.888 42.736L97.088 41.104C95.488 38.544 92.832 36.304 88.512 36.304C82.208 36.304 77.312 40.784 77.312 47.344C77.312 53.904 82.208 58.384 88.512 58.384ZM114.837 58V54.704H105.429V36.656H101.685V58H114.837ZM123.56 58V36.656H119.816V58H123.56ZM144.321 58V54.704H133.441V48.784H144.097V45.488H133.441V39.952H144.321V36.656H129.697V58H144.321ZM168.262 58V36.656H164.518V51.472L153.606 36.656H149.766V58H153.51V42.768L164.646 58H168.262ZM183.229 58V39.952H189.693V36.656H173.021V39.952H179.485V58H183.229Z" fill="white"/>
-<defs>
-<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_27_224" transform="translate(0 -0.00107964) scale(0.00296736 0.00200032)"/>
-</pattern>
-<image id="image0_27_224" width="337" height="501" xlink:href="data:image/png;base64,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"/>
-</defs>
-</svg>
- 
-      </a>
-    </div> 
+        /* Kredi Al Butonu - Parlayan Efekt */
+        .btn-kredi {
+            background: linear-gradient(135deg, #BD9861, #D46C49) !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 10px 25px !important;
+            margin-top: 5px;
+            font-weight: bold !important;
+            box-shadow: 0 0 15px rgba(212, 108, 73, 0.4);
+            transition: 0.4s;
+        }
 
-    <div class="col"></div>
+        .btn-kredi:hover {
+            box-shadow: 0 0 25px rgba(212, 108, 73, 0.8);
+            transform: translateY(-2px);
+        }
 
-    <div class="flex-strong">
-      <div class="hide-on-mobile nav__links"> 
-        <a href="./#features">Features</a> 
-        <a href="./#screenshots">Screenshots</a> 
-        <a href="./media">Media</a> 
-        <a target="_blank" href="https://news.feathermc.com/">News</a>
-        <a target="_blank" href="https://feathermc.com/discord">
-          <svg class="size-m" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Discord</title><path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
-          &nbsp; Discord</a>
-      </div>
-    </div> 
+        /* Bölümler (Sections) */
+        .home-section {
+            background-color: #0a0a0a !important;
+            padding: 80px 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
 
+        .bg-gray {
+            background-color: #050505 !important;
+        }
 
-    <div class="padd-m hide-on-desktop"></div>
-    
-    <div class="nav__menu clickable flex-strong" onclick="toggleMenu()">
-      <div class="nav__menu--open hide-on-desktop"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
-      <div class="nav__menu--close hide-on-desktop hidden"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></div>
+        h2, h5 {
+            color: #fff !important;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .text_color {
+            color: #D46C49 !important;
+        }
+
+        /* Kartlar (Team & Service Boxes) */
+        .boxed-grey, .service-box {
+            background: #111 !important;
+            border: 1px solid #222 !important;
+            transition: 0.3s;
+            color: #888;
+        }
+
+        .boxed-grey:hover, .service-box:hover {
+            border-color: #BD9861 !important;
+            background: #151515 !important;
+        }
+
+        /* Alt Bilgi */
+        footer {
+            background-color: #000 !important;
+            padding: 40px 0;
+            border-top: 1px solid #222;
+        }
+
+        /* Scroll Butonu */
+        .btn-circle {
+            border: 2px solid #BD9861 !important;
+            color: #BD9861 !important;
+        }
+
+        .btn-circle:hover {
+            background: #BD9861 !important;
+            color: #000 !important;
+        }
+
+        /* Discord Butonu */
+        .btn-skin {
+            background-color: transparent !important;
+            border: 2px solid #D46C49 !important;
+            color: #D46C49 !important;
+            font-weight: bold;
+        }
+
+        .btn-skin:hover {
+            background-color: #D46C49 !important;
+            color: #fff !important;
+        }
+    </style>
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+    <div id="preloader">
+        <div id="load"></div>
     </div>
 
-
-    </div>
-  </div>
-
-  <div class="hidden nav__mobile hide-on-desktop padd-xs"> 
-    <div class="nav__mobile-links padd-l">
-      <a href="./#features">Features</a> 
-      <a href="./#screenshots">Screenshots</a> 
-      <a href="https://store.feathermc.com/">Store</a>
-      <a href="https://news.feathermc.com/">News</a>
-      <a href="https://discord.gg/feather">
-        <svg class="size-m" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Discord</title><path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
-        &nbsp; Discord</a>
-    </div> 
-  </div>
-</nav>
-
-<div class="nav__mobile-background hidden" onclick="toggleMenu()"></div>
-
-
- 
-
-
- 
-<style>   
-
-@keyframes delayed-fade {
-  0% {
-    opacity: 0; 
-  }
-  50% {
-    opacity: 0; 
-  }
-  100% {
-    opacity: 1; 
-  }
-}
-
-@keyframes fade {
-  0% {
-    opacity: 0; 
-  }
-  100% {
-    opacity: 1; 
-  }
-}
-
-.homepage-illustration-right {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: auto;
-  z-index: -1; 
-  animation: fade 20s;
-}
-
-.homepage-illustration-left {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
-  z-index: -1; 
-  animation: fade 10s;
-}
-
-.homepage-pic {
-  animation: delayed-fade 3s;
-}
-</style>
- 
-
-<img src="./gr2.svg" alt="Illustration" class="homepage-illustration-left">
-
-<img src="./gr1.svg" alt="Illustration" class="homepage-illustration-right">
-  
-
-<main>
-  <div class="padd-l hide-on-mobile"></div>
-  <div class="row container">
-    <div class="col padd-l">
-    
-      <svg class="stretch" style="max-width: 400px; animation: panelSlideUp .5s" viewBox="0 0 451 256" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.68 74V8.66H.35V1.1h34.47v7.56H22.85V74H12.68Zm47.17 0V1.1h10.17v31.5h18.72V1.1H98.9V74H88.74V39.89H70.02V74H59.85Zm68.45 0V1.1h28.26v7.56h-18.1v24.12h14.68v7.2h-14.67v26.73h18.27V74H128.3Zm92.94 0V1.1h19c3.11 0 6.05.24 8.81.72 2.82.48 5.31 1.41 7.47 2.79a13.18 13.18 0 0 1 5.04 5.76c1.26 2.46 1.9 5.73 1.9 9.81 0 2.94-.46 5.43-1.36 7.47a11.28 11.28 0 0 1-3.69 4.77 13.15 13.15 0 0 1-5.67 2.43c2.82.36 5.2 1.29 7.11 2.79a13.04 13.04 0 0 1 4.32 5.85 23.24 23.24 0 0 1 1.53 8.91c0 3.78-.5 7.05-1.53 9.81a16.5 16.5 0 0 1-4.23 6.66 17.36 17.36 0 0 1-6.93 3.87c-2.7.84-5.82 1.26-9.36 1.26h-22.4Zm16.11-11.25h3.42c3.54 0 5.97-.9 7.3-2.7 1.37-1.8 2.06-4.44 2.06-7.92 0-2.76-.3-4.95-.9-6.57a6.2 6.2 0 0 0-2.97-3.51c-1.38-.78-3.24-1.17-5.58-1.17h-3.33v21.87Zm0-32.49h3.15c2.46 0 4.32-.36 5.58-1.08a5.64 5.64 0 0 0 2.52-3.33c.48-1.44.72-3.18.72-5.22 0-1.92-.36-3.51-1.08-4.77a6.4 6.4 0 0 0-3.06-2.97c-1.32-.66-3-.99-5.04-.99h-2.79v18.36ZM292.15 74V1.1h32.76v10.98h-16.65v18.09h12.7v11.16h-12.7v21.78h16.83V74h-32.94Zm77.6 1.08c-4.55 0-8.36-.81-11.42-2.43a15.58 15.58 0 0 1-6.93-7.47c-1.56-3.42-2.43-7.83-2.61-13.23l13.77-2.07c.06 3.12.33 5.64.8 7.56.55 1.92 1.27 3.3 2.17 4.14.96.84 2.1 1.26 3.42 1.26 1.68 0 2.76-.57 3.24-1.71a8.3 8.3 0 0 0 .8-3.6c0-3-.71-5.52-2.15-7.56a32.98 32.98 0 0 0-5.85-6.3l-6.3-5.49a36.56 36.56 0 0 1-7.02-7.92c-1.86-3-2.8-6.69-2.8-11.07 0-6.18 1.84-10.89 5.5-14.13C358.03 1.76 363 .11 369.3.11c3.9 0 7.02.66 9.36 1.98 2.4 1.32 4.2 3.06 5.4 5.22 1.26 2.1 2.1 4.35 2.52 6.75a39 39 0 0 1 .8 6.75l-13.85 1.71a45.65 45.65 0 0 0-.45-5.58 7.22 7.22 0 0 0-1.26-3.69c-.66-.9-1.68-1.35-3.06-1.35-1.5 0-2.61.63-3.33 1.89a8.08 8.08 0 0 0-1 3.78c0 2.7.64 4.92 1.9 6.66a41.57 41.57 0 0 0 5.13 5.31l6.03 5.31a40.07 40.07 0 0 1 8 9.18c2.23 3.42 3.34 7.65 3.34 12.69 0 3.42-.78 6.54-2.34 9.36a17.1 17.1 0 0 1-6.66 6.57c-2.82 1.62-6.18 2.43-10.08 2.43ZM421.22 74V13.07h-10.98V1.1h38.07v11.97h-10.9V74h-16.2ZM4.13 164l1.26-72.9h17.28l8.01 42.39 8.64-42.39h16.65l1.26 72.9H45.8l-1.35-48.51L35.99 164H25.82l-9-48.87L15.74 164H4.13Zm68.23 0V91.1h16.1V164h-16.1Zm31.48 0V91.1h11.34l14.94 35.1V91.1h13.32V164h-10.9l-14.93-37.8V164h-13.77Zm54.95 0V91.1h32.76v10.98H174.9v18.09h12.69v11.16h-12.7v21.78h16.84V164h-32.94Zm65.63 1.08c-5.52 0-9.9-.99-13.14-2.97a16.54 16.54 0 0 1-6.75-8.46c-1.32-3.66-1.98-7.95-1.98-12.87V114.5c0-5.04.66-9.36 1.98-12.96a16.07 16.07 0 0 1 6.75-8.46c3.24-1.98 7.62-2.97 13.14-2.97 5.4 0 9.6.9 12.6 2.7a14.4 14.4 0 0 1 6.48 7.38 29.65 29.65 0 0 1 1.9 10.98v6.3h-15.76v-7.29c0-1.44-.09-2.82-.27-4.14a5.62 5.62 0 0 0-1.26-3.24c-.72-.9-1.95-1.35-3.69-1.35-1.68 0-2.94.45-3.78 1.35a6.9 6.9 0 0 0-1.53 3.42 31.35 31.35 0 0 0-.27 4.23v34.29c0 1.62.12 3.12.36 4.5a6.9 6.9 0 0 0 1.62 3.24c.84.78 2.04 1.17 3.6 1.17 1.68 0 2.88-.42 3.6-1.26a6.75 6.75 0 0 0 1.35-3.42c.18-1.38.27-2.79.27-4.23v-7.65h15.75v6.3c0 4.14-.63 7.86-1.89 11.16a15.19 15.19 0 0 1-6.39 7.74c-3 1.86-7.23 2.79-12.69 2.79Zm34.34-1.08V91.1h20.06c4.93 0 9.19.54 12.79 1.62a15.2 15.2 0 0 1 8.37 5.85c2.03 2.76 3.06 6.69 3.06 11.79 0 3-.25 5.67-.73 8.01a14.94 14.94 0 0 1-2.7 6.12 14.4 14.4 0 0 1-5.49 4.23l10 35.28h-16.66l-8-32.67h-4.6V164h-16.1Zm16.1-41.94h4.5c2.28 0 4.06-.39 5.31-1.17a6.44 6.44 0 0 0 2.62-3.51c.53-1.56.8-3.42.8-5.58 0-3.12-.56-5.55-1.7-7.29-1.14-1.74-3.25-2.61-6.3-2.61h-5.22v20.16ZM313.72 164l13.77-72.9h18.36l13.59 72.9h-14.85l-2.43-15.39h-10.71L328.92 164h-15.21Zm19.17-25.02h7.74l-3.87-28.44-3.87 28.44ZM371.29 164V91.1h31.5v10.89H387.4v18.36h13.41v11.25h-13.4V164h-16.12Zm50.1 0v-60.93H410.4V91.1h38.07v11.97h-10.89V164h-16.2ZM4.4 254v-72.9h16.11v62.01h16.74V254H4.4Zm45.4 0 13.76-72.9h18.36l13.6 72.9H80.65l-2.43-15.39h-10.7L65 254H49.8Zm19.16-25.02h7.74l-3.87-28.44-3.87 28.44Zm63.27 26.1c-5.58 0-9.96-.9-13.14-2.7a14.97 14.97 0 0 1-6.57-8.01c-1.26-3.54-1.89-7.86-1.89-12.96V181.1h15.93v52.74c0 1.5.12 3 .36 4.5s.75 2.73 1.53 3.69c.84.96 2.1 1.44 3.78 1.44 1.74 0 3-.48 3.78-1.44a7.05 7.05 0 0 0 1.44-3.69c.24-1.5.36-3 .36-4.5V181.1h16.02v50.31c0 5.1-.66 9.42-1.98 12.96a14.97 14.97 0 0 1-6.57 8.01c-3.12 1.8-7.47 2.7-13.05 2.7Zm40.85-1.08v-72.9h11.34l14.94 35.1v-35.1h13.32V254h-10.89l-14.94-37.8V254h-13.77Zm80.33 1.08c-5.52 0-9.9-.99-13.14-2.97a16.54 16.54 0 0 1-6.75-8.46c-1.32-3.66-1.98-7.95-1.98-12.87V204.5c0-5.04.66-9.36 1.98-12.96a16.07 16.07 0 0 1 6.75-8.46c3.24-1.98 7.62-2.97 13.14-2.97 5.4 0 9.6.9 12.6 2.7a14.4 14.4 0 0 1 6.48 7.38 29.65 29.65 0 0 1 1.89 10.98v6.3h-15.75v-7.29c0-1.44-.1-2.82-.27-4.14a5.62 5.62 0 0 0-1.26-3.24c-.72-.9-1.95-1.35-3.7-1.35-1.67 0-2.93.45-3.77 1.35a6.9 6.9 0 0 0-1.53 3.42 31.35 31.35 0 0 0-.27 4.23v34.29c0 1.62.12 3.12.36 4.5a6.9 6.9 0 0 0 1.62 3.24c.84.78 2.04 1.17 3.6 1.17 1.68 0 2.88-.42 3.6-1.26a6.75 6.75 0 0 0 1.35-3.42c.18-1.38.27-2.79.27-4.23v-7.65h15.75v6.3c0 4.14-.63 7.86-1.9 11.16a15.19 15.19 0 0 1-6.38 7.74c-3 1.86-7.23 2.79-12.7 2.79Zm39.1-1.08v-72.9h16.11v29.52h11.25V181.1h16.2V254h-16.2v-31.86h-11.25V254h-16.1Zm63.66 0v-72.9h32.76v10.98h-16.65v18.09h12.7v11.16h-12.7v21.78h16.83V254h-32.94Zm49.26 0v-72.9h20.07c4.92 0 9.18.54 12.78 1.62a15.2 15.2 0 0 1 8.37 5.85c2.04 2.76 3.06 6.69 3.06 11.79 0 3-.24 5.67-.72 8.01a14.94 14.94 0 0 1-2.7 6.12 14.4 14.4 0 0 1-5.5 4.23l10 35.28h-16.65l-8.01-32.67h-4.6V254h-16.1Zm16.1-41.94h4.5c2.29 0 4.06-.39 5.32-1.17a6.44 6.44 0 0 0 2.6-3.51c.55-1.56.82-3.42.82-5.58 0-3.12-.57-5.55-1.71-7.29-1.14-1.74-3.24-2.61-6.3-2.61h-5.22v20.16Z" fill="#fff"/></svg>
-
-      <div class="padd-l"></div>
-      
-      <ul class="no-bullet check-list white" style="animation: delayed-fade 1s">
-        <li>Host your own server for FREE</li>
-        <li>FPS Boost</li>
-        <li>Add OWN mods</li>
-        <li>Cross-server chat</li>
-        <li>Built-in voice chat</li>
-      </ul>
-      <div class="padd-m"></div>
-
-      <div class="row" style="gap: 0.25rem">
-
-        <!-- FOR WINDOWS ONLY -->
-        <div class="windows-dropdown" style="animation: delayed-fade 1.5s">
-          <a target="_blank" href="https://feathermc.com/download/windows" class="btn btn--primary" style="width: 100%; white-space: nowrap">
-            Download for &nbsp; <span class="windows-logo" style="position: relative; top: -2px"><svg class="size-m" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Windows Logo</title><path fill="currentColor" d="M0 0v11.408h11.408V0zm12.594 0v11.408H24V0zM0 12.594V24h11.408V12.594zm12.594 0V24H24V12.594z"/></svg></span>
-          </a>
-          <span class="padd-s"></span>
-        </div>
-
-        <!-- FOR MACOS ARM ONLY -->
-        <div class="mac-arm-dropdown" style="animation: delayed-fade 1.5s">
-          <a target="_blank" href="https://feathermc.com/download/mac" class="btn btn--primary" style="width: 100%; white-space: nowrap">
-            Download for &nbsp; <span class="mac-logo" style="position: relative; top: -2px"><svg class="size-m" role="img" viewBox="0 0 814 1000" xmlns="http://www.w3.org/2000/svg"><title>MacOS Logo</title><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z"/></svg></span>
-          </a>
-          <span class="padd-s"></span>
-        </div>
-
-        <!-- FOR ANYTHING BUT WINDOWS / MACOS ARM -->
-        <div class="non-windows-dropdown" style="animation: delayed-fade 1.5s; white-space: nowrap;">
-          <div class="dropdown">
-            <span href="./download/" class="btn btn--primary" style="width: 100%">
-              Download for...
-            </span>
-
-            
-                    <div class="dropdown-content">
-                      <a href="./download/windows">
-                        <div class="row-mobile">
-                          <span class="windows-logo flex-strong"><svg class="size-m" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Windows Logo</title><path fill="currentColor" d="M0 0v11.408h11.408V0zm12.594 0v11.408H24V0zM0 12.594V24h11.408V12.594zm12.594 0V24H24V12.594z"/></svg></span>
-                          <span class="padd-s"></span><span class="col padd-s">Windows</span>
-                        </div>
-                      </a>
-                        <a href="./download/mac">
-                            <div class="row-mobile">
-                                <span class="windows-logo flex-strong"><svg class="size-m" role="img" viewBox="0 0 814 1000" xmlns="http://www.w3.org/2000/svg"><title>MacOS Logo</title><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z"/></svg></span>
-                                <span class="padd-s"></span><span class="col padd-s">MacOS ARM</span>
-                            </div>
-                        </a>
-                    </div>
-            
-
-          </div>
-        </div>
-
-        <a target="_blank" href="https://feathermc.com/download/fabric" class="btn btn--fabric btn--tertiary" style="animation: delayed-fade 1.5s">
-          Download for
-          <svg
-                  style="width: 20px; height: 20px; margin-left: 16px"
-                  fill='currentcolor'
-                  viewBox='0 0 512 476'
-                  xmlns='http://www.w3.org/2000/svg'
-                  {...props}
-          >
-            <path
-                    fill='currentcolor'
-                    d='m72 292.4395142h-36v-36h36zm36.9295654-72.9296265h-36.9295654v36.9296265h36.9295654zm36.9296265-36.9295654h-36.9296265v36.9295654h36.9296265zm36.9295654-36.9295655h-36.9295654v36.9295654h36.9295654zm36-36.2574691h-36v36.2574692h36zm37.1346436-72.8280411h-37.1346436v72.8280411h37.1346436zm37.2692871-36.5652466h-37.2692871v36h37.2692871zm0 72h36.0442505v-35.2857056h-36.0442505zm36.0442505 37.3932877h36.4812622v-36.9443741h-36.4812622zm36.4812622 36.6146164h37.1425171v-36.6146164h-37.1425171zm37.1425171 35.6428527h36.29953v-35.6428528h-36.29953zm73.5429077.4488526h-37.2433777v73.7908936h37.2433777zm-220.4802246-72.7063217v36.7222519h36.6399536v-36.7222519zm36.6399536 36.7222519v36.9295654h36.673584v-36.9295654zm73.1548462 72.9295654v-36h-36.4812622v36zm-72.7874146 146.6635742h36.3061523v-36h-36.3061523zm-109.7509765 110.1085815h-36.9428711v35.8370972h73.9933472v-35.8370972h35.8534241v-36.7028809-36.7028808h36.8470764v-36.7028198h-36.8470764v36.7028198h-36.8109436l-.1081543 36.7028809h-35.8173829v36.7028809m-73.670105-.0000001h36.5598145v-36.7028809h-36.5598145zm-36.467041-73.4057617v36.7028809h36.467041v-36.7028809zm-37.210083-36.7028198v36.7028198h37.210083v-36.7028198zm0-73.269165h-36v73.269104h36zm366.8607178-73.020813h-37.1425171v73.494873h-36.4812622v36h36.4812622v-35.8684692h73.4420471v-37h-36.29953z'
-            />
-          </svg>
-        </a>
-      </div>
-
-    </div>
-    <div class="padd-l hide-on-mobile"></div>
-    <div class="col-half padd-l flex-strong hide-on-mobile">
-      <img src="./hero3.png" alt="Illustration" class="homepage-pic stretch">
-    </div>
-  </div>  
-  <div class="padd-xl "></div> 
-</main> 
-
-
-<section id="features" class="container row">
-
-  <div class="col padd-l">
-    <img src="./fps.svg" alt="Speed icon">
-    <h2 class="h3 white">Get an FPS boost</h2>
-    <p>Improve your Minecraft performance through our built-in performance enhancements or various third-party performance boosting mods!</p>
-  </div>
-  <div class="col padd-l">
-    <img src="./mods.svg" alt="Mods icon">
-    <h2 class="h3 white">Add own mods</h2>
-    <p>Missing a mod built-in? Add your own Forge or Fabric mod directly into our launcher. Feather let's you easily manage and toggle each mod.</p>
-  </div>
-  <div class="col padd-l">
-    <img src="./talk.svg" alt="Chat icon">
-    <h2 class="h3 white">Built-in voice chat</h2>
-    <p>Playing SMP with your friends or want to speak with other Feather players? Feather has built-in voice chat to speak with all Feather users!</p>
-  </div>
-
-</section>
-
- 
-
-<section id="video">
-
-  <div class="container row">
-    <div class="col padd-l flex-strong">
-      <h2 class="h2 white">Host your server <span class="accented">for free</span></h2>
-      <p>No longer need to pay for Minecraft hosting, Feather allows you to host a Minecraft server completely for FREE off your PC! Servers are ran directly off your PC and your IP address is protected via our proxy network.</p>
-    </div>
-    <div class="padd-l hide-on-mobile"></div>
-    <div class="col flex-strong">
-      <a target="_blank" href="https://www.youtube.com/watch?v=j3bQdAZ5-Tc">
-        <img src="./video.png" alt="Video preview linking to tutorial" class="stretch">
-      </a>
-    </div>
-  </div>
-
-</section>
-
-
-
-<div class="padd-xl"></div>
-<section class="container container--med">
-  <h2 class="h1 white center" id="screenshots">
-    Take a look inside
-  </h2>
-    
-  <div class="splide padd-l">
-    <div class="splide__track">
-      <ul class="splide__list">
-        <li class="splide__slide">
-          <div class="splide__slide__container padd-l">
-            
-            <img src="https://images.feathercdn.net/SRjMSL60.png" alt="Feather mod menu" class="stretch padd-l">
-            <div class="padd-l"></div>
-            <div class="h4 center"><b>Over 40 built-in mods</b></div>
-            <p class="center container container--min">
-              Feather has over 40 mods built-in such as FPS, Keystrokes, ToggleSprint and many more!
-            </p>
-
-          </div>
-        </li>
-        <li class="splide__slide">
-          <div class="splide__slide__container padd-l">
-            
-            <img src="https://images.feathercdn.net/x5jceLqD.png" alt="Chat overlay" class="stretch padd-l">
-            <div class="padd-l"></div>
-            <div class="h4 center"><b>Cross-server chat</b></div>
-            <p class="center container container--min">
-              Talk to friends from any server!
-            </p>
-
-          </div>
-        </li>
-        <li class="splide__slide">
-          <div class="splide__slide__container padd-l">
-            
-            <img src="https://images.feathercdn.net/03t1OOjG.jpg" alt="HUD Editor" class="stretch padd-l">
-            <div class="padd-l"></div>
-            <div class="h4 center"><b>Customize your hud</b></div>
-            <p class="center container container--min">
-              Easily customize your hud, move mods around and resize them to your liking!
-            </p>
-
-          </div>
-        </li>
-        <li class="splide__slide">
-          <div class="splide__slide__container padd-l">
-
-            <img src="https://images.feathercdn.net/KCOf4okn.png" alt="Feather mod library" class="stretch padd-l">
-            <div class="padd-l"></div>
-            <div class="h4 center"><b>Mod manager and library</b></div>
-            <p class="center container container--min">
-              Missing a mod built-in? Add your own Forge or Fabric mod directly into our launcher. Feather let's you easily manage and toggle each mod.
-            </p>
-
-          </div>
-        </li>
-        <li class="splide__slide">
-          <div class="splide__slide__container padd-l">
-
-            
-            <img src="https://images.feathercdn.net/hx3YRltq.png" alt="Feather skin manager" class="stretch padd-l">
-            <div class="padd-l"></div>
-            <div class="h4 center"><b>Skin manager</b></div>
-            <p class="center container container--min">
-              Have lots of skins? Easily store and change your skin directly from our launcher!
-            </p>
-
-
-          </div>
-        </li> 
-      </ul>
-    </div>
-  </div>
-</section>
-
-
-<!-- SLIDER JS/CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/@splidejs/splide@3.6.11/dist/css/splide-core.min.css,npm/@splidejs/splide@3.6.11/dist/css/splide.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.11/dist/js/splide.min.js"></script>
-
-
-<script>
-  var splide = new Splide( '.splide', {
-    perPage: 1, 
-    rewind: true,
-    type: 'loop',
-  } );
-
-  splide.mount();
-</script>
-
-
-
-<div class="padd-xl"></div>
-
-
-
- 
-<div class="accented-bg white apply-bg-props"> 
-  <div class="container row">
-    <div class="padd-l center-mobile col">
-      <h2 class="h1"><span class="black">Up your game</span></h2>
-    </div>
-    <div class="padd-l flex-strong right center-mobile col">
-      <div class="row" style="gap: 0.25rem">
-
-        
-        <div class="windows-dropdown">
-          <a href="https://feathermc.com/download/windows" class="btn btn--black" style="width: 100%; white-space: nowrap">
-            Download for &nbsp; <span class="windows-logo" style="position: relative; top: -2px"><svg class="size-m" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Windows Logo</title><path fill="currentColor" d="M0 0v11.408h11.408V0zm12.594 0v11.408H24V0zM0 12.594V24h11.408V12.594zm12.594 0V24H24V12.594z"/></svg></span>
-          </a>
-        </div>
-
-        
-        <div class="mac-arm-dropdown" style="animation: delayed-fade 1.5s">
-          <a target="_blank" href="https://feathermc.com/download/mac" class="btn btn--black" style="width: 100%; white-space: nowrap">
-            Download for &nbsp; <span class="mac-logo" style="position: relative; top: -2px"><svg class="size-m" role="img" viewBox="0 0 814 1000" xmlns="http://www.w3.org/2000/svg"><title>MacOS Logo</title><path fill="currentColor" d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z"/></svg></span>
-          </a>
-          <span class="padd-s"></span>
-        </div>
-
-        
-        <div class="non-windows-dropdown">
-          <div class="dropdown left">
-            <span href="./download/" class="btn btn--black" style="width: 100%">
-              Download for...
-            </span>
-
-            
-        <div class="dropdown-content">
-          <a href="./download/windows">
-            <div class="row-mobile">
-              <span class="windows-logo flex-strong"><svg class="size-m" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Windows Logo</title><path fill="currentColor" d="M0 0v11.408h11.408V0zm12.594 0v11.408H24V0zM0 12.594V24h11.408V12.594zm12.594 0V24H24V12.594z"/></svg></span>
-              <span class="padd-s"></span><span class="col padd-s">Windows</span>
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand" href="index.html">
+                    <h1 style="color:#fff; margin:0;">FIRE<span style="color:#D46C49">BOX</span></h1>
+                </a>
             </div>
-          </a>
-            <a href="./download/mac">
-                <div class="row-mobile">
-                    <span class="windows-logo flex-strong"><svg class="size-m" role="img" viewBox="0 0 814 1000" xmlns="http://www.w3.org/2000/svg"><title>MacOS Logo</title><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z"/></svg></span>
-                    <span class="padd-s"></span><span class="col padd-s">MacOS ARM</span>
-                </div>
+
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#intro">GİRİŞ</a></li>
+                    <li><a href="#about">HAKKIMIZDA</a></li>
+                    <li><a href="#service">ÖZELLİKLER</a></li>
+                    <li><a href="https://discord.gg/j7y5Hak6" target="_blank">DESTEK</a></li>
+                    <li><a href="https://donate.bynogame.com/firebox" target="_blank" class="btn-kredi">KREDİ YÜKLE</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="intro" class="intro">
+        <div class="slogan" style="margin-top: 15%;">
+            <h2 style="font-size: 60px;">FIREBOX <span class="text_color">BOXPVP</span> </h2>
+            <h4 style="color: #BD9861; font-weight: bold; letter-spacing: 5px;">IP: FIREBOX.ICE.LOL</h4>
+        </div>
+        <div class="page-scroll">
+            <a href="#about" class="btn btn-circle">
+                <i class="fa fa-angle-double-down animated"></i>
             </a>
         </div>
+    </section>
 
-          </div>
+    <section id="about" class="home-section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="section-heading">
+                        <h2>KARANLIĞA <span class="text_color">HÜKMET</span></h2>
+                        <p>Firebox, sıradan bir sunucu değil; bir savaş meydanıdır. BoxPvP'nin en sert hali, en düşük lag ve en adil yönetimle burada.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="team boxed-grey">
+                        <div class="inner">
+                            <h5>FIREBOX EKİBİ</h5>
+                            <p class="subtitle">KURUCU KADRO</p>
+                            <div class="avatar"><img src="img/team/1.jpg" alt="" class="img-responsive img-circle" style="filter: grayscale(100%);" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
+    </section>
 
-        <a target="_blank" href="https://feathermc.com/download/fabric" class="btn btn--fabric btn--tertiary">
-          Download for
-          <svg
-                  style="width: 20px; height: 20px; margin-left: 16px"
-                  fill='currentcolor'
-                  viewBox='0 0 512 476'
-                  xmlns='http://www.w3.org/2000/svg'
-                  {...props}
-          >
-            <path
-                    fill='currentcolor'
-                    d='m72 292.4395142h-36v-36h36zm36.9295654-72.9296265h-36.9295654v36.9296265h36.9295654zm36.9296265-36.9295654h-36.9296265v36.9295654h36.9296265zm36.9295654-36.9295655h-36.9295654v36.9295654h36.9295654zm36-36.2574691h-36v36.2574692h36zm37.1346436-72.8280411h-37.1346436v72.8280411h37.1346436zm37.2692871-36.5652466h-37.2692871v36h37.2692871zm0 72h36.0442505v-35.2857056h-36.0442505zm36.0442505 37.3932877h36.4812622v-36.9443741h-36.4812622zm36.4812622 36.6146164h37.1425171v-36.6146164h-37.1425171zm37.1425171 35.6428527h36.29953v-35.6428528h-36.29953zm73.5429077.4488526h-37.2433777v73.7908936h37.2433777zm-220.4802246-72.7063217v36.7222519h36.6399536v-36.7222519zm36.6399536 36.7222519v36.9295654h36.673584v-36.9295654zm73.1548462 72.9295654v-36h-36.4812622v36zm-72.7874146 146.6635742h36.3061523v-36h-36.3061523zm-109.7509765 110.1085815h-36.9428711v35.8370972h73.9933472v-35.8370972h35.8534241v-36.7028809-36.7028808h36.8470764v-36.7028198h-36.8470764v36.7028198h-36.8109436l-.1081543 36.7028809h-35.8173829v36.7028809m-73.670105-.0000001h36.5598145v-36.7028809h-36.5598145zm-36.467041-73.4057617v36.7028809h36.467041v-36.7028809zm-37.210083-36.7028198v36.7028198h37.210083v-36.7028198zm0-73.269165h-36v73.269104h36zm366.8607178-73.020813h-37.1425171v73.494873h-36.4812622v36h36.4812622v-35.8684692h73.4420471v-37h-36.29953z'
-            />
-          </svg>
-        </a>
+    <section id="service" class="home-section text-center bg-gray">
+        <div class="container">
+            <h2>SUNUCU <span class="text_color">SİSTEMLERİ</span></h2>
+            <div class="row" style="margin-top: 40px;">
+                <div class="col-md-3">
+                    <div class="service-box">
+                        <i class="fa fa-shield fa-3x text_color"></i>
+                        <h5>ANTİ-CHEAT</h5>
+                        <p>Hileye yer yok. Gelişmiş koruma sistemimizle adil oyun.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="service-box">
+                        <i class="fa fa-bolt fa-3x text_color"></i>
+                        <h5>0 LAG</h5>
+                        <p>En yüksek performanslı makinelerde kesintisiz PvP keyfi.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="service-box">
+                        <i class="fa fa-diamond fa-3x text_color"></i>
+                        <h5>ÖZEL KASALAR</h5>
+                        <p>Birbirinden değerli ödüller barındıran kasa sistemleri.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="service-box">
+                        <i class="fa fa-users fa-3x text_color"></i>
+                        <h5>KLAN SAVAŞLARI</h5>
+                        <p>Klanını kur, rakiplerini ez ve sunucunun hakimi ol.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <div class="padd-l hide-on-desktop"></div>
+    <section id="contact" class="home-section text-center">
+        <div class="container">
+            <h2>ORDUYA <span class="text_color">KATIL</span></h2>
+            <p>Destek talepleri, güncellemeler ve çekilişler için Discord'dayız.</p>
+            <br>
+            <a href="https://discord.gg/j7y5Hak6" target="_blank" class="btn btn-skin btn-lg">DISCORD SUNUCUSUNA GİT</a>
+        </div>
+    </section>
 
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p style="color:#444;">&copy; 2026 FIREBOX MC. ALL RIGHTS RESERVED.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-      </div>
-    </div>
-  </div> 
-</div>
-<footer class="padd-l center-mobile">
-  <div class="padd-l"></div>
-  
-
-  <div class="container">
-    <div class="row">
-      <div class="padd-m col"> 
-        <p>Feather is the most flexible Minecraft Client / Launcher! We have tons of built-in mods and useful quality of life features.</p>
-        <div class="padd-s"></div>
-
-        <div class="h3 center-mobile">
-          <a href="./third-party" class="med">Third Party</a> <span class="padd-s"></span>
-          <a href="./terms/" class="med">Terms</a> <span class="padd-s"></span>
-          <a href="./privacy/" class="med">Privacy</a> <span class="padd-s"></span>
-        </div> 
-        <div class="padd-s"></div>
-
-        <a target="_blank" href="https://feathermc.com/tiktok">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>TikTok</title><path fill="currentColor" d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-        </a> &nbsp; &nbsp; &nbsp;
-        <a target="_blank" href="https://feathermc.com/x">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><title>X</title>
-          <g clip-path="url(#clip0_10631_2477)">
-          <path d="M14.2833 10.1624L23.2178 0H21.1006L13.3427 8.82384L7.14656 0H0L9.36984 13.3432L0 24H2.11732L10.3098 14.6817L16.8534 24H24L14.2827 10.1624H14.2833ZM11.3833 13.4608L10.4339 12.1321L2.88022 1.55962H6.1323L12.2282 10.0919L13.1776 11.4206L21.1016 22.5113H17.8495L11.3833 13.4613V13.4608Z" fill="white"/>
-          </g>
-          <defs>
-          <clipPath id="clip0_10631_2477">
-          <rect width="24" height="24" fill="white"/>
-          </clipPath>
-          </defs>
-          </svg>
-        </a>
-        </a> &nbsp; &nbsp; &nbsp;
-        <a target="_blank" href="https://feathermc.com/youtube">
-          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>YouTube</title><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        </a> &nbsp; &nbsp; &nbsp;
-      </div>
-      <div class="padd-l"></div>
-      <div class="padd-m col-third right hide-on-mobile">
-        <div class="padd-l"></div>
-        <img src="./logo.svg" alt="our logo" class="size-l">
-      </div>
-    </div>
-  </div>
-
-  <div class="padd-l"></div>
-
-  <div class="container padd-m row">
-    <div class="col center-mobile">
-      <small class="ingrained"><a target="_blank" href="https://digitalingot.org/">© Digital Ingot, Inc. 2025. All rights reserved.</a>
-      </small> 
-    </div>
-
-    <div class="col right center-mobile">
-      <div class="padd-s"></div>
-      <a href="#">
-        <svg class="size-m" viewBox="0 0 24 24">
-        <path fill="currentColor" d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z"></path>
-        </svg>
-      </a>
-    </div>
-  </div>
-
-  <div class="padd-l"></div>
-</footer>
-
-
-
-
-
-
-<script src="./js/main.min.js"></script>
- 
-</body></html> 
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+</html>
