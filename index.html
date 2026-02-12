@@ -1,217 +1,253 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
+<title>VOIDMC | BoxPvP</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Firebox BoxPvP - Karamsar Dark Tema">
-<meta name="author" content="Firebox">
-<link rel="Shortcut Icon" href="img/favicon.ico" type="image/x-icon">
-
-<title>Firebox | Dark BoxPvP</title>
-
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<link href="css/animate.css" rel="stylesheet">
 
 <style>
-
-/* =========================
-   SQUADFREE ANA CSS
-========================= */
-
-@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Montserrat:700');
-
-body {
-    width: 100%;
-    height: 100%;
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
-    color: #666;
-    background-color: #fff;
+/* ================== RESET ================== */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family: Inter, system-ui, sans-serif;
+    background:#050505;
+    color:#e5e5e5;
+    overflow-x:hidden;
 }
 
-h1,h2,h3,h4,h5,h6 {
-    margin: 0 0 30px;
-    text-transform: uppercase;
-    font-family: Montserrat,sans-serif;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-p {
-    font-size: 16px;
-    line-height: 1.6em;
-}
-
-.navbar {
-    margin-bottom: 0;
-}
-
-.home-section {
-    padding: 110px 0;
-}
-
-.intro {
-    width:100%;
-    min-height:100vh;
-    background-size: cover;
-    background-attachment: fixed;
-}
-
-.boxed-grey {
-    background: #f9f9f9;
-    padding: 20px;
-}
-
-.service-box {
-    padding: 20px;
-    margin-bottom: 30px;
-}
-
-footer {
-    text-align: center;
-    padding: 50px 0;
-}
-
-/* =========================
-   FIREBOX DARK TEMA
-   (OVERRIDE)
-========================= */
-
-body {
-    background-color: #080808 !important;
-    color: #b0b0b0 !important;
-}
-
-.intro {
+/* ================== BACKGROUND ANIMATION ================== */
+.bg-grid{
+    position:fixed;
+    inset:0;
     background:
-      linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-      url('img/bg.jpg') no-repeat center center !important;
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size:60px 60px;
+    animation: moveBg 40s linear infinite;
+    z-index:-1;
+}
+@keyframes moveBg{
+    from{background-position:0 0}
+    to{background-position:600px 600px}
 }
 
-.navbar-custom {
-    background-color: rgba(10,10,10,0.95) !important;
-    border-bottom: 2px solid #D46C49;
+/* ================== HEADER ================== */
+header{
+    position:fixed;
+    top:0;
+    width:100%;
+    backdrop-filter: blur(10px);
+    background:rgba(5,5,5,.7);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    z-index:10;
+}
+nav{
+    max-width:1300px;
+    margin:auto;
+    padding:18px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.logo{
+    font-weight:900;
+    letter-spacing:3px;
+    color:#ff7a18;
+}
+.menu a{
+    margin-left:30px;
+    color:#aaa;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+.menu a:hover{color:#ff7a18}
+
+/* ================== HERO ================== */
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:0 20px;
+}
+.hero h1{
+    font-size:64px;
+    letter-spacing:6px;
+    animation: glow 2s infinite alternate;
+}
+@keyframes glow{
+    from{text-shadow:0 0 10px #ff7a18}
+    to{text-shadow:0 0 35px #ff9a3c}
+}
+.hero p{
+    margin-top:20px;
+    max-width:600px;
+    color:#aaa;
+}
+.hero button{
+    margin-top:40px;
+    padding:16px 40px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#ff7a18,#ff9a3c);
+    color:#000;
+    font-weight:800;
+    cursor:pointer;
+    transition:.3s;
+}
+.hero button:hover{transform:scale(1.05)}
+
+/* ================== SECTIONS ================== */
+section{
+    max-width:1200px;
+    margin:120px auto;
+    padding:0 20px;
+}
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:25px;
+}
+.card{
+    background:#0b0b0b;
+    border-radius:20px;
+    padding:30px;
+    border:1px solid rgba(255,255,255,.06);
+    transition:.3s;
+}
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#ff7a18;
 }
 
-.navbar-custom .nav li a {
-    color: #fff !important;
-    font-weight: 600;
+/* ================== LOGIN ================== */
+#loginBox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.8);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:20;
+}
+.login{
+    background:#0c0c0c;
+    padding:40px;
+    border-radius:20px;
+    width:320px;
+}
+.login input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:12px;
+    border:none;
+    background:#111;
+    color:#fff;
+}
+.login button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:#ff7a18;
+    font-weight:700;
+    cursor:pointer;
 }
 
-.navbar-custom .nav li a:hover {
-    color: #BD9861 !important;
+/* ================== COOKIE ================== */
+#cookie{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#0c0c0c;
+    padding:20px 25px;
+    border-radius:18px;
+    display:none;
+    gap:15px;
+    align-items:center;
+    border:1px solid rgba(255,255,255,.06);
 }
-
-.btn-kredi {
-    background: linear-gradient(135deg,#BD9861,#D46C49);
-    color: #fff;
-    padding: 10px 25px;
-    box-shadow: 0 0 15px rgba(212,108,73,.4);
+#cookie button{
+    padding:8px 18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
 }
-
-.btn-kredi:hover {
-    box-shadow: 0 0 25px rgba(212,108,73,.8);
-}
-
-.home-section {
-    background-color: #0a0a0a !important;
-    border-bottom: 1px solid #1a1a1a;
-}
-
-.bg-gray {
-    background-color: #050505 !important;
-}
-
-h2,h5 {
-    color: #fff !important;
-}
-
-.text_color {
-    color: #D46C49 !important;
-}
-
-.boxed-grey,.service-box {
-    background: #111 !important;
-    border: 1px solid #222;
-}
-
-.boxed-grey:hover,.service-box:hover {
-    background: #151515 !important;
-    border-color: #BD9861;
-}
-
-footer {
-    background-color: #000 !important;
-    border-top: 1px solid #222;
-}
-
-.btn-circle {
-    border: 2px solid #BD9861;
-    color: #BD9861;
-}
-
-.btn-circle:hover {
-    background: #BD9861;
-    color: #000;
-}
-
-.btn-skin {
-    border: 2px solid #D46C49;
-    color: #D46C49;
-}
-
-.btn-skin:hover {
-    background: #D46C49;
-    color: #fff;
-}
-
+.accept{background:#ff7a18;font-weight:700}
+.reject{background:#222;color:#aaa}
 </style>
 </head>
 
-<body id="page-top">
+<body>
+<div class="bg-grid"></div>
 
-<nav class="navbar navbar-custom navbar-fixed-top">
-<div class="container">
-<a class="navbar-brand" href="#">
-<h1>FIRE<span class="text_color">BOX</span></h1>
-</a>
-
-<ul class="nav navbar-nav navbar-right">
-<li class="active"><a href="#intro">GİRİŞ</a></li>
-<li><a href="#about">HAKKIMIZDA</a></li>
-<li><a href="#service">ÖZELLİKLER</a></li>
-<li><a href="https://discord.gg/j7y5Hak6" target="_blank">DESTEK</a></li>
-<li><a href="https://donate.bynogame.com/firebox" target="_blank" class="btn-kredi">KREDİ YÜKLE</a></li>
-</ul>
+<header>
+<nav>
+<div class="logo">VOIDMC</div>
+<div class="menu">
+<a href="#features">Özellikler</a>
+<a href="#login" onclick="openLogin()">Giriş</a>
 </div>
 </nav>
+</header>
 
-<section id="intro" class="intro text-center">
-<div class="slogan" style="margin-top:15%">
-<h2>FIREBOX <span class="text_color">BOXPVP</span></h2>
-<h4 style="color:#BD9861;letter-spacing:5px;">IP: FIREBOX.ICE.LOL</h4>
+<div class="hero">
+<h1>VOID BOX</h1>
+<p>Bu bir sunucu sitesi değil. Bu bir arena.  
+Lag yok, saçmalık yok, sadece PvP.</p>
+<button onclick="openLogin()">GİRİŞ YAP</button>
+</div>
+
+<section id="features">
+<div class="cards">
+<div class="card">⚔ Özel BoxPvP Mekanikleri</div>
+<div class="card">🛡 Client-side Anti Cheat</div>
+<div class="card">🔥 Ultra Performans</div>
+<div class="card">👑 Clan Dominance Sistemi</div>
 </div>
 </section>
 
-<section id="about" class="home-section text-center">
-<div class="container">
-<h2>KARANLIĞA <span class="text_color">HÜKMET</span></h2>
-<p>Firebox sıradan sunucu değil. Saf kaos.</p>
+<!-- LOGIN -->
+<div id="loginBox">
+<div class="login">
+<h3 style="margin-bottom:20px">Giriş</h3>
+<input placeholder="Kullanıcı adı">
+<input type="password" placeholder="Şifre">
+<button onclick="fakeLogin()">Giriş Yap</button>
 </div>
-</section>
-
-<section id="service" class="home-section bg-gray text-center">
-<div class="container">
-<h2>SUNUCU <span class="text_color">SİSTEMLERİ</span></h2>
 </div>
-</section>
 
-<footer>
-<p>&copy; 2026 FIREBOX MC</p>
-</footer>
+<!-- COOKIE -->
+<div id="cookie">
+<span>Bu site çerez kullanır. Ne işe yaradığını biz de tam bilmiyoruz.</span>
+<button class="accept" onclick="cookieAccept()">Kabul</button>
+<button class="reject" onclick="cookieReject()">Reddet</button>
+</div>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script>
+function openLogin(){
+    document.getElementById("loginBox").style.display="flex";
+}
+function fakeLogin(){
+    localStorage.setItem("login","1");
+    document.getElementById("loginBox").style.display="none";
+}
+function cookieAccept(){
+    localStorage.setItem("cookie","ok");
+    document.getElementById("cookie").style.display="none";
+}
+function cookieReject(){
+    document.getElementById("cookie").style.display="none";
+}
+if(!localStorage.getItem("cookie")){
+    document.getElementById("cookie").style.display="flex";
+}
+</script>
+
 </body>
 </html>
