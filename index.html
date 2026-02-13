@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RED PRO | Animated Edition</title>
+    <title>RED PRO | Profile System</title>
     <style>
         :root { --main-red: #ff0000; --bg-black: #050000; }
         
@@ -13,18 +13,14 @@
             font-family: 'Segoe UI', sans-serif; overflow-x: hidden;
         }
 
-        /* --- YAZI RENK GEÇİŞ ANİMASYONU --- */
         @keyframes redToWhite {
             0% { color: var(--main-red); text-shadow: 0 0 15px var(--main-red); }
             50% { color: #ffffff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
             100% { color: var(--main-red); text-shadow: 0 0 15px var(--main-red); }
         }
 
-        .animated-text {
-            animation: redToWhite 3s infinite ease-in-out;
-        }
+        .animated-text { animation: redToWhite 3s infinite ease-in-out; }
 
-        /* Arka Plan */
         #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
 
         .cursor-glow {
@@ -47,25 +43,18 @@
         .nav-links li { cursor: pointer; font-size: 13px; font-weight: bold; transition: 0.3s; color: #888; }
         .nav-links li:hover { color: white; }
 
+        .profile-trigger { cursor: pointer; border: 1px solid var(--main-red); padding: 5px 15px; border-radius: 5px; transition: 0.3s; }
+        .profile-trigger:hover { background: var(--main-red); color: white !important; }
+
         main { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        
-        h1 { 
-            font-size: 5rem; letter-spacing: 15px; margin: 0; 
-            text-transform: uppercase;
-            animation: redToWhite 4s infinite ease-in-out;
-        }
-        
-        .hero-p { color: #555; letter-spacing: 5px; margin-top: 10px; font-weight: bold; }
+        h1 { font-size: 5rem; letter-spacing: 15px; margin: 0; animation: redToWhite 4s infinite ease-in-out; }
 
         .btn {
             padding: 15px 45px; border: 1px solid var(--main-red);
-            background: transparent; color: white;
-            font-weight: bold; cursor: pointer; transition: 0.4s; letter-spacing: 2px;
-            position: relative; overflow: hidden;
+            background: transparent; color: white; font-weight: bold; cursor: pointer; transition: 0.4s; letter-spacing: 2px;
         }
         .btn:hover { background: var(--main-red); box-shadow: 0 0 30px var(--main-red); }
 
-        /* MODALLAR */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.96); display: none;
@@ -73,28 +62,16 @@
         }
         .modal-content {
             background: #080000; border: 1px solid var(--main-red);
-            padding: 30px; width: 450px; position: relative; text-align: center;
+            padding: 30px; width: 400px; position: relative; text-align: center;
         }
         
         input {
             width: 90%; padding: 12px; margin: 10px 0;
-            background: #111; border: 1px solid #222; color: white;
+            background: #111; border: 1px solid #222; color: white; border-radius: 3px;
         }
         input:focus { border-color: var(--main-red); outline: none; }
 
-        .item-row { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 0; border-bottom: 1px solid #1a0000; 
-        }
-        .free-label { font-weight: bold; animation: redToWhite 1.5s infinite ease-in-out; }
-
-        .download-btn { 
-            text-decoration: none; color: black; background: white; 
-            padding: 6px 15px; font-weight: bold; font-size: 12px;
-            transition: 0.3s;
-        }
-        .download-btn:hover { background: var(--main-red); color: white; }
-
+        .item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #1a0000; }
         .close-x { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 20px; color: #444; }
         .close-x:hover { color: white; }
     </style>
@@ -110,8 +87,8 @@
             <li id="nav-login" onclick="openModal('loginModal')">GİRİŞ YAP</li>
             <li id="nav-register" onclick="openModal('registerModal')">KAYIT OL</li>
             <li id="user-info" style="display:none;">
-                <span class="animated-text" id="username-display"></span> 
-                <span onclick="logout()" style="margin-left:15px; cursor:pointer; color:#444;">[ÇIKIŞ]</span>
+                <span class="animated-text profile-trigger" id="username-display" onclick="openModal('profileModal')"></span> 
+                <span onclick="logout()" style="margin-left:15px; cursor:pointer; color:#444; font-size: 11px;">[ÇIKIŞ]</span>
             </li>
             <li><a href="https://discord.gg/WR4mznHQYf" target="_blank" style="color:inherit; text-decoration:none;">DISCORD</a></li>
         </ul>
@@ -119,27 +96,21 @@
 
     <main>
         <h1>ELITE ACCESS</h1>
-        <p class="hero-p">KIRMIZI ÇİZGİYİ GEÇİN</p>
+        <p style="color:#555; letter-spacing:5px;">PROFİLİNİZİ YÖNETİN</p>
         <button class="btn" onclick="checkAuthAndOpen()">SİSTEME GİRİŞ</button>
     </main>
 
-    <div class="modal-overlay" id="registerModal">
-        <div class="modal-content">
-            <span class="close-x" onclick="closeModal('registerModal')">✕</span>
-            <h2 class="animated-text">KAYIT OL</h2>
-            <input type="text" id="reg-user" placeholder="Kullanıcı Adı">
-            <input type="password" id="reg-pass" placeholder="Şifre">
-            <button class="btn" style="width:100%" onclick="handleRegister()">OLUŞTUR</button>
-        </div>
-    </div>
+    <div class="modal-overlay" id="registerModal"><div class="modal-content"><span class="close-x" onclick="closeModal('registerModal')">✕</span><h2 class="animated-text">KAYIT OL</h2><input type="text" id="reg-user" placeholder="Kullanıcı Adı"><input type="password" id="reg-pass" placeholder="Şifre"><button class="btn" style="width:100%" onclick="handleRegister()">OLUŞTUR</button></div></div>
+    <div class="modal-overlay" id="loginModal"><div class="modal-content"><span class="close-x" onclick="closeModal('loginModal')">✕</span><h2 class="animated-text">GİRİŞ YAP</h2><input type="text" id="login-user" placeholder="Kullanıcı Adı"><input type="password" id="login-pass" placeholder="Şifre"><button class="btn" style="width:100%" onclick="handleLogin()">GİRİŞ</button></div></div>
 
-    <div class="modal-overlay" id="loginModal">
+    <div class="modal-overlay" id="profileModal">
         <div class="modal-content">
-            <span class="close-x" onclick="closeModal('loginModal')">✕</span>
-            <h2 class="animated-text">GİRİŞ YAP</h2>
-            <input type="text" id="login-user" placeholder="Kullanıcı Adı">
-            <input type="password" id="login-pass" placeholder="Şifre">
-            <button class="btn" style="width:100%" onclick="handleLogin()">GİRİŞ</button>
+            <span class="close-x" onclick="closeModal('profileModal')">✕</span>
+            <h2 class="animated-text">PROFİL AYARLARI</h2>
+            <p style="font-size: 12px; color: #666;">Bilgilerinizi buradan güncelleyebilirsiniz.</p>
+            <input type="text" id="edit-user" placeholder="Yeni Kullanıcı Adı">
+            <input type="password" id="edit-pass" placeholder="Yeni Şifre">
+            <button class="btn" style="width:100%; margin-top: 10px;" onclick="updateProfile()">GÜNCELLE</button>
         </div>
     </div>
 
@@ -147,33 +118,20 @@
         <div class="modal-content">
             <span class="close-x" onclick="closeModal('listModal')">✕</span>
             <h2 class="animated-text">ÜCRETSİZ ERİŞİM</h2>
-            
-            <div class="item-row">
-                <span>ExHack Loader</span>
-                <div><span class="free-label">0 TL</span> <a href="https://data.exloader.net/ExLoader_Installer.exe" class="download-btn">İNDİR</a></div>
-            </div>
-            <div class="item-row">
-                <span>SharkHack Premium</span>
-                <div><span class="free-label">0 TL</span> <a href="https://data.exloader.net/ExLoader_Installer.exe" class="download-btn">İNDİR</a></div>
-            </div>
-            <div class="item-row">
-                <span>Enigma Legit</span>
-                <div><span class="free-label">0 TL</span> <a href="https://data.exloader.net/ExLoader_Installer.exe" class="download-btn">İNDİR</a></div>
-            </div>
-
-            <p style="font-size:10px; color:#444; margin-top:20px;">* Giriş yapıldığı için tüm fiyatlar sıfırlanmıştır.</p>
+            <div class="item-row"><span>ExHack Loader</span> <div><b class="animated-text">0 TL</b> <a href="https://data.exloader.net/ExLoader_Installer.exe" style="background:white; color:black; padding:5px 10px; text-decoration:none; font-weight:bold; margin-left:10px;">İNDİR</a></div></div>
+            <div class="item-row"><span>SharkHack Premium</span> <div><b class="animated-text">0 TL</b> <a href="https://data.exloader.net/ExLoader_Installer.exe" style="background:white; color:black; padding:5px 10px; text-decoration:none; font-weight:bold; margin-left:10px;">İNDİR</a></div></div>
         </div>
     </div>
 
     <script>
-        // --- AUTH & STORAGE ---
+        // --- SİSTEM FONKSİYONLARI ---
         function handleRegister() {
             const u = document.getElementById('reg-user').value;
             const p = document.getElementById('reg-pass').value;
             if(u && p) {
                 localStorage.setItem('user', u);
                 localStorage.setItem('pass', p);
-                alert('Kayıt Başarılı!');
+                alert('Kayıt Başarılı! Giriş yapabilirsiniz.');
                 closeModal('registerModal');
                 openModal('loginModal');
             }
@@ -186,46 +144,50 @@
                 localStorage.setItem('isLogged', 'true');
                 updateUI();
                 closeModal('loginModal');
-            } else { alert('Hatalı Bilgi!'); }
+            } else { alert('Hatalı Bilgiler!'); }
         }
 
-        function logout() { localStorage.removeItem('isLogged'); location.reload(); }
+        function updateProfile() {
+            const newU = document.getElementById('edit-user').value;
+            const newP = document.getElementById('edit-pass').value;
+            if(newU) localStorage.setItem('user', newU);
+            if(newP) localStorage.setItem('pass', newP);
+            
+            alert('Bilgiler Başarıyla Güncellendi!');
+            updateUI();
+            closeModal('profileModal');
+        }
 
         function updateUI() {
             if(localStorage.getItem('isLogged') === 'true') {
                 document.getElementById('nav-login').style.display = 'none';
                 document.getElementById('nav-register').style.display = 'none';
                 document.getElementById('user-info').style.display = 'block';
-                document.getElementById('username-display').innerText = localStorage.getItem('user');
+                const currentName = localStorage.getItem('user');
+                document.getElementById('username-display').innerText = currentName;
+                document.getElementById('edit-user').value = currentName; // Inputu doldur
             }
         }
-        updateUI();
 
+        function logout() { localStorage.removeItem('isLogged'); location.reload(); }
         function checkAuthAndOpen() {
             if(localStorage.getItem('isLogged') === 'true') openModal('listModal');
-            else { alert('Lütfen Önce Giriş Yapın!'); openModal('loginModal'); }
+            else { alert('Önce Giriş Yapmalısın!'); openModal('loginModal'); }
         }
 
         // --- GÖRSEL ---
+        updateUI();
         const glow = document.getElementById('glow');
-        window.addEventListener('mousemove', (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        });
+        window.addEventListener('mousemove', (e) => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
 
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         let parts = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
-
         class Particle {
             constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.v = Math.random()*0.5 + 0.2; }
-            draw() {
-                ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
-                ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill();
-                this.y += this.v; if(this.y > canvas.height) this.y = 0;
-            }
+            draw() { ctx.fillStyle = 'rgba(255, 0, 0, 0.3)'; ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill(); this.y += this.v; if(this.y > canvas.height) this.y = 0; }
         }
         for(let i=0; i<80; i++) parts.push(new Particle());
         function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); parts.forEach(p => p.draw()); requestAnimationFrame(anim); }
