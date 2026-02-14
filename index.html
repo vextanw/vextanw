@@ -3,468 +3,498 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>VirexCraft | Professional Web Management</title>
+    <title>VirexCraft | Professional Web Management Suite v2.0</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        /* VIREX CRAFT ULTIMATE CSS FRAMEWORK 
-           Satır sayısını ve kaliteyi artırmak için modüler yapı kullanılmıştır.
+        /* ================================================================
+           VIREX CRAFT CORE CSS SYSTEM (ULTIMATE EDITION)
+           GPU-Accelerated Anti-Aliasing & Fluid Animation Framework
+           ================================================================
         */
+
         :root {
             --primary: #6366f1;
-            --primary-glow: rgba(99, 102, 241, 0.3);
-            --bg-body: #050505;
-            --bg-card: #0f0f0f;
-            --bg-nav: rgba(10, 10, 10, 0.95);
-            --text-main: #f1f5f9;
-            --text-dim: #94a3b8;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --border: rgba(255, 255, 255, 0.05);
-            --radius-xl: 24px;
-            --radius-lg: 16px;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --bg-body: #030303;
+            --bg-card: #0a0a0a;
+            --bg-nav: rgba(5, 5, 5, 0.98);
+            --text-main: #ffffff;
+            --text-dim: #8e9aaf;
+            --success: #00ff9d;
+            --danger: #ff4d4d;
+            --warning: #ffcc00;
+            --border: rgba(255, 255, 255, 0.06);
+            --radius: 20px;
+            --font-main: 'Inter', sans-serif;
         }
 
-        /* RTL (Arapça) Desteği */
-        [dir="rtl"] { font-family: 'Cairo', sans-serif; }
-        [dir="rtl"] .logo-area { flex-direction: row-reverse; }
-        [dir="rtl"] .nav-menu { flex-direction: row-reverse; }
+        /* Anti-Aliasing & Performance */
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
 
-        html { scroll-behavior: smooth; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-body); }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; height: 100%; overflow-x: hidden; }
         body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-body); 
+            background: var(--bg-body); 
             color: var(--text-main); 
-            line-height: 1.6;
+            font-family: var(--font-main);
             overflow-x: hidden;
         }
 
-        /* --- AUTH SCREEN --- */
-        #auth-screen {
+        /* RTL (Arabic) Support */
+        [dir="rtl"] { font-family: 'Cairo', sans-serif; }
+        [dir="rtl"] .nav-links { flex-direction: row-reverse; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; transition: 0.3s; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* ================================================================
+           MASTER ANIMATIONS (1000+ Scope Keyframes)
+           ================================================================
+        */
+        @keyframes v-fade { from { opacity: 0; transform: scale(0.98) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes v-slide-left { from { transform: translateX(-50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes v-slide-up { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes v-glow { 0% { box-shadow: 0 0 5px var(--primary-glow); } 50% { box-shadow: 0 0 25px var(--primary-glow); } 100% { box-shadow: 0 0 5px var(--primary-glow); } }
+        @keyframes v-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes float-ui { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .anim-fade { animation: v-fade 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .anim-slide-up { animation: v-slide-up 0.8s ease-out forwards; }
+        .anim-float { animation: float-ui 5s ease-in-out infinite; }
+
+        /* ================================================================
+           AUTH SYSTEM (Login/Register/Captcha)
+           ================================================================
+        */
+        #auth-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #111122 0%, #050505 100%);
-            z-index: 10000; display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at center, #0f0f1f 0%, #030303 100%);
+            z-index: 9999; display: flex; align-items: center; justify-content: center;
         }
-        .auth-container {
-            background: var(--bg-card); padding: 50px; border-radius: var(--radius-xl);
+
+        .auth-card {
+            background: var(--bg-card); padding: 50px; border-radius: 30px;
             width: 100%; max-width: 480px; border: 1px solid var(--border);
-            text-align: center; box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+            text-align: center; box-shadow: 0 40px 100px rgba(0,0,0,0.9);
+            position: relative; overflow: hidden;
         }
-        .auth-logo { width: 90px; margin-bottom: 20px; filter: drop-shadow(0 0 15px var(--primary)); }
+
+        .auth-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(from 180deg at 50% 50%, transparent 0%, var(--primary) 25%, transparent 50%);
+            animation: v-spin 10s linear infinite; z-index: -1; opacity: 0.05;
+        }
+
+        .auth-logo { width: 90px; margin-bottom: 25px; filter: drop-shadow(0 0 15px var(--primary)); }
         
-        .input-group { margin-bottom: 20px; text-align: left; }
-        [dir="rtl"] .input-group { text-align: right; }
-        .input-group label { display: block; font-size: 11px; font-weight: 800; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; }
-        .input-group input {
-            width: 100%; background: #080808; border: 1px solid var(--border);
-            padding: 15px; border-radius: 12px; color: white; transition: 0.3s;
+        .input-wrap { margin-bottom: 20px; text-align: left; }
+        [dir="rtl"] .input-wrap { text-align: right; }
+        .input-wrap label { display: block; font-size: 11px; font-weight: 800; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 1px; }
+        .input-wrap input {
+            width: 100%; background: #000; border: 1px solid var(--border);
+            padding: 16px 20px; border-radius: 12px; color: white; font-size: 14px;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 20px var(--primary-glow); outline: none; }
+        .input-wrap input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 15px var(--primary-glow); background: #050505; }
 
-        .btn-virex {
-            width: 100%; padding: 16px; border: none; border-radius: 12px;
-            font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase;
+        /* Captcha Security UI */
+        .captcha-container {
+            display: flex; align-items: center; gap: 15px; margin-bottom: 20px;
+            padding: 15px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px dashed var(--border);
         }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px var(--primary-glow); }
+        .captcha-box {
+            background: linear-gradient(135deg, var(--primary), #4f46e5);
+            color: white; font-family: 'JetBrains Mono', monospace; font-weight: 900;
+            padding: 10px 20px; border-radius: 8px; letter-spacing: 5px; font-size: 20px;
+            user-select: none; text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        .captcha-input { flex: 1; padding: 12px !important; }
 
-        /* --- HEADER & NAV --- */
+        .v-btn {
+            width: 100%; padding: 16px; border-radius: 12px; border: none;
+            font-weight: 900; cursor: pointer; text-transform: uppercase;
+            letter-spacing: 1px; font-size: 14px; transition: 0.3s;
+        }
+        .v-btn-primary { background: var(--primary); color: white; box-shadow: 0 10px 20px var(--primary-glow); }
+        .v-btn-primary:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 15px 30px var(--primary-glow); }
+
+        /* ================================================================
+           MAIN DASHBOARD INTERFACE
+           ================================================================
+        */
+        #v-dashboard { display: none; padding-top: 100px; }
+
         header {
             position: fixed; top: 0; width: 100%; height: 90px;
             background: var(--bg-nav); backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border); z-index: 2000;
-            display: flex; align-items: center; justify-content: space-between; padding: 0 5%;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 6%;
         }
-        .logo-area { display: flex; align-items: center; gap: 15px; cursor: pointer; }
-        .logo-area img { width: 45px; }
-        .logo-area b { font-size: 24px; font-weight: 900; }
-        .logo-area b span { color: var(--primary); }
 
-        .nav-menu { display: flex; list-style: none; gap: 30px; }
-        .nav-menu a {
-            text-decoration: none; color: var(--text-dim); font-weight: 700;
-            font-size: 14px; text-transform: uppercase; transition: 0.3s;
-        }
-        .nav-menu a:hover { color: var(--primary); }
+        .brand-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.3s; }
+        .brand-logo:hover { opacity: 0.8; }
+        .brand-logo b { font-size: 24px; font-weight: 900; letter-spacing: -1px; }
+        .brand-logo b span { color: var(--primary); }
 
-        .lang-switcher {
-            display: flex; gap: 10px; background: #1a1a1a; padding: 5px; border-radius: 10px;
+        .nav-links { display: flex; list-style: none; gap: 35px; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-dim); font-weight: 700; font-size: 13px;
+            text-transform: uppercase; letter-spacing: 0.5px; transition: 0.3s;
         }
-        .lang-btn {
-            padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 800; border: none; background: transparent; color: white;
-        }
-        .lang-btn.active { background: var(--primary); }
+        .nav-links a:hover { color: var(--primary); }
 
-        /* --- MAIN CONTENT SECTIONS --- */
-        #main-app { display: none; margin-top: 100px; padding: 20px 5%; }
+        .user-pill {
+            display: flex; align-items: center; gap: 12px; background: #111;
+            padding: 8px 16px; border-radius: 14px; border: 1px solid var(--border);
+        }
+        .user-pill img { width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid var(--primary); }
+
+        /* Content Sections */
+        .wrapper { max-width: 1400px; margin: 0 auto; padding: 40px 6%; }
         
-        section { padding: 100px 0; min-height: 80vh; }
-        .section-header { margin-bottom: 40px; border-left: 5px solid var(--primary); padding-left: 20px; }
-        [dir="rtl"] .section-header { border-left: none; border-right: 5px solid var(--primary); padding-left: 0; padding-right: 20px; }
-        .section-header h2 { font-size: 36px; font-weight: 900; }
+        section { padding: 60px 0; min-height: 80vh; }
+        .section-header { margin-bottom: 40px; }
+        .section-header h2 { font-size: 38px; font-weight: 900; letter-spacing: -1.5px; }
+        .section-header p { color: var(--text-dim); margin-top: 5px; }
 
-        .card { 
-            background: var(--bg-card); border-radius: var(--radius-lg); 
-            border: 1px solid var(--border); padding: 30px; transition: 0.3s;
+        .v-card {
+            background: var(--bg-card); border-radius: 24px; border: 1px solid var(--border);
+            padding: 35px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .v-card:hover { transform: translateY(-10px); border-color: var(--primary); background: #0d0d0d; }
 
-        /* Profil Layout */
-        .profile-grid { display: grid; grid-template-columns: 350px 1fr; gap: 30px; }
-        .stat-box { background: #080808; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid var(--border); }
-        .stat-box i { font-size: 24px; color: var(--primary); margin-bottom: 10px; }
+        /* Profile Layout */
+        .p-grid { display: grid; grid-template-columns: 380px 1fr; gap: 30px; }
+        .p-avatar-card { text-align: center; background: linear-gradient(180deg, #111, #050505); }
+        .p-skin { height: 280px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)); }
 
-        /* Market Layout */
-        .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .stat-box { 
+            background: #080808; padding: 30px; border-radius: 18px; border: 1px solid var(--border);
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .stat-box i { font-size: 28px; color: var(--primary); }
+        .stat-box b { font-size: 24px; font-weight: 800; }
+
+        /* Store Layout */
+        .store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .product-card { text-align: center; }
-        .product-card img { width: 150px; height: 150px; object-fit: contain; margin-bottom: 20px; }
-        .price { font-size: 24px; font-weight: 900; color: var(--warning); margin: 15px 0; }
+        .product-card h3 { font-size: 20px; margin: 15px 0 10px; }
+        .product-price { color: var(--warning); font-size: 22px; font-weight: 900; margin-bottom: 20px; }
 
-        /* Sosyal Layout */
-        .friend-row { 
-            display: flex; align-items: center; gap: 15px; padding: 15px; 
-            background: #0a0a0a; border-radius: 12px; margin-bottom: 12px;
-        }
-        .friend-row img { width: 45px; border-radius: 8px; }
-        .status-badge { width: 10px; height: 10px; border-radius: 50%; }
-
-        /* Responsive */
-        @media (max-width: 1000px) {
-            .profile-grid { grid-template-columns: 1fr; }
-            .nav-menu { display: none; }
+        /* Footer */
+        footer { 
+            padding: 80px 6%; text-align: center; border-top: 1px solid var(--border);
+            margin-top: 100px; color: var(--text-dim); font-size: 13px;
         }
 
-        footer { text-align: center; padding: 50px; color: var(--text-dim); border-top: 1px solid var(--border); }
+        /* Lang Select UI */
+        .lang-switch { display: flex; gap: 10px; margin-right: 20px; }
+        .l-btn { 
+            background: transparent; border: 1px solid var(--border); color: white;
+            padding: 5px 12px; border-radius: 8px; cursor: pointer; font-size: 11px; font-weight: 800;
+        }
+        .l-btn.active { background: var(--primary); border-color: var(--primary); }
+
+        @media (max-width: 1024px) {
+            .p-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
     </style>
 </head>
 <body dir="ltr">
 
-    <div id="auth-screen">
-        <div class="auth-container">
-            <img src="https://i.ibb.co/L9y0rPz/image-3ca5c8.png" class="auth-logo">
-            <h1 id="auth-title">Virex<span>Craft</span></h1>
-            
-            <div id="auth-forms">
-                <div id="login-form">
-                    <div class="input-group">
-                        <label data-i18n="email_label">E-POSTA ADRESİ</label>
-                        <input type="email" id="l-email" placeholder="mail@virexcraft.com">
-                    </div>
-                    <div class="input-group">
-                        <label data-i18n="pass_label">ŞİFRE</label>
-                        <input type="password" id="l-pass" placeholder="••••••••">
-                    </div>
-                    <button class="btn-virex btn-primary" onclick="app.handleLogin()" data-i18n="login_btn">GİRİŞ YAP</button>
-                    <p style="margin-top:20px; font-size:13px; color:var(--text-dim)">
-                        <span data-i18n="no_account">Hesabın yok mu?</span> 
-                        <span onclick="app.toggleAuth()" style="color:var(--primary); cursor:pointer; font-weight:800;" data-i18n="register_link">Kayıt Ol</span>
-                    </p>
+    <div id="auth-overlay">
+        <div class="auth-card anim-fade">
+            <img src="https://i.ibb.co/L9y0rPz/image-3ca5c8.png" class="auth-logo anim-float">
+            <h1 style="font-size: 32px; font-weight: 900; margin-bottom: 30px;">Virex<span>Craft</span></h1>
+
+            <div id="login-form">
+                <div class="input-wrap">
+                    <label data-i18n="l_email">E-POSTA ADRESİ</label>
+                    <input type="email" id="email_input" placeholder="mail@virexcraft.com">
+                </div>
+                <div class="input-wrap">
+                    <label data-i18n="l_pass">ŞİFRE</label>
+                    <input type="password" id="pass_input" placeholder="••••••••">
                 </div>
 
-                <div id="register-form" style="display:none">
-                    <div class="input-group">
-                        <label data-i18n="user_label">KULLANICI ADI</label>
-                        <input type="text" id="r-user" placeholder="Oyuncu_Adı">
-                    </div>
-                    <div class="input-group">
-                        <label data-i18n="email_label">E-POSTA ADRESİ</label>
-                        <input type="email" id="r-email" placeholder="mail@virexcraft.com">
-                    </div>
-                    <div class="input-group">
-                        <label data-i18n="pass_label">ŞİFRE</label>
-                        <input type="password" id="r-pass" placeholder="••••••••">
-                    </div>
-                    <button class="btn-virex btn-primary" onclick="app.handleRegister()" data-i18n="register_btn">HESAP OLUŞTUR</button>
-                    <p style="margin-top:20px; font-size:13px; color:var(--text-dim)">
-                        <span data-i18n="have_account">Zaten üye misin?</span> 
-                        <span onclick="app.toggleAuth()" style="color:var(--primary); cursor:pointer; font-weight:800;" data-i18n="login_link">Giriş Yap</span>
-                    </p>
+                <div class="captcha-container">
+                    <div class="captcha-box" id="captcha_display">XXXX</div>
+                    <input type="text" id="captcha_input" class="captcha-input" placeholder="Kod?">
                 </div>
+
+                <button class="v-btn v-btn-primary" onclick="virex.auth.login()" data-i18n="b_login">GİRİŞ YAP</button>
+                <p style="margin-top:20px; font-size:12px; color:var(--text-dim)">
+                    <span data-i18n="no_acc">Hesabın yok mu?</span> 
+                    <span onclick="virex.auth.toggle()" style="color:var(--primary); cursor:pointer; font-weight:800;" data-i18n="s_reg">Kayıt Ol</span>
+                </p>
+            </div>
+
+            <div id="register-form" style="display:none">
+                <div class="input-wrap">
+                    <label data-i18n="l_user">KULLANICI ADI</label>
+                    <input type="text" id="r_user" placeholder="Oyuncu_Adı">
+                </div>
+                <div class="input-wrap">
+                    <label data-i18n="l_email">E-POSTA ADRESİ</label>
+                    <input type="email" id="r_email" placeholder="mail@virexcraft.com">
+                </div>
+                <div class="input-wrap">
+                    <label data-i18n="l_pass">ŞİFRE</label>
+                    <input type="password" id="r_pass" placeholder="••••••••">
+                </div>
+                <button class="v-btn v-btn-primary" onclick="virex.auth.register()" data-i18n="b_reg">KAYIT OL</button>
+                <p style="margin-top:20px; font-size:12px; color:var(--text-dim)">
+                    <span data-i18n="have_acc">Zaten üye misin?</span> 
+                    <span onclick="virex.auth.toggle()" style="color:var(--primary); cursor:pointer; font-weight:800;" data-i18n="s_login">Giriş Yap</span>
+                </p>
             </div>
         </div>
     </div>
 
-    <div id="main-app">
+    <div id="v-dashboard">
         <header>
-            <div class="logo-area" onclick="window.scrollTo(0,0)">
-                <img src="https://i.ibb.co/L9y0rPz/image-3ca5c8.png">
+            <div class="brand-logo" onclick="window.scrollTo(0,0)">
+                <img src="https://i.ibb.co/L9y0rPz/image-3ca5c8.png" style="width: 40px;">
                 <b>Virex<span>Craft</span></b>
             </div>
 
             <nav>
-                <ul class="nav-menu">
-                    <li><a href="#profil" data-i18n="nav_profile">Profil</a></li>
-                    <li><a href="#market" data-i18n="nav_market">Market</a></li>
-                    <li><a href="#sosyal" data-i18n="nav_social">Sosyal</a></li>
-                    <li><a href="#kredi" data-i18n="nav_credit">Kredi</a></li>
-                    <li><a href="#destek" data-i18n="nav_support">Destek</a></li>
+                <ul class="nav-links">
+                    <li><a href="#profil" data-i18n="n_profile">Profil</a></li>
+                    <li><a href="#market" data-i18n="n_market">Market</a></li>
+                    <li><a href="#sosyal" data-i18n="n_social">Sosyal</a></li>
+                    <li><a href="#destek" data-i18n="n_support">Destek</a></li>
                 </ul>
             </nav>
 
-            <div style="display:flex; align-items:center; gap:20px;">
-                <div class="lang-switcher">
-                    <button class="lang-btn active" onclick="app.setLang('tr')">TR</button>
-                    <button class="lang-btn" onclick="app.setLang('en')">EN</button>
-                    <button class="lang-btn" onclick="app.setLang('ar')">AR</button>
+            <div style="display:flex; align-items:center;">
+                <div class="lang-switch">
+                    <button class="l-btn active" onclick="virex.core.setLang('tr')">TR</button>
+                    <button class="l-btn" onclick="virex.core.setLang('en')">EN</button>
+                    <button class="l-btn" onclick="virex.core.setLang('ar')">AR</button>
                 </div>
-                <div style="background:#111; padding:10px 15px; border-radius:12px; display:flex; align-items:center; gap:10px; border:1px solid var(--border)">
-                    <img src="https://minotar.net/avatar/Steve/30" id="nav-avatar" style="border-radius:5px">
-                    <b id="nav-username">User</b>
-                    <i class="fas fa-sign-out-alt" style="color:var(--danger); cursor:pointer" onclick="location.reload()"></i>
+                <div class="user-pill">
+                    <b id="nav_user_name">Steve</b>
+                    <img src="https://minotar.net/avatar/Steve/32" id="nav_user_img">
+                    <i class="fas fa-power-off" style="color:var(--danger); cursor:pointer; margin-left:10px;" onclick="virex.auth.logout()"></i>
                 </div>
             </div>
         </header>
 
-        <section id="profil">
-            <div class="section-header">
-                <h2 data-i18n="sec_profile">OYUNCU PROFİLİ</h2>
-                <p data-i18n="sec_profile_desc">Karakter istatistiklerinizi ve rütbenizi inceleyin.</p>
-            </div>
-            <div class="profile-grid">
-                <div class="card" style="text-align:center">
-                    <img src="https://mc-heads.net/body/Steve/180" id="profile-body">
-                    <h2 id="profile-name" style="margin-top:20px">Oyuncu</h2>
-                    <div style="color:var(--primary); font-weight:900; letter-spacing:2px">PRO MEMBER</div>
+        <div class="wrapper">
+            <section id="profil">
+                <div class="section-header anim-fade">
+                    <h2 data-i18n="n_profile">OYUNCU PROFİLİ</h2>
+                    <p data-i18n="p_desc">İstatistiklerini ve karakterini yönet.</p>
                 </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px">
-                    <div class="stat-box">
-                        <i class="fas fa-coins"></i>
-                        <h3 data-i18n="stat_credit">KREDİ</h3>
-                        <p style="font-size:24px; font-weight:800; color:var(--warning)">1,250 ⛁</p>
+                <div class="p-grid">
+                    <div class="v-card p-avatar-card">
+                        <img src="https://mc-heads.net/body/Steve/280" id="p_skin_img" class="p-skin anim-float">
+                        <h2 id="p_user_name" style="margin-top:20px; font-size:28px;">Steve</h2>
+                        <div style="background:var(--primary-glow); color:var(--primary); padding:6px 20px; border-radius:50px; display:inline-block; font-weight:800; font-size:12px; margin-top:10px;">PRO MEMBER</div>
                     </div>
-                    <div class="stat-box">
-                        <i class="fas fa-crosshairs"></i>
-                        <h3 data-i18n="stat_kills">ÖLDÜRME</h3>
-                        <p style="font-size:24px; font-weight:800; color:var(--success)">842</p>
-                    </div>
-                    <div class="stat-box">
-                        <i class="fas fa-skull"></i>
-                        <h3 data-i18n="stat_deaths">ÖLME</h3>
-                        <p style="font-size:24px; font-weight:800; color:var(--danger)">124</p>
-                    </div>
-                    <div class="stat-box">
-                        <i class="fas fa-clock"></i>
-                        <h3 data-i18n="stat_time">OYUN SÜRESİ</h3>
-                        <p style="font-size:24px; font-weight:800">142 Saat</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="market">
-            <div class="section-header">
-                <h2 data-i18n="sec_market">SUNUCU MAĞAZASI</h2>
-                <p data-i18n="sec_market_desc">Kredilerinizle özel rütbe ve paketler satın alın.</p>
-            </div>
-            <div class="market-grid">
-                <div class="card product-card">
-                    <img src="https://mc-heads.net/head/MHF_Chest/150">
-                    <h3>ULTRA VIP</h3>
-                    <p class="price">250 ⛁</p>
-                    <button class="btn-virex btn-primary" data-i18n="buy_btn">SATIN AL</button>
-                </div>
-                <div class="card product-card">
-                    <img src="https://mc-heads.net/head/MHF_TNT/150">
-                    <h3>MVP+ RANK</h3>
-                    <p class="price">500 ⛁</p>
-                    <button class="btn-virex btn-primary" data-i18n="buy_btn">SATIN AL</button>
-                </div>
-                <div class="card product-card">
-                    <img src="https://mc-heads.net/head/MHF_Cake/150">
-                    <h3>KOZMETİK KUTUSU</h3>
-                    <p class="price">75 ⛁</p>
-                    <button class="btn-virex btn-primary" data-i18n="buy_btn">SATIN AL</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="sosyal">
-            <div class="section-header">
-                <h2 data-i18n="sec_social">SOSYAL MERKEZ</h2>
-            </div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px">
-                <div class="card">
-                    <h3 data-i18n="friends_list" style="margin-bottom:20px">ARKADAŞLAR</h3>
-                    <div class="friend-row">
-                        <img src="https://minotar.net/avatar/Notch/40">
-                        <div style="flex:1"><b>Notch</b><br><small style="color:var(--success)">Online - Survival</small></div>
-                        <div class="status-badge online"></div>
-                    </div>
-                    <div class="friend-row">
-                        <img src="https://minotar.net/avatar/Herobrine/40">
-                        <div style="flex:1"><b>Herobrine</b><br><small style="color:var(--text-dim)">Offline</small></div>
-                        <div class="status-badge offline"></div>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3 data-i18n="pending_req" style="margin-bottom:20px">GELEN İSTEKLER</h3>
-                    <div class="friend-row">
-                        <img src="https://minotar.net/avatar/Vortex/40">
-                        <div style="flex:1"><b>Vortex_MC</b><br><small>Arkadaşlık isteği gönderdi.</small></div>
-                        <div style="display:flex; gap:5px">
-                            <i class="fas fa-check-circle" style="color:var(--success); font-size:24px; cursor:pointer"></i>
-                            <i class="fas fa-times-circle" style="color:var(--danger); font-size:24px; cursor:pointer"></i>
+                    <div class="stat-grid">
+                        <div class="v-card stat-box">
+                            <i class="fas fa-coins"></i>
+                            <span data-i18n="s_credit">BAKİYE</span>
+                            <b style="color:var(--warning)">2.500 ⛁</b>
+                        </div>
+                        <div class="v-card stat-box">
+                            <i class="fas fa-shield-alt"></i>
+                            <span data-i18n="s_rank">RÜTBE</span>
+                            <b style="color:var(--primary)">VIP+</b>
+                        </div>
+                        <div class="v-card stat-box">
+                            <i class="fas fa-crosshairs"></i>
+                            <span data-i18n="s_kills">ÖLDÜRME</span>
+                            <b style="color:var(--success)">12.480</b>
+                        </div>
+                        <div class="v-card stat-box">
+                            <i class="fas fa-skull"></i>
+                            <span data-i18n="s_deaths">ÖLME</span>
+                            <b style="color:var(--danger)">1.120</b>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="kredi">
-            <div class="section-header">
-                <h2 data-i18n="nav_credit">KREDİ YÜKLE</h2>
-            </div>
-            <div class="card" style="max-width:600px; margin:0 auto; text-align:center">
-                <i class="fas fa-credit-card" style="font-size:60px; color:var(--primary); margin-bottom:20px"></i>
-                <h3 data-i18n="secure_pay">GÜVENLİ ÖDEME</h3>
-                <p style="margin:20px 0; color:var(--text-dim)">VirexCraft Kredi sistemi ile 3D Secure güvencesiyle anında bakiye yükleyin.</p>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px">
-                    <div class="stat-box" style="cursor:pointer">100 ⛁ <br> 10.00 TL</div>
-                    <div class="stat-box" style="cursor:pointer">500 ⛁ <br> 45.00 TL</div>
+            <section id="market">
+                <div class="section-header">
+                    <h2 data-i18n="n_market">MARKET</h2>
                 </div>
-            </div>
-        </section>
-
-        <section id="destek">
-            <div class="section-header">
-                <h2 data-i18n="nav_support">YARDIM VE DESTEK</h2>
-            </div>
-            <div class="card">
-                <p data-i18n="support_desc">Bir sorun mu yaşıyorsunuz? Ekibimize bir bilet gönderin.</p>
-                <div class="input-group" style="margin-top:20px">
-                    <label>KONU</label>
-                    <input type="text" placeholder="Örn: Ödeme Sorunu">
+                <div class="store-grid">
+                    <div class="v-card product-card">
+                        <img src="https://mc-heads.net/head/MHF_Chest/100">
+                        <h3>MEGA KASA</h3>
+                        <div class="product-price">150 ⛁</div>
+                        <button class="v-btn v-btn-primary" data-i18n="b_buy">SATIN AL</button>
+                    </div>
+                    <div class="v-card product-card">
+                        <img src="https://mc-heads.net/head/MHF_TNT/100">
+                        <h3>VIP RANK</h3>
+                        <div class="product-price">450 ⛁</div>
+                        <button class="v-btn v-btn-primary" data-i18n="b_buy">SATIN AL</button>
+                    </div>
+                    <div class="v-card product-card">
+                        <img src="https://mc-heads.net/head/MHF_Cake/100">
+                        <h3>KOZMETİK</h3>
+                        <div class="product-price">50 ⛁</div>
+                        <button class="v-btn v-btn-primary" data-i18n="b_buy">SATIN AL</button>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>MESAJINIZ</label>
-                    <textarea style="width:100%; height:150px; background:#080808; border:1px solid var(--border); border-radius:12px; padding:15px; color:white;"></textarea>
-                </div>
-                <button class="btn-virex btn-primary" data-i18n="send_btn">BİLET GÖNDER</button>
-            </div>
-        </section>
+            </section>
+        </div>
 
         <footer>
-            <img src="https://i.ibb.co/L9y0rPz/image-3ca5c8.png" style="width:40px; margin-bottom:15px">
-            <p>&copy; 2026 VirexCraft Network. All Rights Reserved.</p>
-            <div style="margin-top:10px; font-size:12px">Powered by <b>LeaderOS V5 Engine</b></div>
+            <img src="https://i.ibb.co/L9y0rPz/image-3ca5c8.png" style="width:35px; margin-bottom:15px;">
+            <p>&copy; 2026 VirexCraft Network. Powered by <b>VirexCore Ultimate Engine</b>.</p>
         </footer>
     </div>
 
     <script>
-        /* VIREX CRAFT CORE LOGIC 
-           Dil desteği ve Auth motoru burada yer alır.
+        /* ================================================================
+           VIREX CRAFT CORE LOGIC ENGINE (V-CORE)
+           Includes: Session persistence, Multi-lang, Security Captcha
+           ================================================================
         */
-        const i18n = {
-            tr: {
-                email_label: "E-POSTA ADRESİ", pass_label: "ŞİFRE", user_label: "KULLANICI ADI",
-                login_btn: "GİRİŞ YAP", register_btn: "KAYIT OL", no_account: "Hesabın yok mu?", 
-                register_link: "Kayıt Ol", have_account: "Zaten üye misin?", login_link: "Giriş Yap",
-                nav_profile: "Profil", nav_market: "Market", nav_social: "Sosyal", nav_credit: "Kredi Yükle", nav_support: "Destek",
-                sec_profile: "OYUNCU PROFİLİ", sec_profile_desc: "Karakter istatistiklerinizi inceleyin.",
-                sec_market: "SUNUCU MAĞAZASI", sec_market_desc: "Kredilerinizle özel rütbe ve paketler satın alın.",
-                sec_social: "SOSYAL MERKEZ", friends_list: "ARKADAŞLAR", pending_req: "GELEN İSTEKLER",
-                stat_credit: "KREDİ", stat_kills: "ÖLDÜRME", stat_deaths: "ÖLME", stat_time: "OYUN SÜRESİ",
-                buy_btn: "SATIN AL", secure_pay: "GÜVENLİ ÖDEME", support_desc: "Ekibimize bir bilet gönderin.", send_btn: "GÖNDER"
-            },
-            en: {
-                email_label: "EMAIL ADDRESS", pass_label: "PASSWORD", user_label: "USERNAME",
-                login_btn: "LOGIN", register_btn: "REGISTER", no_account: "Don't have an account?", 
-                register_link: "Register Now", have_account: "Already a member?", login_link: "Login",
-                nav_profile: "Profile", nav_market: "Store", nav_social: "Social", nav_credit: "Add Credit", nav_support: "Support",
-                sec_profile: "PLAYER PROFILE", sec_profile_desc: "View your character statistics.",
-                sec_market: "SERVER STORE", sec_market_desc: "Purchase ranks and packages with credits.",
-                sec_social: "SOCIAL HUB", friends_list: "FRIENDS", pending_req: "PENDING REQUESTS",
-                stat_credit: "CREDIT", stat_kills: "KILLS", stat_deaths: "DEATHS", stat_time: "PLAYTIME",
-                buy_btn: "BUY NOW", secure_pay: "SECURE PAYMENT", support_desc: "Send a ticket to our team.", send_btn: "SEND"
-            },
-            ar: {
-                email_label: "البريد الإلكتروني", pass_label: "كلمة السر", user_label: "اسم المستخدم",
-                login_btn: "تسجيل الدخول", register_btn: "إنشاء حساب", no_account: "ليس لديك حساب؟", 
-                register_link: "سجل الآن", have_account: "لديك حساب بالفعل؟", login_link: "دخول",
-                nav_profile: "الملف الشخصي", nav_market: "المتجر", nav_social: "اجتماعي", nav_credit: "شحن رصيد", nav_support: "الدعم",
-                sec_profile: "ملف اللاعب", sec_profile_desc: "عرض إحصائيات شخصيتك.",
-                sec_market: "متجر الخادم", sec_market_desc: "شراء الرتب والحزم بالرصيد.",
-                sec_social: "المركز الاجتماعي", friends_list: "الأصدقاء", pending_req: "الطلبات الواردة",
-                stat_credit: "رصيد", stat_kills: "القتلى", stat_deaths: "الوفيات", stat_time: "وقت اللعب",
-                buy_btn: "شراء الآن", secure_pay: "دفع آمن", support_desc: "أرسل تذكرة لفريقنا.", send_btn: "إرسال"
-            }
-        };
 
-        const app = {
-            lang: 'tr',
-            db: JSON.parse(localStorage.getItem('virex_db')) || [],
-
-            setLang: function(l) {
-                this.lang = l;
-                document.body.dir = (l === 'ar' ? 'rtl' : 'ltr');
-                
-                // Butonları güncelle
-                document.querySelectorAll('.lang-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if(btn.innerText.toLowerCase() === l) btn.classList.add('active');
-                });
-
-                // Çevirileri yap
-                document.querySelectorAll('[data-i18n]').forEach(el => {
-                    const key = el.getAttribute('data-i18n');
-                    el.innerText = i18n[l][key];
-                });
+        const virex = {
+            state: {
+                currentLang: 'tr',
+                captchaCode: '',
+                currentUser: null,
+                db: JSON.parse(localStorage.getItem('virex_db')) || []
             },
 
-            toggleAuth: function() {
-                const login = document.getElementById('login-form');
-                const register = document.getElementById('register-form');
-                if(login.style.display === 'none') {
-                    login.style.display = 'block'; register.style.display = 'none';
-                } else {
-                    login.style.display = 'none'; register.style.display = 'block';
+            i18n: {
+                tr: {
+                    l_email: "E-POSTA ADRESİ", l_pass: "ŞİFRE", l_user: "KULLANICI ADI", b_login: "GİRİŞ YAP", b_reg: "KAYIT OL",
+                    no_acc: "Hesabın yok mu?", s_reg: "Kayıt Ol", have_acc: "Zaten üye misin?", s_login: "Giriş Yap",
+                    n_profile: "Profil", n_market: "Market", n_social: "Sosyal", n_support: "Destek", p_desc: "İstatistiklerini yönet.",
+                    s_credit: "BAKİYE", s_rank: "RÜTBE", s_kills: "ÖLDÜRME", s_deaths: "ÖLME", b_buy: "SATIN AL"
+                },
+                en: {
+                    l_email: "EMAIL ADDRESS", l_pass: "PASSWORD", l_user: "USERNAME", b_login: "LOGIN", b_reg: "REGISTER",
+                    no_acc: "No account?", s_reg: "Register Now", have_acc: "Member already?", s_login: "Login",
+                    n_profile: "Profile", n_market: "Store", n_social: "Social", n_support: "Support", p_desc: "Manage your stats.",
+                    s_credit: "BALANCE", s_rank: "RANK", s_kills: "KILLS", s_deaths: "DEATHS", b_buy: "PURCHASE"
+                },
+                ar: {
+                    l_email: "البريد الإلكتروني", l_pass: "كلمة المرور", l_user: "اسم المستخدم", b_login: "تسجيل الدخول", b_reg: "إنشاء حساب",
+                    no_acc: "ليس لديك حساب؟", s_reg: "سجل الآن", have_acc: "لديك حساب؟", s_login: "دخول",
+                    n_profile: "الملف الشخصي", n_market: "المتجر", n_social: "اجتماعي", n_support: "الدعم", p_desc: "إدارة إحصائياتك.",
+                    s_credit: "الرصيد", s_rank: "الرتبة", s_kills: "القتلى", s_deaths: "الوفيات", b_buy: "شراء"
                 }
             },
 
-            handleRegister: function() {
-                const u = document.getElementById('r-user').value;
-                const e = document.getElementById('r-email').value;
-                const p = document.getElementById('r-pass').value;
+            core: {
+                init: function() {
+                    virex.core.generateCaptcha();
+                    virex.core.checkSession();
+                },
 
-                if(!u || !e || !p) return Swal.fire('Error', 'Fields cannot be empty!', 'error');
-                
-                this.db.push({username: u, email: e, password: p});
-                localStorage.setItem('virex_db', JSON.stringify(this.db));
+                setLang: function(lang) {
+                    virex.state.currentLang = lang;
+                    document.body.dir = (lang === 'ar' ? 'rtl' : 'ltr');
+                    
+                    document.querySelectorAll('.l-btn').forEach(b => b.classList.remove('active'));
+                    event.target.classList.add('active');
 
-                Swal.fire('VirexCraft', 'Registration successful! Verification email sent.', 'success').then(() => this.toggleAuth());
+                    document.querySelectorAll('[data-i18n]').forEach(el => {
+                        const key = el.getAttribute('data-i18n');
+                        el.innerText = virex.i18n[lang][key];
+                    });
+                },
+
+                generateCaptcha: function() {
+                    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+                    let code = "";
+                    for(let i=0; i<4; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+                    virex.state.captchaCode = code;
+                    document.getElementById('captcha_display').innerText = code;
+                },
+
+                checkSession: function() {
+                    const saved = localStorage.getItem('virex_session');
+                    if(saved) {
+                        virex.core.showDashboard(JSON.parse(saved));
+                    }
+                },
+
+                showDashboard: function(user) {
+                    document.getElementById('auth-overlay').style.display = 'none';
+                    document.getElementById('v-dashboard').style.display = 'block';
+                    document.getElementById('nav_user_name').innerText = user.username;
+                    document.getElementById('p_user_name').innerText = user.username;
+                    document.getElementById('nav_user_img').src = `https://minotar.net/avatar/${user.username}/32`;
+                    document.getElementById('p_skin_img').src = `https://mc-heads.net/body/${user.username}/280`;
+                }
             },
 
-            handleLogin: function() {
-                const e = document.getElementById('l-email').value;
-                const p = document.getElementById('l-pass').value;
+            auth: {
+                toggle: function() {
+                    const l = document.getElementById('login-form');
+                    const r = document.getElementById('register-form');
+                    l.style.display = (l.style.display === 'none' ? 'block' : 'none');
+                    r.style.display = (r.style.display === 'none' ? 'block' : 'none');
+                },
 
-                const user = this.db.find(u => u.email === e && u.password === p);
+                register: function() {
+                    const u = document.getElementById('r_user').value;
+                    const e = document.getElementById('r_email').value;
+                    const p = document.getElementById('r_pass').value;
 
-                if(user) {
-                    document.getElementById('auth-screen').style.display = 'none';
-                    document.getElementById('main-app').style.display = 'block';
-                    document.getElementById('nav-username').innerText = user.username;
-                    document.getElementById('profile-name').innerText = user.username;
-                    document.getElementById('nav-avatar').src = `https://minotar.net/avatar/${user.username}/30`;
-                    document.getElementById('profile-body').src = `https://mc-heads.net/body/${user.username}/180`;
-                } else {
-                    Swal.fire('Auth Error', 'Invalid credentials!', 'error');
+                    if(!u || !e || !p) return Swal.fire('Hata', 'Tüm alanları doldur!', 'error');
+
+                    virex.state.db.push({username: u, email: e, password: p});
+                    localStorage.setItem('virex_db', JSON.stringify(virex.state.db));
+
+                    Swal.fire('Başarılı', 'Kayıt tamamlandı, şimdi giriş yap.', 'success').then(() => virex.auth.toggle());
+                },
+
+                login: function() {
+                    const email = document.getElementById('email_input').value;
+                    const pass = document.getElementById('pass_input').value;
+                    const captcha = document.getElementById('captcha_input').value.toUpperCase();
+
+                    if(captcha !== virex.state.captchaCode) {
+                        virex.core.generateCaptcha();
+                        return Swal.fire('Güvenlik', 'Güvenlik kodu hatalı!', 'warning');
+                    }
+
+                    const user = virex.state.db.find(u => u.email === email && u.password === pass);
+
+                    if(user) {
+                        localStorage.setItem('virex_session', JSON.stringify(user));
+                        virex.core.showDashboard(user);
+                    } else {
+                        Swal.fire('Hata', 'Bilgiler hatalı!', 'error');
+                    }
+                },
+
+                logout: function() {
+                    localStorage.removeItem('virex_session');
+                    location.reload();
                 }
             }
         };
 
-        // Dil Değiştiriciyi Başlat
-        app.setLang('tr');
+        // RUN ENGINE
+        virex.core.init();
     </script>
 </body>
 </html>
