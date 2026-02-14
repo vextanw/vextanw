@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>VIREX ELITE | The Blood Portal</title>
+    <title>ARXON NETWORK | Elite System</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Orbitron:wght@400;900&family=Poppins:wght@300;600;900&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
             --blood: #ff0000;
             --dark: #020202;
             --panel: #0a0a0a;
-            --glow: 0 0 20px rgba(255, 0, 0, 0.6);
+            --neon: 0 0 20px rgba(255, 0, 0, 0.5);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,135 +26,130 @@
             height: 100vh;
         }
 
-        /* --- LOGIN WALL (TAKILAN EKRAN BURASIYDI) --- */
-        #auth-wall {
-            position: fixed; inset: 0; z-index: 99999;
-            background: radial-gradient(circle, #1a0000 0%, #000 100%);
-            display: flex; align-items: center; justify-content: center;
-        }
+        /* --- SAYFA YAPILARI --- */
+        .page { display: none; height: 100vh; width: 100%; position: fixed; inset: 0; z-index: 10; }
+        .active-page { display: flex !important; align-items: center; justify-content: center; flex-direction: column; }
 
+        /* --- AUTH CARDS --- */
         .auth-card {
             background: var(--panel); padding: 40px; border-radius: 20px;
-            border: 2px solid var(--blood); box-shadow: var(--glow);
-            width: 400px; text-align: center;
+            border: 2px solid var(--blood); box-shadow: var(--neon);
+            width: 400px; text-align: center; animation: fadeIn 0.5s ease;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         input {
-            width: 100%; padding: 12px; margin: 8px 0; background: #000;
-            border: 1px solid #333; color: #fff; border-radius: 8px;
+            width: 100%; padding: 12px; margin: 10px 0; background: #000;
+            border: 1px solid #333; color: #fff; border-radius: 8px; transition: 0.3s;
         }
+        input:focus { border-color: var(--blood); box-shadow: 0 0 10px var(--blood); }
 
-        /* --- APP INTERFACE (GİZLİ BAŞLAR) --- */
-        #main-layout { display: none; } /* Başlangıçta komple gizli */
+        .btn { cursor: pointer; border: none; font-family: 'Orbitron'; font-weight: 700; transition: 0.3s; }
+        .btn-blood { background: var(--blood); color: #fff; padding: 12px; border-radius: 8px; width: 100%; margin-top: 10px; }
+        .btn-blood:hover { transform: scale(1.02); filter: brightness(1.2); }
 
-        nav {
-            height: 70px; background: rgba(0,0,0,0.9); border-bottom: 2px solid var(--blood);
-            display: flex; align-items: center; justify-content: space-between; padding: 0 30px;
-        }
+        /* --- LOBBY (#l) INTERFACE --- */
+        #lobby-page { display: none; flex-direction: column; }
+        nav { height: 70px; background: rgba(0,0,0,0.9); border-bottom: 2px solid var(--blood); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; width: 100%; }
+        .app-grid { display: grid; grid-template-columns: 300px 1fr 320px; height: calc(100vh - 70px); width: 100%; }
+        
+        .sidebar { background: #050505; border-right: 1px solid #1a1a1a; padding: 20px; }
+        .stage { background: #000; position: relative; overflow: hidden; display: flex; flex-direction: column; }
 
-        .app-grid { display: grid; grid-template-columns: 300px 1fr 320px; height: calc(100vh - 70px); }
-
-        .sidebar { background: #050505; border-right: 1px solid #1a1a1a; padding: 20px; overflow-y: auto; }
-        .stage { background: #000; position: relative; display: flex; flex-direction: column; }
-
-        /* VİDEO VE MİKROFON */
-        .video-container { flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 15px; padding: 20px; }
-        .user-video-box { background: #0d0d0d; border-radius: 15px; border: 2px solid #222; position: relative; overflow: hidden; }
+        /* VIDEO AREA */
+        .video-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 15px; padding: 20px; }
+        .video-box { background: #0d0d0d; border-radius: 15px; border: 2px solid #222; position: relative; overflow: hidden; }
         video { width: 100%; height: 100%; object-fit: cover; }
 
-        .talking-fx {
-            position: absolute; top: 15px; right: 15px; width: 40px; height: 40px;
-            background: var(--blood); border-radius: 50%; display: none;
-            align-items: center; justify-content: center; box-shadow: 0 0 15px var(--blood);
-            animation: pulse 0.5s infinite alternate; z-index: 5;
-        }
+        /* TALKING EFFECT */
+        .mic-on { position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; background: var(--blood); border-radius: 50%; display: none; align-items: center; justify-content: center; box-shadow: 0 0 15px var(--blood); animation: pulse 0.5s infinite alternate; }
         @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
-        /* PROFİL VE ÇERÇEVELER */
-        .dc-profile { background: #18191c; border-radius: 12px; overflow: hidden; }
-        .dc-banner { height: 80px; background: var(--blood); }
-        .dc-avatar-container { margin-top: -45px; padding: 0 20px; position: relative; display: inline-block; }
-        .dc-avatar { width: 90px; height: 90px; border-radius: 50%; border: 5px solid #18191c; object-fit: cover; }
-        .dc-frame-img { position: absolute; top: -12px; left: 8px; width: 114px; pointer-events: none; }
+        /* PROFILE CARD */
+        .profile-wrap { background: #18191c; border-radius: 12px; overflow: hidden; }
+        .banner { height: 80px; background: var(--blood); }
+        .avatar-box { margin-top: -45px; padding: 0 20px; position: relative; display: inline-block; }
+        .p-img { width: 90px; height: 90px; border-radius: 50%; border: 5px solid #18191c; object-fit: cover; }
+        .p-frame { position: absolute; top: -12px; left: 8px; width: 114px; pointer-events: none; }
 
-        .btn { cursor: pointer; border: none; transition: 0.3s; font-family: 'Orbitron'; font-weight: 700; }
-        .btn-blood { background: var(--blood); color: #fff; padding: 12px; border-radius: 8px; width: 100%; }
-        
-        /* FRAME SHOP */
+        /* SHOP GRID */
         .shop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .shop-item { cursor: pointer; background: #111; padding: 10px; border-radius: 8px; border: 1px solid transparent; }
+        .shop-item { cursor: pointer; background: #111; padding: 10px; border-radius: 8px; border: 1px solid transparent; text-align: center; }
         .shop-item:hover { border-color: var(--blood); transform: scale(1.05); }
 
     </style>
 </head>
-<body>
+<body onhashchange="route()">
 
-    <div id="auth-wall">
+    <div id="register" class="page">
         <div class="auth-card">
-            <h1 style="font-family: 'Black Ops One'; color: var(--blood); margin-bottom: 20px;">VIREX LOGIN</h1>
-            
-            <div id="login-fields">
-                <input type="text" id="username" placeholder="Kullanıcı Adı">
-                <input type="password" id="password" placeholder="Şifre">
-                <label style="display:block; margin: 10px 0; font-size:12px; color:#666; cursor:pointer;">
-                    <input type="file" id="pp-upload" hidden onchange="handlePP(this)">
-                    <i class="fas fa-camera"></i> Profil Resmi Seç (Opsiyonel)
-                </label>
-                <button class="btn btn-blood" onclick="finalizeLogin()">SİSTEME GİRİŞ YAP</button>
-                <p style="font-size:10px; margin-top:15px; color:#444;">Kayıt otomatik olarak LocalStorage'a yapılır.</p>
-            </div>
+            <h1 style="font-family: 'Black Ops One'; color: var(--blood); font-size: 32px;">ARXON REGISTER</h1>
+            <p style="font-size: 11px; color: #555; margin-bottom: 20px;">Yeni bir hesap oluştur ve ağa katıl.</p>
+            <input type="text" id="r-user" placeholder="Kullanıcı Adı">
+            <input type="password" id="r-pass" placeholder="Şifre">
+            <label style="display:block; margin: 10px 0; font-size:12px; color:var(--blood); cursor:pointer;">
+                <input type="file" id="r-pp" hidden onchange="handlePP(this)">
+                <i class="fas fa-image"></i> Profil Resmi Yükle
+            </label>
+            <button class="btn btn-blood" onclick="doRegister()">KAYIT OL</button>
+            <p style="margin-top: 15px; font-size: 12px;">Zaten üye misin? <a href="#login" style="color:var(--blood)">Giriş Yap</a></p>
         </div>
     </div>
 
-    <div id="main-layout">
+    <div id="login" class="page">
+        <div class="auth-card">
+            <h1 style="font-family: 'Black Ops One'; color: var(--blood); font-size: 32px;">ARXON LOGIN</h1>
+            <input type="text" id="l-user" placeholder="Kullanıcı Adı">
+            <input type="password" id="l-pass" placeholder="Şifre">
+            <button class="btn btn-blood" onclick="doLogin()">SİSTEME GİRİŞ YAP</button>
+            <p style="margin-top: 15px; font-size: 12px;">Hesabın yok mu? <a href="#register" style="color:var(--blood)">Kayıt Ol</a></p>
+        </div>
+    </div>
+
+    <div id="l" class="page" style="display: none; flex-direction: column;">
         <nav>
-            <div class="logo" style="font-family:'Black Ops One'; font-size:24px; color:var(--blood);">VIREX<span>ELITE</span></div>
+            <div class="logo" style="font-family:'Black Ops One'; font-size:24px; color:var(--blood);">ARXON NETWORK</div>
             <div style="display:flex; align-items:center; gap:10px;">
-                <span id="nav-user-name" style="font-weight:900;">USER#0001</span>
-                <img id="nav-user-pp" src="" style="width:35px; height:35px; border-radius:50%; border:1px solid var(--blood); object-fit:cover;">
+                <span id="n-name" style="font-weight:900;">GİRİŞ YAPILDI</span>
+                <img id="n-pp" src="" style="width:35px; height:35px; border-radius:50%; border:1px solid var(--blood); object-fit:cover;">
             </div>
         </nav>
-
         <div class="app-grid">
             <aside class="sidebar">
-                <button class="btn btn-blood" style="margin-bottom:20px;" onclick="Swal.fire('Lobi','Lobi oluşturma yetkiniz yok.','error')">+ YENİ LOBİ</button>
+                <button class="btn btn-blood" style="margin-bottom:20px;">+ LOBİ OLUŞTUR</button>
                 <div style="background:#111; padding:15px; border-radius:10px; border-left:4px solid var(--blood);">
-                    <h4 style="color:var(--blood)">Virex Public #1</h4>
-                    <p style="font-size:10px; color:#555;">Aktif: 42 Kişi</p>
+                    <h4 style="color:var(--blood)">Arxon Global #1</h4>
+                    <p style="font-size:10px; color:#555;">Status: Online</p>
                 </div>
             </aside>
-
             <main class="stage">
-                <div class="video-container" id="videoGrid">
-                    <div class="user-video-box">
-                        <video id="webcam" autoplay playsinline muted></video>
-                        <div class="talking-fx" id="micIndicator"><i class="fas fa-microphone"></i></div>
+                <div class="video-grid" id="v-grid">
+                    <div class="video-box">
+                        <video id="myCam" autoplay playsinline muted></video>
+                        <div class="mic-on" id="micInd"><i class="fas fa-microphone"></i></div>
                         <div style="position:absolute; bottom:15px; left:15px; background:rgba(0,0,0,0.8); padding:5px 12px; border-radius:5px;">
-                            <span id="video-label" style="font-weight:900; font-size:12px;">OYUNCU</span>
+                            <span id="v-name" style="font-weight:900; font-size:12px;">OYUNCU</span>
                         </div>
                     </div>
                 </div>
-
                 <div style="height:80px; background:#080808; display:flex; align-items:center; justify-content:center; gap:20px; border-top:1px solid #111;">
-                    <button class="btn-blood" style="width:50px; height:50px; border-radius:50%;" onclick="muteAudio()"><i class="fas fa-microphone"></i></button>
-                    <button class="btn-blood" style="width:50px; height:50px; border-radius:50%;" onclick="stopVideo()"><i class="fas fa-video"></i></button>
-                    <button class="btn-blood" style="width:auto; padding:0 20px;" onclick="shareScreen()">EKRAN PAYLAŞ</button>
+                    <button class="btn-blood" style="width:50px; height:50px; border-radius:50%;" onclick="toggleMute()"><i class="fas fa-microphone"></i></button>
+                    <button class="btn-blood" style="width:50px; height:50px; border-radius:50%;" onclick="toggleCam()"><i class="fas fa-video"></i></button>
+                    <button class="btn-blood" style="width:auto; padding:0 20px;" onclick="location.hash='#login'">ÇIKIŞ YAP</button>
                 </div>
             </main>
-
             <aside class="sidebar" style="border-right:none; border-left:1px solid #1a1a1a;">
-                <div class="dc-profile">
-                    <div class="dc-banner"></div>
-                    <div class="dc-avatar-container">
-                        <img id="card-pp" class="dc-avatar" src="https://i.imgur.com/6VBx3io.png">
-                        <img id="card-frame" class="dc-frame-img" src="">
+                <div class="profile-wrap">
+                    <div class="banner"></div>
+                    <div class="avatar-box">
+                        <img id="c-pp" class="p-img" src="https://i.imgur.com/6VBx3io.png">
+                        <img id="c-frame" class="p-frame" src="">
                     </div>
                     <div style="padding:20px;">
-                        <h3 id="card-name" style="font-family:'Orbitron';">KULLANICI</h3>
-                        <p style="color:var(--blood); font-size:10px; font-weight:900; margin-top:3px;">ELITE DEVELOPER</p>
+                        <h3 id="c-name" style="font-family:'Orbitron';">KULLANICI</h3>
+                        <p style="color:var(--blood); font-size:10px; font-weight:900;">ARXON ELITE</p>
                         <hr style="border:0; border-top:1px solid #222; margin:15px 0;">
-                        <button class="btn btn-blood" style="font-size:10px; margin-bottom:10px;" onclick="openShop()">ÇERÇEVE MAĞAZASI</button>
-                        <button class="btn" style="width:100%; background:#300; color:#fff; padding:10px; border-radius:8px; font-size:10px;" onclick="logout()">HESAPTAN ÇIKIŞ YAP</button>
+                        <button class="btn btn-blood" style="font-size:10px;" onclick="openShop()">AVATAR SHOP</button>
                     </div>
                 </div>
             </aside>
@@ -162,58 +157,89 @@
     </div>
 
     <script>
-        let userPP = "https://i.imgur.com/6VBx3io.png";
-        let stream = null;
+        let userData = { pp: "https://i.imgur.com/6VBx3io.png", stream: null };
+
+        // --- YÖNLENDİRME MOTORU ---
+        function route() {
+            const hash = window.location.hash || '#login';
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            
+            const targetPage = document.querySelector(hash);
+            if(targetPage) {
+                targetPage.classList.add('active-page');
+            }
+
+            // Lobiye girişte kamera başlat
+            if(hash === '#l') {
+                startMedia();
+            } else if(userData.stream) {
+                userData.stream.getTracks().forEach(t => t.stop());
+            }
+        }
 
         // --- PP YÜKLEME ---
         function handlePP(input) {
             const reader = new FileReader();
-            reader.onload = (e) => { userPP = e.target.result; Swal.fire('Başarılı','Resim yüklendi!','success'); }
+            reader.onload = (e) => { userData.pp = e.target.result; Swal.fire('Hazır','Resim sisteme işlendi!','success'); }
             reader.readAsDataURL(input.files[0]);
         }
 
-        // --- GİRİŞ YAP (EKRAN KALDIRMA FIX) ---
-        async function finalizeLogin() {
-            const name = document.getElementById('username').value;
-            if(name.length < 2) return Swal.fire('Hata','İsim gir koçum!','error');
+        // --- KAYIT İŞLEMİ ---
+        function doRegister() {
+            const u = document.getElementById('r-user').value;
+            const p = document.getElementById('r-pass').value;
+            if(!u || !p) return Swal.fire('Hata','Tüm alanları doldur!','error');
 
-            try {
-                // Kamera İzni
-                stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                document.getElementById('webcam').srcObject = stream;
+            const db = JSON.parse(localStorage.getItem('arxon_users') || '{}');
+            db[u] = { pass: p, pp: userData.pp };
+            localStorage.setItem('arxon_users', JSON.stringify(db));
 
-                // LOGIN EKRANINI KÖKTEN SİL (Takılmayı önler)
-                const wall = document.getElementById('auth-wall');
-                wall.style.opacity = '0';
-                setTimeout(() => {
-                    wall.remove(); // DOM'dan tamamen temizle
-                    document.getElementById('main-layout').style.display = 'block';
-                }, 500);
+            Swal.fire('Başarılı','Kayıt tamamlandı, şimdi giriş yap!','success').then(() => {
+                window.location.hash = '#login';
+            });
+        }
 
-                // Verileri Yerleştir
-                document.getElementById('nav-user-name').innerText = name + "#0001";
-                document.getElementById('card-name').innerText = name.toUpperCase();
-                document.getElementById('video-label').innerText = name.toUpperCase();
-                document.getElementById('nav-user-pp').src = userPP;
-                document.getElementById('card-pp').src = userPP;
+        // --- GİRİŞ İŞLEMİ ---
+        function doLogin() {
+            const u = document.getElementById('l-user').value;
+            const p = document.getElementById('l-pass').value;
+            const db = JSON.parse(localStorage.getItem('arxon_users') || '{}');
 
-                startVoiceDetect(stream);
-
-            } catch(e) {
-                Swal.fire('İzin Gerekli','Kamera ve Mikrofon izni olmadan giriş yapamazsın.','warning');
+            if(db[u] && db[u].pass === p) {
+                userData.name = u;
+                userData.pp = db[u].pp;
+                window.location.hash = '#l';
+            } else {
+                Swal.fire('Erişim Engellendi','Bilgiler hatalı!','error');
             }
         }
 
-        // --- ÇIKIŞ YAP ---
-        function logout() {
-            location.reload();
+        // --- MEDYA BAŞLATMA ---
+        async function startMedia() {
+            try {
+                userData.stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                document.getElementById('myCam').srcObject = userData.stream;
+                
+                // UI Update
+                document.getElementById('n-name').innerText = userData.name + "#2026";
+                document.getElementById('c-name').innerText = userData.name.toUpperCase();
+                document.getElementById('v-name').innerText = userData.name.toUpperCase();
+                document.getElementById('n-pp').src = userData.pp;
+                document.getElementById('c-pp').src = userData.pp;
+
+                detectVoice(userData.stream);
+            } catch(e) {
+                Swal.fire('İzin Şart','Kamera izni olmadan lobiye giremezsin!','warning').then(() => {
+                    window.location.hash = '#login';
+                });
+            }
         }
 
-        // --- SES ALGILAMA ---
-        function startVoiceDetect(s) {
-            const ctx = new AudioContext();
-            const ana = ctx.createAnalyser();
-            const src = ctx.createMediaStreamSource(s);
+        // --- SES ANALİZİ ---
+        function detectVoice(s) {
+            const actx = new AudioContext();
+            const ana = actx.createAnalyser();
+            const src = actx.createMediaStreamSource(s);
             ana.fftSize = 256;
             src.connect(ana);
             const data = new Uint8Array(ana.frequencyBinCount);
@@ -221,61 +247,40 @@
             function loop() {
                 ana.getByteFrequencyData(data);
                 let vol = data.reduce((a, b) => a + b) / data.length;
-                document.getElementById('micIndicator').style.display = (vol > 35) ? 'flex' : 'none';
+                document.getElementById('micInd').style.display = (vol > 40) ? 'flex' : 'none';
                 requestAnimationFrame(loop);
             }
             loop();
         }
 
-        // --- DISCORD SHOP ÇERÇEVELERİ (FULL LİSTE) ---
+        // --- DISCORD SHOP ---
         const frames = [
-            { n: "Cyberpunk", id: "a_8656113ccf3e24b7a66164f9f7403164" },
-            { n: "Fantasy", id: "a_550220979667c31d17d096c466488344" },
-            { n: "Fire Lord", id: "a_b5104d498114c000df837c7682f6e520" },
-            { n: "Glitch", id: "a_06f1556017006830500f4f9f53e344e5" },
-            { n: "Horror", id: "a_2069539369324151325" },
-            { n: "Sakura", id: "a_6c4767142468305f884a0d9b4b96b467" },
-            { n: "Anime", id: "a_8ed6697a8ec97607a9779df529e7f950" },
-            { n: "Electric", id: "a_3f656037740f958866380a9762118742" },
-            { n: "Neon Night", id: "a_022f67623916962f928a6f3a746a4892" }
+            { n: "Cyber", id: "a_8656113ccf3e24b7a66164f9f7403164" },
+            { n: "Magic", id: "a_550220979667c31d17d096c466488344" },
+            { n: "Fire", id: "a_b5104d498114c000df837c7682f6e520" },
+            { n: "Ghost", id: "a_2069539369324151325" },
+            { n: "Sakura", id: "a_6c4767142468305f884a0d9b4b96b467" }
         ];
 
         function openShop() {
-            let html = `<div class="shop-grid">`;
+            let h = `<div class="shop-grid">`;
             frames.forEach(f => {
-                html += `
-                <div class="shop-item" onclick="applyF('${f.id}')">
-                    <img src="https://cdn.discordapp.com/avatar-decoration-presets/v2/${f.id}.png" width="60">
-                    <p style="font-size:9px; color:#fff; margin-top:5px;">${f.n}</p>
-                </div>`;
+                h += `<div class="shop-item" onclick="setF('${f.id}')"><img src="https://cdn.discordapp.com/avatar-decoration-presets/v2/${f.id}.png" width="60"><p style="font-size:9px;">${f.n}</p></div>`;
             });
-            html += `</div>`;
-
-            Swal.fire({
-                title: 'Discord Avatar Shop',
-                background: '#0a0a0a',
-                color: '#fff',
-                html: html,
-                showConfirmButton: false
-            });
+            h += `</div>`;
+            Swal.fire({ title: 'Arxon Avatar Shop', background: '#0a0a0a', color: '#fff', html: h, showConfirmButton: false });
         }
 
-        function applyF(id) {
-            document.getElementById('card-frame').src = `https://cdn.discordapp.com/avatar-decoration-presets/v2/${id}.png`;
+        function setF(id) {
+            document.getElementById('c-frame').src = `https://cdn.discordapp.com/avatar-decoration-presets/v2/${id}.png`;
             Swal.close();
         }
 
-        // --- MEDYA KONTROLLERİ ---
-        function muteAudio() { stream.getAudioTracks()[0].enabled = !stream.getAudioTracks()[0].enabled; }
-        function stopVideo() { stream.getVideoTracks()[0].enabled = !stream.getVideoTracks()[0].enabled; }
-        async function shareScreen() {
-            const ss = await navigator.mediaDevices.getDisplayMedia({ video: true });
-            const b = document.createElement('div');
-            b.className = "user-video-box"; b.innerHTML = `<video id="ssV" autoplay playsinline></video>`;
-            document.getElementById('videoGrid').appendChild(b);
-            document.getElementById('ssV').srcObject = ss;
-        }
+        function toggleMute() { userData.stream.getAudioTracks()[0].enabled = !userData.stream.getAudioTracks()[0].enabled; }
+        function toggleCam() { userData.stream.getVideoTracks()[0].enabled = !userData.stream.getVideoTracks()[0].enabled; }
 
+        // İlk açılışta route kontrol et
+        route();
     </script>
 </body>
 </html>
