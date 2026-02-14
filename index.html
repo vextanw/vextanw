@@ -1,211 +1,170 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>RED PRO | LOBBY FIXED</title>
-    <style>
-        :root { --red: #ff0000; --bg: #050000; --gold: #ffd700; }
-        body, html { margin: 0; padding: 0; background: var(--bg); color: white; font-family: 'Arial Black', sans-serif; overflow: hidden; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VirexCraft - Kalitenin Adresi</title>
 
-        /* NAVBAR */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: #000; border-bottom: 2px solid var(--red); position: fixed; width: 90%; top:0; z-index: 1000; }
-        .nav-links span { margin: 0 15px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 13px; }
-        
-        /* ANA EKRAN */
-        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .hero h1 { font-size: 8rem; margin: 0; letter-spacing: -5px; }
-        .hero h1 span { color: var(--red); text-shadow: 0 0 30px var(--red); }
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#121212;
+    color:white;
+}
 
-        /* MODAL SİSTEMİ */
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
-        .window { width: 600px; padding: 30px; border: 1px solid var(--red); background: #080000; text-align: center; }
+header{
+    background:#0d0d0d;
+    padding:20px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:2px solid #22c55e;
+}
 
-        .btn { padding: 12px 25px; border: 1px solid var(--red); background: transparent; color: white; cursor: pointer; font-weight: bold; margin: 5px; }
-        .btn:hover { background: var(--red); }
-        
-        input { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid #333; color: white; box-sizing: border-box; }
+.logo{
+    font-size:26px;
+    font-weight:bold;
+    color:#22c55e;
+}
 
-        .lobby-card { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #111; margin: 10px 0; border-left: 5px solid var(--red); }
-        .admin-tag { color: var(--gold); border: 1px solid var(--gold); padding: 2px 5px; font-size: 10px; margin-left: 10px; }
-    </style>
+nav a{
+    color:white;
+    margin-left:25px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#22c55e;
+}
+
+.hero{
+    padding:120px 60px;
+    background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+    url('https://images.alphacoders.com/108/1088362.jpg');
+    background-size:cover;
+    background-position:center;
+}
+
+.hero h1{
+    font-size:48px;
+    margin:0;
+}
+
+.hero p{
+    color:#cccccc;
+    margin-top:15px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 25px;
+    background:#22c55e;
+    color:black;
+    font-weight:bold;
+    text-decoration:none;
+    border-radius:8px;
+}
+
+.section{
+    padding:60px;
+}
+
+.card{
+    background:#1a1a1a;
+    padding:25px;
+    border-radius:12px;
+    margin-bottom:25px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #333;
+    text-align:left;
+}
+
+th{
+    background:#22c55e;
+    color:black;
+}
+
+footer{
+    background:#0d0d0d;
+    padding:30px 60px;
+    margin-top:40px;
+    color:#aaa;
+}
+</style>
 </head>
+
 <body>
 
-<nav>
-    <div style="font-size: 26px; font-weight: bold;">RED<span style="color:var(--red)">PRO</span></div>
-    <div class="nav-links">
-        <span onclick="openV('shop')">MAĞAZA</span>
-        <span onclick="openV('friends')">ARKADAŞLAR</span>
-        <span onclick="openV('lobbies')">LOBİLER</span>
-        <span id="adm-link" style="display:none; color:var(--gold)" onclick="openV('admin')">ADMIN</span>
-        <span id="u-display"></span>
+<header>
+    <div class="logo">⛏️ VirexCraft</div>
+    <nav>
+        <a href="#">Ana Sayfa</a>
+        <a href="#">Mağaza</a>
+        <a href="#">Yardım</a>
+        <a href="#">Kredi Yükle</a>
+        <a href="#">Giriş Yap</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>1 Numaralı Minecraft Sunucusuna Katıl!</h1>
+    <p>BoxMining • Survival • Etkinlikler • Lag yok</p>
+    <a href="#" class="btn">Şimdi Oyna</a>
+</section>
+
+<section class="section">
+
+    <div class="card">
+        <h2>Sunucuya Katıl</h2>
+        <p><strong>IP:</strong> play.virexcraft.net</p>
+        <p><strong>Aktif Oyuncu:</strong> 245 / 500</p>
     </div>
-</nav>
 
-<div class="hero">
-    <h1>RED<span>PRO</span></h1>
-    <p style="color:#444; letter-spacing:10px;">SYVEX & TANRIM NETWORK</p>
-    <div style="margin-top:20px;">
-        <button class="btn" onclick="openV('lobbies')">LOBİLERİ AÇ</button>
-        <button class="btn" style="border-color:white" onclick="openV('shop')">MAĞAZA</button>
+    <div class="card">
+        <h2>Haber</h2>
+        <p><strong>VirexCraft Açılıyor!</strong></p>
+        <p>Çok yakında büyük ödüllü açılış etkinliği başlıyor. Discord'dan takipte kal!</p>
     </div>
-</div>
 
-<div id="v-lobbies" class="overlay">
-    <div class="window">
-        <h2 style="color:var(--red)">AKTİF LOBİLER</h2>
-        <div id="lobby-list" style="max-height: 350px; overflow-y: auto;">
-            </div>
-        <hr style="border:0; border-top:1px solid #222; margin:15px 0;">
-        <button class="btn" onclick="openV('create')">+ YENİ LOBİ KUR</button>
-        <button class="btn" onclick="closeV()">KAPAT</button>
+    <div class="card">
+        <h2>Son Kredi Yükleyenler</h2>
+        <table>
+            <tr>
+                <th>Kullanıcı</th>
+                <th>Miktar</th>
+            </tr>
+            <tr>
+                <td>VirexPlayer</td>
+                <td>200 Kredi</td>
+            </tr>
+            <tr>
+                <td>MineKing</td>
+                <td>120 Kredi</td>
+            </tr>
+            <tr>
+                <td>BoxMaster</td>
+                <td>80 Kredi</td>
+            </tr>
+        </table>
     </div>
-</div>
 
-<div id="v-create" class="overlay">
-    <div class="window">
-        <h2>LOBİ OLUŞTUR</h2>
-        <input type="text" id="l-input" placeholder="Lobi Adı Giriniz...">
-        <button class="btn" onclick="confirmLobby()">SİSTEME GÖNDER</button>
-        <button class="btn" onclick="openV('lobbies')">İPTAL</button>
-    </div>
-</div>
+</section>
 
-<div id="v-shop" class="overlay">
-    <div class="window">
-        <h2 style="color:var(--red)">MAĞAZA</h2>
-        <div class="lobby-card"><span>ExLoader Premium</span> <button class="btn" onclick="location.href='#'">İNDİR</button></div>
-        <button class="btn" onclick="closeV()">KAPAT</button>
-    </div>
-</div>
+<footer>
+    © 2026 VirexCraft - Tüm Hakları Saklıdır.
+</footer>
 
-<div id="v-friends" class="overlay">
-    <div class="window">
-        <h2>ARKADAŞ LİSTESİ</h2>
-        <input type="text" id="f-input" placeholder="İsim...">
-        <button class="btn" onclick="addFriend()">EKLE</button>
-        <div id="friend-list" style="margin-top:10px;"></div>
-        <button class="btn" onclick="closeV()">KAPAT</button>
-    </div>
-</div>
-
-<div id="v-login" class="overlay">
-    <div class="window">
-        <h2>GİRİŞ YAP</h2>
-        <input type="text" id="nick-in" placeholder="Kullanıcı Adı">
-        <button class="btn" onclick="login()">BAĞLAN</button>
-    </div>
-</div>
-
-<script>
-    const ADMINS = ["syvex", "tanrımbenibaştanyaratsın"];
-
-    function openV(id) {
-        if(!localStorage.getItem('user') && id !== 'login') return openV('login');
-        closeV();
-        document.getElementById('v-'+id).style.display = 'flex';
-        if(id === 'lobbies') renderLobbies();
-        if(id === 'friends') renderFriends();
-    }
-    function closeV() { document.querySelectorAll('.overlay').forEach(e => e.style.display = 'none'); }
-
-    // --- LOBİ SİSTEMİ (KESİN ÇÖZÜM) ---
-    function confirmLobby() {
-        let input = document.getElementById('l-input');
-        if(!input.value) return alert("Lobi adı boş olamaz!");
-
-        let currentLobbies = JSON.parse(localStorage.getItem('RED_GLOBAL_LOBBIES') || "[]");
-        
-        let newLobby = {
-            id: Date.now(),
-            name: input.value,
-            host: localStorage.getItem('user')
-        };
-
-        currentLobbies.push(newLobby);
-        localStorage.setItem('RED_GLOBAL_LOBBIES', JSON.stringify(currentLobbies));
-        
-        input.value = ""; // Inputu temizle
-        alert("Lobi başarıyla oluşturuldu!");
-        openV('lobbies'); // Listeye geri dön
-    }
-
-    function renderLobbies() {
-        const listContainer = document.getElementById('lobby-list');
-        listContainer.innerHTML = "";
-        
-        let lobbies = JSON.parse(localStorage.getItem('RED_GLOBAL_LOBBIES') || "[]");
-        let currentUser = localStorage.getItem('user');
-
-        if(lobbies.length === 0) {
-            listContainer.innerHTML = "<p style='color:#555'>Henüz aktif lobi yok.</p>";
-            return;
-        }
-
-        lobbies.forEach((l, index) => {
-            let isAdmin = ADMINS.includes(currentUser.toLowerCase()) || l.host === currentUser;
-            listContainer.innerHTML += `
-                <div class="lobby-card">
-                    <span><b>${l.name}</b> <small style="color:#666">(${l.host})</small></span>
-                    <div>
-                        <button class="btn" style="padding:5px 10px; font-size:12px;" onclick="alert('Lobiye giriliyor...')">KATIL</button>
-                        ${isAdmin ? `<button class="btn" style="padding:5px 10px; font-size:12px; border-color:orange" onclick="deleteLobby(${index})">SİL</button>` : ''}
-                    </div>
-                </div>`;
-        });
-    }
-
-    function deleteLobby(index) {
-        let lobbies = JSON.parse(localStorage.getItem('RED_GLOBAL_LOBBIES'));
-        lobbies.splice(index, 1);
-        localStorage.setItem('RED_GLOBAL_LOBBIES', JSON.stringify(lobbies));
-        renderLobbies();
-    }
-
-    // --- ARKADAŞ SİSTEMİ ---
-    function addFriend() {
-        let nick = document.getElementById('f-input').value;
-        if(!nick) return;
-        let f = JSON.parse(localStorage.getItem('RED_FRIENDS') || "[]");
-        if(!f.includes(nick)) f.push(nick);
-        localStorage.setItem('RED_FRIENDS', JSON.stringify(f));
-        renderFriends();
-    }
-    function renderFriends() {
-        const div = document.getElementById('friend-list');
-        div.innerHTML = "";
-        let f = JSON.parse(localStorage.getItem('RED_FRIENDS') || "[]");
-        f.forEach(n => { div.innerHTML += `<div class="lobby-card"><span>${n}</span> <i style="color:lime; font-size:10px">Online</i></div>`; });
-    }
-
-    // --- AUTH ---
-    function login() {
-        let u = document.getElementById('nick-in').value;
-        if(!u) return;
-        localStorage.setItem('user', u);
-        location.reload();
-    }
-
-    window.onload = () => {
-        let user = localStorage.getItem('user');
-        if(user) {
-            document.getElementById('u-display').innerText = user;
-            if(ADMINS.includes(user.toLowerCase())) {
-                document.getElementById('adm-link').style.display = 'inline';
-                document.getElementById('u-display').innerHTML += '<span class="admin-tag">KURUCU</span>';
-            }
-        } else {
-            openV('login');
-        }
-    };
-
-    // Arkadaşının lobisini görmen için her 1 saniyede otomatik yenileme (Sync)
-    setInterval(() => {
-        if(document.getElementById('v-lobbies').style.display === 'flex') {
-            renderLobbies();
-        }
-    }, 1000);
-
-</script>
 </body>
 </html>
