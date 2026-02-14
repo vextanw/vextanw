@@ -3,351 +3,443 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>VIREX LOBBY | REAL-TIME STREAMING</title>
+    <title>VIREX PORTAL | The Blood Network</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        /* ========================================
+           ANA TEMA VE CSS DEĞİŞKENLERİ
+           ======================================== */
         :root {
-            --blood: #ff0000;
-            --dark: #050505;
-            --card: #0f0f0f;
-            --discord: #5865F2;
+            --blood: #ce0000;
+            --blood-glow: rgba(206, 0, 0, 0.5);
+            --dark: #070707;
+            --card-bg: #111111;
             --text: #ffffff;
+            --discord: #5865F2;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+        
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--dark);
             color: var(--text);
-            overflow: hidden; /* Scroll istemiyoruz, uygulama gibi dursun */
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* NAVBAR */
-        .navbar {
-            height: 70px; background: #000; border-bottom: 2px solid var(--blood);
+        /* Arka Plan Kan Damlaları Animasyonu */
+        .bg-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a0000 0%, #070707 100%);
+            z-index: -1;
+        }
+
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--blood); border-radius: 10px; }
+
+        /* ========================================
+           NAVBAR (HER YERDE AYNI)
+           ======================================== */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 80px;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
+            border-bottom: 2px solid var(--blood);
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 30px; position: relative; z-index: 100;
-        }
-        .logo { font-family: 'Oswald'; font-size: 28px; color: var(--blood); cursor: pointer; }
-
-        /* ANA EKRAN DÜZENİ */
-        .app-container {
-            display: flex;
-            height: calc(100vh - 70px);
+            padding: 0 6%; z-index: 1000;
         }
 
-        /* SOL PANEL: LOBİ LİSTESİ */
-        .lobby-sidebar {
-            width: 320px; background: var(--card); border-right: 1px solid #222;
-            padding: 20px; display: flex; flex-direction: column;
+        .logo { 
+            font-family: 'Black Ops One', cursive; font-size: 30px; color: var(--blood);
+            text-shadow: 0 0 15px var(--blood-glow); letter-spacing: 2px;
         }
 
-        .lobby-list { flex: 1; overflow-y: auto; margin-top: 20px; }
-        .lobby-card {
-            background: #1a1a1a; padding: 15px; border-radius: 12px; margin-bottom: 15px;
-            border: 1px solid #333; cursor: pointer; transition: 0.3s;
+        .nav-items { display: flex; list-style: none; gap: 35px; }
+        .nav-items li a {
+            text-decoration: none; color: #ccc; font-weight: 600; font-size: 14px;
+            text-transform: uppercase; transition: var(--transition);
         }
-        .lobby-card:hover { border-color: var(--blood); background: #222; }
-        .lobby-card h4 { font-size: 15px; color: var(--blood); }
-        .lobby-card p { font-size: 12px; color: #888; }
+        .nav-items li a:hover, .nav-items li a.active { color: var(--blood); transform: translateY(-3px); }
 
-        /* ORTA PANEL: GERÇEK YAYIN ALANI */
-        .stream-area {
-            flex: 1; background: #000; display: flex; flex-direction: column; position: relative;
+        /* ========================================
+           ANA EKRAN (HOME)
+           ======================================== */
+        #home-screen { padding-top: 80px; min-height: 100vh; }
+
+        .hero-section {
+            height: 80vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; background: url('https://wallpapercave.com/wp/wp2752752.jpg') center/cover;
+            position: relative;
+        }
+        .hero-section::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
         }
 
-        .video-grid {
-            flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 10px; padding: 20px; align-content: center;
-        }
+        .hero-content { position: relative; z-index: 10; max-width: 900px; padding: 0 20px; }
+        .hero-content h1 { font-size: 80px; font-weight: 900; line-height: 1; margin-bottom: 20px; }
+        .hero-content span { color: var(--blood); }
+        .hero-content p { font-size: 18px; color: #bbb; margin-bottom: 40px; }
 
-        .video-wrapper {
-            background: #111; border-radius: 15px; overflow: hidden; position: relative;
-            border: 2px solid #222; height: 100%; min-height: 300px;
-        }
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; }
         
-        /* GERÇEK VİDEO ELEMENTLERİ */
-        video {
-            width: 100%; height: 100%; object-fit: cover; background: #000;
-            transform: scaleX(-1); /* Ayna efekti */
+        .btn {
+            padding: 18px 40px; border-radius: 5px; border: none; font-weight: 800;
+            cursor: pointer; text-transform: uppercase; transition: var(--transition);
+            display: flex; align-items: center; gap: 10px; font-size: 16px;
+        }
+        .btn-blood { background: var(--blood); color: white; box-shadow: 0 0 20px var(--blood-glow); }
+        .btn-blood:hover { transform: scale(1.1); box-shadow: 0 0 40px var(--blood); }
+        .btn-outline { background: transparent; border: 2px solid white; color: white; }
+        .btn-outline:hover { background: white; color: black; }
+
+        /* İSTATİSTİK BÖLÜMÜ */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px;
+            padding: 50px 10%; margin-top: -50px; position: relative; z-index: 20;
+        }
+        .stat-card {
+            background: var(--card-bg); padding: 30px; border-radius: 10px;
+            border-bottom: 3px solid var(--blood); text-align: center;
+        }
+        .stat-card h2 { font-size: 35px; color: var(--blood); }
+
+        /* ========================================
+           LOBİLER EKRANI (UYGULAMA MODU)
+           ======================================== */
+        #lobby-screen { display: none; padding-top: 80px; height: 100vh; background: #000; }
+        
+        .lobby-layout { display: grid; grid-template-columns: 300px 1fr 300px; height: calc(100vh - 80px); }
+
+        .lobby-sidebar { background: #0a0a0a; border-right: 1px solid #1a1a1a; padding: 20px; overflow-y: auto; }
+        .lobby-main { background: #050505; position: relative; display: flex; flex-direction: column; }
+        
+        .video-container {
+            flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px; padding: 20px; overflow-y: auto;
+        }
+
+        .video-box {
+            background: #111; border-radius: 12px; border: 2px solid #222; position: relative;
+            min-height: 200px; overflow: hidden;
+        }
+        .video-box video { width: 100%; height: 100%; object-fit: cover; }
+        .video-label {
+            position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7);
+            padding: 5px 12px; border-radius: 4px; font-size: 12px;
         }
 
         .stream-controls {
-            height: 100px; background: rgba(0,0,0,0.8); display: flex;
-            align-items: center; justify-content: center; gap: 20px;
-            border-top: 1px solid #222;
+            height: 90px; background: #0a0a0a; border-top: 1px solid #222;
+            display: flex; align-items: center; justify-content: center; gap: 20px;
         }
 
-        .action-btn {
-            width: 55px; height: 55px; border-radius: 50%; border: none;
-            background: #222; color: white; cursor: pointer; font-size: 20px;
-            transition: 0.3s;
+        /* DISCORD PROFILE PANEL */
+        .profile-panel { background: #0a0a0a; border-left: 1px solid #1a1a1a; padding: 15px; }
+        .discord-card {
+            background: #18191c; border-radius: 8px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .action-btn:hover { background: var(--blood); transform: scale(1.1); }
-        .action-btn.off { background: #ff4747; }
-        .btn-screen { background: #2ecc71; width: auto; padding: 0 20px; border-radius: 10px; }
+        .discord-banner { height: 60px; background: var(--blood); }
+        .discord-avatar-wrap { margin-top: -35px; padding: 0 15px; position: relative; }
+        .discord-avatar {
+            width: 75px; height: 75px; border-radius: 50%; border: 5px solid #18191c;
+            background: #000; cursor: pointer; transition: 0.3s;
+        }
+        .discord-avatar:hover { transform: scale(1.05); }
 
-        /* SAĞ PANEL: DISCORD STYLE PROFILE */
-        .profile-sidebar {
-            width: 300px; background: #080808; border-left: 1px solid #222; padding: 20px;
+        /* MAĞAZA (STORE) */
+        #store-screen { display: none; padding: 120px 10% 50px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .product-card {
+            background: var(--card-bg); border-radius: 15px; padding: 25px; border: 1px solid #222;
+            text-align: center; transition: var(--transition);
         }
+        .product-card:hover { border-color: var(--blood); transform: translateY(-10px); }
+        .product-card img { width: 100px; height: 100px; margin-bottom: 20px; }
 
-        .dc-profile {
-            background: #18191c; border-radius: 12px; overflow: hidden;
+        /* SAĞ TIK MENÜ */
+        .ctx-menu {
+            position: fixed; background: #18191c; border: 1px solid #333; width: 180px;
+            border-radius: 5px; display: none; z-index: 5000; padding: 5px;
         }
-        .banner { height: 60px; background: var(--blood); }
-        .avatar-area { margin-top: -30px; padding: 0 20px; position: relative; }
-        .main-pp { 
-            width: 80px; height: 80px; border-radius: 50%; border: 4px solid #18191c;
-            background: #000; object-fit: cover;
+        .ctx-item {
+            padding: 10px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 10px;
         }
-        .badge-list { display: flex; gap: 5px; margin-top: 10px; }
-
-        /* MAĞAZA MODAL */
-        #shopOverlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 2000; display: none;
-            padding: 100px 10%;
-        }
-
-        /* SAĞ TIK */
-        .context-menu {
-            position: fixed; background: #18191c; border: 1px solid #333;
-            width: 200px; border-radius: 8px; display: none; z-index: 3000;
-        }
-        .menu-item {
-            padding: 12px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 10px;
-        }
-        .menu-item:hover { background: var(--blood); }
+        .ctx-item:hover { background: var(--blood); color: white; border-radius: 3px; }
 
     </style>
 </head>
-<body oncontextmenu="return handleRightClick(event)">
+<body oncontextmenu="return openContextMenu(event)">
 
-<nav class="navbar">
-    <div class="logo" onclick="location.reload()">VIREX<span>CHEATS</span></div>
-    <div style="display:flex; gap:30px;">
-        <span onclick="toggleView('lobbies')" style="cursor:pointer; font-weight:800; border-bottom: 2px solid var(--blood)">ANASAYFA / LOBİLER</span>
-        <span onclick="toggleShop(true)" style="cursor:pointer; color:#888;">MAĞAZA</span>
+    <div class="bg-overlay"></div>
+
+    <nav>
+        <div class="logo">VIREX</div>
+        <ul class="nav-items">
+            <li><a href="javascript:void(0)" onclick="showScreen('home')" id="nav-home" class="active">Ana Ekran</a></li>
+            <li><a href="javascript:void(0)" onclick="showScreen('lobby')" id="nav-lobby">Lobiler</a></li>
+            <li><a href="javascript:void(0)" onclick="showScreen('store')" id="nav-store">Hileler</a></li>
+            <li><a href="javascript:void(0)" onclick="loginAlert()">Giriş Yap</a></li>
+        </ul>
+        <button class="btn btn-blood" style="padding: 10px 25px; font-size: 13px;" onclick="showScreen('lobby')">Lobiye Bağlan</button>
+    </nav>
+
+    <div id="contextMenu" class="ctx-menu">
+        <div class="ctx-item" onclick="toggleLocalStream('audio')"><i class="fas fa-microphone-slash"></i> Sesi Kapat/Aç</div>
+        <div class="ctx-item" onclick="toggleLocalStream('video')"><i class="fas fa-video-slash"></i> Kamera Kapat/Aç</div>
+        <div class="ctx-item" onclick="location.reload()"><i class="fas fa-sync"></i> Sayfayı Yenile</div>
     </div>
-    <div class="user-info" style="display:flex; align-items:center; gap:10px;">
-        <span id="userNameDisplay">Syvex#0001</span>
-        <img src="https://media.tenor.com/y_S_m7T36m8AAAAM/anime-aesthetic.gif" style="width:35px; height:35px; border-radius:50%;">
-    </div>
-</nav>
 
-<div class="app-container">
-    <aside class="lobby-sidebar">
-        <button class="action-btn btn-screen" style="width:100%; margin-bottom:20px;" onclick="createNewLobby()">
-            <i class="fas fa-plus"></i> LOBİ OLUŞTUR
-        </button>
-        <div class="lobby-list" id="globalLobbies">
-            <div class="lobby-card" onclick="joinLobby('CS2 Hile Paylaşımı')">
-                <h4>CS2 Hile Paylaşımı</h4>
-                <p>Oluşturan: AhmetPro - 4 Oyuncu</p>
-            </div>
-            <div class="lobby-card" onclick="joinLobby('Roblox Script Lobi')">
-                <h4>Roblox Script Lobi</h4>
-                <p>Oluşturan: Kerem_Exe - 7 Oyuncu</p>
-            </div>
-        </div>
-    </aside>
-
-    <main class="stream-area">
-        <div class="video-grid" id="videoGrid">
-            <div class="video-wrapper">
-                <video id="localVideo" autoplay playsinline muted></video>
-                <div style="position:absolute; bottom:10px; left:10px; background:rgba(0,0,0,0.6); padding:4px 10px; border-radius:5px; font-size:12px;">
-                    <i class="fas fa-microphone"></i> Siz (Canlı)
+    <div id="home-screen">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>VIREX <span>NETWORK</span></h1>
+                <p>Türkiye'nin en gelişmiş hile topluluğu ve lobi sistemi. Gerçek zamanlı sesli sohbet, ekran paylaşımı ve en güncel oyun yazılımlarıyla gücü eline al.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-blood" onclick="showScreen('lobby')"><i class="fas fa-bolt"></i> Lobilere Göz At</button>
+                    <button class="btn btn-outline" onclick="showScreen('store')">Hileleri İncele</button>
                 </div>
             </div>
-            <div class="video-wrapper" id="screenWrapper" style="display:none;">
-                <video id="screenVideo" autoplay playsinline></video>
-                <div style="position:absolute; top:10px; right:10px; background:var(--blood); padding:4px 10px; border-radius:5px; font-size:10px; font-weight:800;">EKRAN PAYLAŞILIYOR</div>
-            </div>
-        </div>
+        </section>
 
-        <div class="stream-controls">
-            <button class="action-btn" id="micBtn" onclick="toggleMic()">
-                <i class="fas fa-microphone"></i>
-            </button>
-            <button class="action-btn" id="camBtn" onclick="toggleCam()">
-                <i class="fas fa-video"></i>
-            </button>
-            <button class="action-btn btn-screen" onclick="startScreenShare()">
-                <i class="fas fa-desktop"></i> EKRAN PAYLAŞ
-            </button>
-            <button class="action-btn off" onclick="location.reload()">
-                <i class="fas fa-phone-slash"></i>
-            </button>
-        </div>
-    </main>
+        <section class="stats-grid">
+            <div class="stat-card"><h2>15K+</h2><p>Aktif Üye</p></div>
+            <div class="stat-card"><h2>42</h2><p>Aktif Lobi</p></div>
+            <div class="stat-card"><h2>0</h2><p>Ban Riski</p></div>
+            <div class="stat-card"><h2>24/7</h2><p>Canlı Destek</p></div>
+        </section>
 
-    <aside class="profile-sidebar">
-        <div class="dc-profile">
-            <div class="banner"></div>
-            <div class="avatar-area">
-                <img src="https://media.tenor.com/y_S_m7T36m8AAAAM/anime-aesthetic.gif" class="main-pp" id="userPP">
-                <img src="https://cdn.discordapp.com/avatar-decoration-presets/v2/a_550220979667c31d17d096c466488344.png" 
-                     style="position:absolute; top:-10px; left:10px; width:100px;">
-                <div style="margin-top:10px; font-weight:800; font-size:20px;">Syvex <span style="color:#888; font-weight:400;">#0001</span></div>
-                <div class="badge-list">
-                    <img src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordnitro.svg" width="20">
-                    <img src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordstaff.svg" width="20">
+        <section style="padding: 100px 10%; text-align: center;">
+            <h2 style="font-size: 40px; margin-bottom: 20px;">NEDEN VIREX?</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 50px;">
+                <div class="product-card">
+                    <i class="fas fa-shield-alt fa-3x" style="color:var(--blood)"></i>
+                    <h3 style="margin-top:20px;">Üstün Koruma</h3>
+                    <p style="color:#888; margin-top:10px;">Tüm yazılımlarımız anti-cheat sistemlerine karşı özel olarak şifrelenmiştir.</p>
                 </div>
-                <hr style="border:0; border-top:1px solid #333; margin:15px 0;">
-                <div style="font-size:11px; font-weight:800; color:#888;">HAKKINDA</div>
-                <p style="font-size:13px; margin-top:5px;">Virex Admin & Developer. Hareketli profil aktif.</p>
-                <button class="action-btn btn-screen" style="width:100%; margin-top:15px; font-size:12px; height:40px;" onclick="editProfile()">PROFİLİ DÜZENLE</button>
+                <div class="product-card">
+                    <i class="fas fa-headset fa-3x" style="color:var(--blood)"></i>
+                    <h3 style="margin-top:20px;">Sesli Lobiler</h3>
+                    <p style="color:#888; margin-top:10px;">Arkadaşlarınla gerçek zamanlı sesli ve görüntülü iletişim kurarak oyunun tadını çıkar.</p>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-code fa-3x" style="color:var(--blood)"></i>
+                    <h3 style="margin-top:20px;">Düzenli Güncelleme</h3>
+                    <p style="color:#888; margin-top:10px;">Haftalık güncellemelerle hilelerin her zaman aktif kalmasını sağlıyoruz.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="lobby-screen">
+        <div class="lobby-layout">
+            <aside class="lobby-sidebar">
+                <button class="btn btn-blood" style="width: 100%; margin-bottom: 20px;" onclick="createNewLobby()">+ Lobi Oluştur</button>
+                <h4 style="font-size: 12px; color: var(--blood); margin-bottom: 15px; letter-spacing: 1px;">AKTİF LOBİLER</h4>
+                <div id="lobby-list-container">
+                    <div class="stat-card" style="padding: 15px; margin-bottom: 10px; cursor: pointer; text-align: left;" onclick="joinLobby('Global Elite CS2')">
+                        <div style="font-weight: 700; font-size: 14px;">Global Elite CS2</div>
+                        <div style="font-size: 11px; color: #666;">6 Oyuncu Bağlı</div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="lobby-main">
+                <div class="video-container" id="videoGrid">
+                    <div class="video-box" id="localBox">
+                        <video id="localVideo" autoplay playsinline muted></video>
+                        <div class="video-label"><i class="fas fa-circle" style="color:var(--blood); font-size:8px;"></i> Siz</div>
+                    </div>
+                </div>
+
+                <div class="stream-controls">
+                    <button class="btn btn-outline" style="border-radius: 50%; width: 55px; height: 55px; padding: 0;" id="micBtn" onclick="muteMic()">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button class="btn btn-outline" style="border-radius: 50%; width: 55px; height: 55px; padding: 0;" id="camBtn" onclick="stopVideo()">
+                        <i class="fas fa-video"></i>
+                    </button>
+                    <button class="btn btn-blood" onclick="startShare()">
+                        <i class="fas fa-desktop"></i> EKRAN PAYLAŞ
+                    </button>
+                    <button class="btn btn-blood" style="background: #333; box-shadow: none;" onclick="showScreen('home')">
+                        <i class="fas fa-sign-out-alt"></i> AYRIL
+                    </button>
+                </div>
+            </main>
+
+            <aside class="profile-panel">
+                <div class="discord-card">
+                    <div class="discord-banner"></div>
+                    <div class="discord-avatar-wrap">
+                        <img src="https://media.tenor.com/y_S_m7T36m8AAAAM/anime-aesthetic.gif" class="discord-avatar" id="profilePP">
+                        <img src="https://cdn.discordapp.com/avatar-decoration-presets/v2/a_550220979667c31d17d096c466488344.png" style="position:absolute; top:-15px; left:5px; width:100px; pointer-events:none;">
+                    </div>
+                    <div style="padding: 15px;">
+                        <div style="font-weight: 800; font-size: 18px;">VirexDev <span style="color:#888; font-weight:400;">#0001</span></div>
+                        <div style="margin-top:10px; font-size: 12px; color: #b9bbbe;">HAKKINDA</div>
+                        <p style="font-size: 13px; margin-top: 5px;">Hareketi sev, hileyi daha çok sev. 🔥</p>
+                        <button class="btn btn-outline" style="width:100%; margin-top:20px; font-size:11px; padding:10px;" onclick="editProfile()">Profili Düzenle</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div id="store-screen">
+        <h1 style="font-family:'Black Ops One'; font-size: 45px; text-align: center; margin-bottom: 50px;">Oyun <span>Yazılımları</span></h1>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://www.freeiconspng.com/uploads/csgo-icon-12.png">
+                <h3>Counter-Strike 2</h3>
+                <p style="color: #666; font-size: 13px; margin: 10px 0;">Aimbot, ESP, Skinchanger</p>
+                <div style="font-size: 24px; font-weight: 900; color: var(--blood); margin-bottom: 20px;">BEDAVA</div>
+                <button class="btn btn-blood" style="width:100%" onclick="window.location.href='https://data.exloader.net/ExLoader_Installer.exe'">İNDİR</button>
+            </div>
+            <div class="product-card">
+                <img src="https://www.freeiconspng.com/uploads/minecraft-icon-0.png">
+                <h3>Minecraft Ghost</h3>
+                <p style="color: #666; font-size: 13px; margin: 10px 0;">Killaura, Fly, X-Ray</p>
+                <div style="font-size: 24px; font-weight: 900; color: var(--blood); margin-bottom: 20px;">BEDAVA</div>
+                <button class="btn btn-blood" style="width:100%" onclick="window.location.href='https://data.exloader.net/ExLoader_Installer.exe'">İNDİR</button>
+            </div>
+            <div class="product-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Roblox_player_icon_black.svg" style="filter:invert(1)">
+                <h3>Roblox Executor</h3>
+                <p style="color: #666; font-size: 13px; margin: 10px 0;">Script Hub, God Mode</p>
+                <div style="font-size: 24px; font-weight: 900; color: var(--blood); margin-bottom: 20px;">BEDAVA</div>
+                <button class="btn btn-blood" style="width:100%" onclick="window.location.href='https://data.exloader.net/ExLoader_Installer.exe'">İNDİR</button>
             </div>
         </div>
-    </aside>
-</div>
+    </div>
 
-<div id="shopOverlay">
-    <h1 style="font-family:'Oswald'; color:var(--blood); font-size:50px; margin-bottom:30px;">HİLE MAĞAZASI</h1>
-    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:20px;">
-        <div class="lobby-card" style="text-align:center;">
-            <img src="https://www.freeiconspng.com/uploads/csgo-icon-12.png" width="80">
-            <h3>CS2 HACK</h3>
-            <p>BEDAVA</p>
-            <button class="action-btn btn-screen" onclick="window.location.href='https://data.exloader.net/ExLoader_Installer.exe'">İNDİR</button>
-        </div>
-        </div>
-    <button class="action-btn" style="position:absolute; top:40px; right:40px;" onclick="toggleShop(false)">X</button>
-</div>
-
-<div id="contextMenu" class="context-menu">
-    <div class="menu-item" onclick="alert('Ses kapatıldı')"><i class="fas fa-volume-mute"></i> Sesi Kapat</div>
-    <div class="menu-item" onclick="alert('Ekran Gizlendi')"><i class="fas fa-eye-slash"></i> Ekranı Gizle</div>
-    <div class="menu-item" style="color:var(--blood)" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> Lobiden At</div>
-</div>
-
-<script>
-    let localStream;
-    let screenStream;
-    let isCamOn = true;
-    let isMicOn = true;
-
-    // 1. GERÇEK KAMERA VE SESİ BAŞLAT
-    async function initCamera() {
-        try {
-            localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-            document.getElementById('localVideo').srcObject = localStream;
-        } catch (err) {
-            console.error("Hata:", err);
-            Swal.fire("Hata", "Kamera izni verilmedi!", "error");
-        }
-    }
-
-    // 2. GERÇEK EKRAN PAYLAŞIMI
-    async function startScreenShare() {
-        try {
-            screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-            const screenVideo = document.getElementById('screenVideo');
-            const wrapper = document.getElementById('screenWrapper');
+    <script>
+        // EKRAN DEĞİŞTİRME SİSTEMİ
+        function showScreen(screenId) {
+            // Tüm ekranları gizle
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('lobby-screen').style.display = 'none';
+            document.getElementById('store-screen').style.display = 'none';
             
-            screenVideo.srcObject = screenStream;
-            wrapper.style.display = 'block';
+            // Tüm nav linklerinden active class'ı sil
+            document.querySelectorAll('.nav-items a').forEach(a => a.classList.remove('active'));
 
-            // Paylaşım durduğunda kapat
-            screenStream.getVideoTracks()[0].onended = () => {
-                wrapper.style.display = 'none';
-            };
-        } catch (err) {
-            console.error("Ekran paylaşımı hatası:", err);
+            // İstenen ekranı aç
+            const target = document.getElementById(screenId + '-screen');
+            target.style.display = (screenId === 'lobby') ? 'block' : 'block';
+            if(screenId === 'lobby') target.style.display = 'block';
+
+            document.getElementById('nav-' + screenId).classList.add('active');
+            
+            if(screenId === 'lobby') {
+                startCamera();
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         }
-    }
 
-    // MİKROFON AÇ-KAPA
-    function toggleMic() {
-        isMicOn = !isMicOn;
-        localStream.getAudioTracks()[0].enabled = isMicOn;
-        document.getElementById('micBtn').classList.toggle('off', !isMicOn);
-        document.getElementById('micBtn').innerHTML = isMicOn ? '<i class="fas fa-microphone"></i>' : '<i class="fas fa-microphone-slash"></i>';
-    }
-
-    // KAMERA AÇ-KAPA
-    function toggleCam() {
-        isCamOn = !isCamOn;
-        localStream.getVideoTracks()[0].enabled = isCamOn;
-        document.getElementById('camBtn').classList.toggle('off', !isCamOn);
-        document.getElementById('camBtn').innerHTML = isCamOn ? '<i class="fas fa-video"></i>' : '<i class="fas fa-video-slash"></i>';
-    }
-
-    // LOBİ OLUŞTURMA (DİNAMİK)
-    function createNewLobby() {
-        Swal.fire({
-            title: 'Lobi Adı',
-            input: 'text',
-            background: '#111',
-            color: '#fff',
-            confirmButtonColor: '#ff0000'
-        }).then((res) => {
-            if(res.value) {
-                const list = document.getElementById('globalLobbies');
-                const newCard = document.createElement('div');
-                newCard.className = 'lobby-card';
-                newCard.innerHTML = `<h4>${res.value}</h4><p>Oluşturan: Siz - 1 Oyuncu</p>`;
-                newCard.onclick = () => joinLobby(res.value);
-                list.prepend(newCard);
-                joinLobby(res.value);
+        // GERÇEK KAMERA SİSTEMİ
+        let stream;
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                document.getElementById('localVideo').srcObject = stream;
+            } catch (err) {
+                console.log("Kamera hatası:", err);
             }
-        });
-    }
+        }
 
-    function joinLobby(name) {
-        Swal.fire({ title: name + ' Lobisine Girildi', timer: 1500, showConfirmButton: false, background: '#111', color: '#fff' });
-    }
+        // EKRAN PAYLAŞIMI
+        async function startShare() {
+            try {
+                const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                const videoBox = document.createElement('div');
+                videoBox.className = 'video-box';
+                videoBox.innerHTML = `<video id="screenView" autoplay playsinline></video><div class="video-label">Ekran Paylaşımı</div>`;
+                document.getElementById('videoGrid').appendChild(videoBox);
+                document.getElementById('screenView').srcObject = screenStream;
+            } catch (err) {
+                console.log("Ekran paylaşım hatası");
+            }
+        }
 
-    // PROFİL DÜZENLEME
-    function editProfile() {
-        Swal.fire({
-            title: 'Profil Düzenle',
-            html: `
-                <input id="swal-input1" class="swal2-input" placeholder="Yeni Ad" style="background:#222; color:#fff; border:1px solid #444">
-                <input id="swal-input2" class="swal2-input" placeholder="Yeni PP (URL)" style="background:#222; color:#fff; border:1px solid #444">
-            `,
-            background: '#111',
-            color: '#fff'
-        }).then((res) => {
-            if(res.isConfirmed) {
-                const name = document.getElementById('swal-input1').value;
-                const pp = document.getElementById('swal-input2').value;
-                if(name) document.getElementById('userNameDisplay').innerText = name;
-                if(pp) {
-                    document.getElementById('userPP').src = pp;
-                    // Hareketli GIF ise otomatik oynar zaten
+        // MUTE / STOP FUNCTIONS
+        let micOn = true;
+        function muteMic() {
+            micOn = !micOn;
+            stream.getAudioTracks()[0].enabled = micOn;
+            document.getElementById('micBtn').innerHTML = micOn ? '<i class="fas fa-microphone"></i>' : '<i class="fas fa-microphone-slash"></i>';
+            document.getElementById('micBtn').style.borderColor = micOn ? 'white' : 'var(--blood)';
+        }
+
+        let camOn = true;
+        function stopVideo() {
+            camOn = !camOn;
+            stream.getVideoTracks()[0].enabled = camOn;
+            document.getElementById('camBtn').innerHTML = camOn ? '<i class="fas fa-video"></i>' : '<i class="fas fa-video-slash"></i>';
+            document.getElementById('camBtn').style.borderColor = camOn ? 'white' : 'var(--blood)';
+        }
+
+        // SAĞ TIK KONTROL
+        function openContextMenu(e) {
+            e.preventDefault();
+            const menu = document.getElementById('contextMenu');
+            menu.style.display = 'block';
+            menu.style.left = e.pageX + 'px';
+            menu.style.top = e.pageY + 'px';
+            return false;
+        }
+
+        window.onclick = () => document.getElementById('contextMenu').style.display = 'none';
+
+        // LOBİ OLUŞTURMA (DİNAMİK)
+        function createNewLobby() {
+            Swal.fire({
+                title: 'Lobi Adı Belirle',
+                input: 'text',
+                background: '#111',
+                color: '#fff',
+                confirmButtonColor: '#ce0000',
+                inputPlaceholder: 'Örn: Minecraft Tayfası'
+            }).then((res) => {
+                if(res.value) {
+                    const container = document.getElementById('lobby-list-container');
+                    const div = document.createElement('div');
+                    div.className = 'stat-card';
+                    div.style = 'padding: 15px; margin-bottom: 10px; cursor: pointer; text-align: left;';
+                    div.innerHTML = `<div style="font-weight: 700; font-size: 14px;">${res.value}</div><div style="font-size: 11px; color: #666;">1 Oyuncu Bağlı</div>`;
+                    container.prepend(div);
                 }
-            }
-        });
-    }
+            });
+        }
 
-    // MAĞAZA KONTROL
-    function toggleShop(show) {
-        document.getElementById('shopOverlay').style.display = show ? 'block' : 'none';
-    }
+        // PROFİL DÜZENLEME
+        function editProfile() {
+            Swal.fire({
+                title: 'Profili Güncelle',
+                html: `<input id="pp-url" class="swal2-input" placeholder="GIF/Resim URL">
+                       <input id="p-name" class="swal2-input" placeholder="Yeni Kullanıcı Adı">`,
+                background: '#111',
+                color: '#fff'
+            }).then((res) => {
+                const pp = document.getElementById('pp-url').value;
+                const name = document.getElementById('p-name').value;
+                if(pp) document.getElementById('profilePP').src = pp;
+            });
+        }
 
-    // SAĞ TIK
-    function handleRightClick(e) {
-        e.preventDefault();
-        const menu = document.getElementById('contextMenu');
-        menu.style.display = 'block';
-        menu.style.left = e.pageX + 'px';
-        menu.style.top = e.pageY + 'px';
-        return false;
-    }
-
-    window.onclick = () => document.getElementById('contextMenu').style.display = 'none';
-
-    // BAŞLAT
-    initCamera();
-
-</script>
-
+        function loginAlert() {
+            Swal.fire({ title: 'Sistem', text: 'Giriş sistemi şu an bakımda!', icon: 'info', background: '#111', color: '#fff' });
+        }
+    </script>
 </body>
 </html>
