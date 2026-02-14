@@ -3,306 +3,779 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>RED PRO | Arkadaşlık Dünyası</title>
+    <title>AVENOR CRAFT | Profesyonel Sosyal Ağ & Yönetim Paneli</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+
     <style>
-        /* TEMEL DEĞİŞKENLER VE SIFIRLAMA */
+        /* ========================================
+           CORE VARIABLES (LeaderOS & Gale Style)
+           ========================================
+        */
         :root {
-            --color-indigo-500: 249 115 22; /* Turuncu-Indigo Karışımı */
             --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --bg-dark: #0a0a0a;
-            --card-bg: #141414;
-            --text-main: #e2e8f0;
+            --primary-hover: #4f46e5;
+            --primary-glow: rgba(99, 102, 241, 0.35);
+            --bg-deep: #060606;
+            --bg-card: #111111;
+            --bg-card-hover: #161616;
+            --bg-input: #0a0a0a;
+            --text-main: #f8fafc;
             --text-dim: #94a3b8;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --border: rgba(255, 255, 255, 0.06);
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ========================================
+           BASE RESET & SCROLLBAR
+           ========================================
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; transition: var(--transition); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-dark);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
             color: var(--text-main);
+            line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* HEADER */
+        /* ========================================
+           HEADER & NAVIGATION
+           ========================================
+        */
         header {
-            background: rgba(10, 10, 10, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             position: fixed;
-            width: 100%;
             top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .logo span { color: var(--primary); }
-
-        nav a {
-            color: var(--text-dim);
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
-        nav a:hover, nav a.active { color: #fff; }
-
-        /* HERO SECTION */
-        .hero {
-            padding: 180px 5% 100px;
-            background: linear-gradient(to bottom, rgba(99, 102, 241, 0.1), transparent), 
-                        url('https://wallpaperaccess.com/full/337145.jpg');
-            background-size: cover;
-            background-position: center;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-dim);
-            max-width: 700px;
-            margin: 0 auto 30px;
-        }
-
-        .btn {
-            background: var(--primary);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
+            width: 100%;
+            height: 90px;
+            background: rgba(8, 8, 8, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            padding: 0 6%;
+            z-index: 2000;
         }
 
-        .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
         }
 
-        /* ANA İÇERİK - ARKADAŞ EKLEME PANELİ */
-        .container {
-            max-width: 1200px;
-            margin: -50px auto 100px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
+        .logo-area img { height: 55px; filter: drop-shadow(0 0 10px var(--primary-glow)); }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span { color: var(--primary); }
+
+        nav ul {
+            display: flex;
+            list-style: none;
             gap: 30px;
         }
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dim);
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
         }
 
-        .card h2 { margin-bottom: 20px; font-size: 1.5rem; }
-
-        /* ARKADAŞ EKLEME FORMU */
-        .add-friend-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-glow);
         }
 
-        input {
-            flex: 1;
-            background: #0a0a0a;
-            border: 1px solid #222;
-            padding: 15px;
-            border-radius: 12px;
-            color: white;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus { border-color: var(--primary); }
-
-        /* ARKADAŞ LİSTESİ */
-        .friend-item {
+        .auth-zone {
             display: flex;
             align-items: center;
-            padding: 15px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 15px;
-            margin-bottom: 15px;
-            transition: 0.3s;
+            gap: 20px;
         }
 
-        .friend-item:hover { background: rgba(255,255,255,0.05); }
+        /* ========================================
+           HERO & PARALLAX
+           ========================================
+        */
+        .hero-banner {
+            position: relative;
+            height: 550px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(6,6,6,0.5), var(--bg-deep)), url('https://images.alphacoders.com/132/1327116.jpeg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            padding-top: 90px;
+        }
 
-        .friend-avatar {
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 15px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            color: var(--text-dim);
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 35px;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        /* ========================================
+           MAIN CONTAINER SYSTEM
+           ========================================
+        */
+        .main-wrapper {
+            max-width: 1400px;
+            margin: -80px auto 100px;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 320px 1fr 350px;
+            gap: 30px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            transition: var(--transition);
+            margin-bottom: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card:hover {
+            border-color: rgba(99, 102, 241, 0.25);
+            background: var(--bg-card-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .card-header h3 {
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-header h3 i { color: var(--primary); }
+
+        .badge-count {
+            background: var(--primary);
+            color: white;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 800;
+        }
+
+        /* ========================================
+           FRIENDSHIP ENGINE (Gelişmiş İstek & Liste)
+           ========================================
+        */
+        .input-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-box input {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            padding: 14px 20px;
+            border-radius: var(--radius-md);
+            color: white;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .input-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: rgba(255,255,255,0.02);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .user-item:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--border);
+        }
+
+        .user-avatar {
             width: 50px;
             height: 50px;
             border-radius: 10px;
-            margin-right: 15px;
+            object-fit: cover;
             background: #222;
+            flex-shrink: 0;
+            border: 2px solid transparent;
+            transition: var(--transition);
         }
 
-        .friend-info { flex: 1; }
-        .friend-name { font-weight: 600; display: block; }
-        .friend-status { font-size: 0.8rem; color: #10b981; } /* Online Rengi */
+        .user-item:hover .user-avatar { border-color: var(--primary); }
 
-        .remove-btn {
-            color: #ef4444;
+        .user-details { flex: 1; }
+        .user-details h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+        .user-details p { font-size: 12px; color: var(--text-dim); }
+
+        .user-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .online { background: var(--success); box-shadow: 0 0 8px var(--success); }
+        .offline { background: var(--text-muted); }
+
+        .btn-action {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            padding: 10px;
-            transition: 0.3s;
+            transition: var(--transition);
         }
 
-        /* SIDEBAR - TOP PLAYERS */
-        .sidebar-section { margin-bottom: 30px; }
+        .btn-accept { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .btn-accept:hover { background: var(--success); color: white; }
 
-        .stats-row {
+        .btn-reject { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+        .btn-reject:hover { background: var(--danger); color: white; }
+
+        /* ========================================
+           SHOP & MARKETPLACE
+           ========================================
+        */
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-card img {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+        }
+
+        .product-price {
+            color: var(--warning);
+            font-weight: 800;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        /* ========================================
+           ANIMATIONS
+           ========================================
+        */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(99, 102, 241, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+
+        /* ========================================
+           FOOTER
+           ========================================
+        */
+        footer {
+            background: #080808;
+            border-top: 1px solid var(--border);
+            padding: 60px 6% 30px;
+            margin-top: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .footer-col p { color: var(--text-dim); font-size: 14px; }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.03);
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #222;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .container { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.5rem; }
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">RED<span>PRO</span></div>
+    <div class="logo-area" onclick="location.reload()">
+        <img src="https://avenorcraft.com/assets/core/images/uploads/59a78fcd28e2a280769bc1538eef106a.png?cache=1745847284" alt="Logo">
+        <div class="logo-text">AVENOR<span>CRAFT</span></div>
+    </div>
+    
     <nav>
-        <a href="#" class="active">Ana Sayfa</a>
-        <a href="#">Mağaza</a>
-        <a href="#">Sıralama</a>
-        <a href="#" style="background: var(--primary); color: white; padding: 8px 15px; border-radius: 8px;">Giriş Yap</a>
+        <ul>
+            <li><a href="#" class="active">Panel</a></li>
+            <li><a href="#">Mağaza</a></li>
+            <li><a href="#">Kredi Yükle</a></li>
+            <li><a href="#">Sıralama</a></li>
+            <li><a href="#">Destek</a></li>
+        </ul>
     </nav>
+
+    <div class="auth-zone">
+        <div style="text-align: right; margin-right: 15px;">
+            <div style="font-weight: 800; font-size: 14px; color: white;">Syvex</div>
+            <div style="font-size: 12px; color: var(--warning); font-weight: 600;">1.450,00 ⛁</div>
+        </div>
+        <img src="https://minotar.net/avatar/Syvex/45" style="border-radius: 10px; border: 2px solid var(--primary);" alt="User">
+    </div>
 </header>
 
-<section class="hero">
-    <h1>Arkadaşlarınla <span>Daha Eğlenceli!</span></h1>
-    <p>Avenor Craft sosyal panelinde arkadaşlarını ekleyebilir, istatistiklerini görebilir ve onlara hediye krediler gönderebilirsin.</p>
-    <a href="#friends" class="btn"><i class="fas fa-users"></i> Keşfetmeye Başla</a>
+<section class="hero-banner">
+    <div class="hero-content">
+        <h1>SOSYAL HUB</h1>
+        <p>Avenor Craft dünyasındaki arkadaşlarını yönet, onlara hediye gönder ve sunucunun nabzını tut.</p>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button class="btn-action" style="width: auto; padding: 0 30px; background: var(--primary); color: white; font-weight: 700; border-radius: 12px;">
+                MARKETİ GEZ
+            </button>
+            <button class="btn-action" style="width: auto; padding: 0 30px; background: rgba(255,255,255,0.05); color: white; font-weight: 700; border-radius: 12px; border: 1px solid var(--border);">
+                DİSCORD KATIL
+            </button>
+        </div>
+    </div>
 </section>
 
-<div class="container" id="friends">
-    <div class="card">
-        <h2><i class="fas fa-user-plus" style="color: var(--primary);"></i> Arkadaş Ekle</h2>
-        <div class="add-friend-box">
-            <input type="text" id="friendName" placeholder="Oyuncu adını yazın... (Örn: Ordek58)">
-            <button class="btn" onclick="addFriend()">Ekle</button>
-        </div>
-
-        <h2><i class="fas fa-list" style="color: var(--primary);"></i> Arkadaş Listesi</h2>
-        <div id="friendList">
-            <div class="friend-item">
-                <img src="https://minotar.net/avatar/Ordek58/50" class="friend-avatar" alt="">
-                <div class="friend-info">
-                    <span class="friend-name">Ordek58</span>
-                    <span class="friend-status">🟢 Çevrimiçi - Survival 1</span>
+<div class="main-wrapper">
+    
+    <aside class="left-col">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-user-circle"></i> PROFILIM</h3>
+            </div>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="https://mc-heads.net/body/Syvex/150" alt="Body" style="filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">
+                <h2 style="margin-top: 15px;">Syvex</h2>
+                <span style="background: rgba(99,102,241,0.1); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; letter-spacing: 1px;">YÖNETİCİ</span>
+            </div>
+            <div style="background: #080808; border-radius: 12px; padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div style="text-align: center;">
+                    <small style="color: var(--text-dim); display: block;">Öldürme</small>
+                    <b style="color: var(--success);">1.245</b>
                 </div>
-                <div class="remove-btn"><i class="fas fa-trash"></i></div>
-            </div>
-
-            <div class="friend-item">
-                <img src="https://minotar.net/avatar/GodAzO/50" class="friend-avatar" alt="">
-                <div class="friend-info">
-                    <span class="friend-name">GodAzO</span>
-                    <span class="friend-status" style="color: #666;">🔴 Çevrimdışı</span>
+                <div style="text-align: center;">
+                    <small style="color: var(--text-dim); display: block;">Ölme</small>
+                    <b style="color: var(--danger);">412</b>
                 </div>
-                <div class="remove-btn"><i class="fas fa-trash"></i></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="sidebar-section">
-            <h3 style="margin-bottom: 15px;">Profil Özetim</h3>
-            <div class="stats-row">
-                <span>Kredi</span>
-                <strong style="color: #fbbf24;">1,250 ⛁</strong>
-            </div>
-            <div class="stats-row">
-                <span>Arkadaş Sayısı</span>
-                <strong>2 / 50</strong>
             </div>
         </div>
 
-        <div class="sidebar-section" style="margin-top: 40px;">
-            <h3 style="margin-bottom: 15px;">En Popülerler</h3>
-            <div class="friend-item" style="padding: 10px; background: none; border-bottom: 1px solid #222; border-radius: 0;">
-                <img src="https://minotar.net/avatar/met05/30" style="width: 30px; height: 30px; border-radius: 5px; margin-right: 10px;">
-                <span style="font-size: 0.9rem;">met05</span>
-                <span style="margin-left: auto; color: var(--primary); font-size: 0.8rem;">9.2k Kredi</span>
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-gem"></i> VIP DURUMU</h3>
+            </div>
+            <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 15px;">Mevcut Rütbeniz: <b>OYUNCU</b></p>
+            <div style="width: 100%; height: 6px; background: #222; border-radius: 10px; margin-bottom: 10px;">
+                <div style="width: 0%; height: 100%; background: var(--primary); border-radius: 10px;"></div>
+            </div>
+            <small style="color: var(--text-muted);">Sıradaki rütbe için 250 kredi gerekli.</small>
+        </div>
+    </aside>
+
+    <main class="center-col">
+        <div class="card" id="requestSection">
+            <div class="card-header">
+                <h3><i class="fas fa-envelope-open-text"></i> GELEN DAVETLER</h3>
+                <span class="badge-count" id="reqCounter">2</span>
+            </div>
+            <div class="user-list" id="requestContainer">
+                <div class="user-item" id="req_1">
+                    <img src="https://minotar.net/avatar/Vortex_MC/50" class="user-avatar" alt="">
+                    <div class="user-details">
+                        <h4>Vortex_MC</h4>
+                        <p>Seni arkadaş olarak eklemek istiyor.</p>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-action btn-accept" onclick="socialEngine.accept('req_1', 'Vortex_MC')"><i class="fas fa-check"></i></button>
+                        <button class="btn-action btn-reject" onclick="socialEngine.reject('req_1')"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="user-item" id="req_2">
+                    <img src="https://minotar.net/avatar/LavaQueen/50" class="user-avatar" alt="">
+                    <div class="user-details">
+                        <h4>LavaQueen</h4>
+                        <p>Seni arkadaş olarak eklemek istiyor.</p>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-action btn-accept" onclick="socialEngine.accept('req_2', 'LavaQueen')"><i class="fas fa-check"></i></button>
+                        <button class="btn-action btn-reject" onclick="socialEngine.reject('req_2')"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-user-friends"></i> ARKADAŞLARIM</h3>
+                <span class="badge-count" id="friendCounter">3</span>
+            </div>
+            
+            <div class="input-box">
+                <input type="text" id="addFriendInput" placeholder="Eklemek istediğin oyuncunun adı...">
+                <button class="btn-action" onclick="socialEngine.sendRequest()" style="position: absolute; right: 8px; top: 8px; background: var(--primary); color: white; width: 80px; border-radius: 8px; font-weight: 700; font-size: 11px;">
+                    GÖNDER
+                </button>
+            </div>
+
+            <div class="user-list" id="friendsContainer">
+                <div class="user-item">
+                    <img src="https://minotar.net/avatar/Ordek58/50" class="user-avatar" alt="">
+                    <div class="user-details">
+                        <h4>Ordek58</h4>
+                        <p><span class="user-status-dot online"></span> Çevrimiçi - Survival</p>
+                    </div>
+                    <button class="btn-action btn-reject" onclick="socialEngine.removeFriend(this)"><i class="fas fa-user-minus"></i></button>
+                </div>
+                <div class="user-item">
+                    <img src="https://minotar.net/avatar/GodAzO/50" class="user-avatar" alt="">
+                    <div class="user-details">
+                        <h4>GodAzO</h4>
+                        <p><span class="user-status-dot offline"></span> Çevrimdışı (2 saat önce)</p>
+                    </div>
+                    <button class="btn-action btn-reject" onclick="socialEngine.removeFriend(this)"><i class="fas fa-user-minus"></i></button>
+                </div>
+                <div class="user-item">
+                    <img src="https://minotar.net/avatar/LeaderOS/50" class="user-avatar" alt="">
+                    <div class="user-details">
+                        <h4>LeaderOS</h4>
+                        <p><span class="user-status-dot online"></span> Çevrimiçi - Skyblock</p>
+                    </div>
+                    <button class="btn-action btn-reject" onclick="socialEngine.removeFriend(this)"><i class="fas fa-user-minus"></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <aside class="right-col">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-shopping-cart"></i> HAFTALIK MARKET</h3>
+            </div>
+            <div class="market-grid">
+                <div class="product-card">
+                    <img src="https://mc-heads.net/head/MHF_Chest/100" alt="">
+                    <div style="font-weight: 700; font-size: 13px;">GİZEMLİ KUTU</div>
+                    <div class="product-price">75 ⛁</div>
+                    <button class="btn-action" style="width: 100%; background: var(--primary); color: white; border-radius: 6px; font-size: 11px;">SATIN AL</button>
+                </div>
+                <div class="product-card">
+                    <img src="https://mc-heads.net/head/MHF_TNT/100" alt="">
+                    <div style="font-weight: 700; font-size: 13px;">BOOST PAKETİ</div>
+                    <div class="product-price">120 ⛁</div>
+                    <button class="btn-action" style="width: 100%; background: var(--primary); color: white; border-radius: 6px; font-size: 11px;">SATIN AL</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="background: linear-gradient(135deg, #111 0%, #060606 100%);">
+            <div class="card-header">
+                <h3><i class="fas fa-newspaper"></i> HABERLER</h3>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div style="border-left: 3px solid var(--primary); padding-left: 15px;">
+                    <h5 style="font-size: 14px; margin-bottom: 5px;">Sezon Sonu Yaklaşıyor!</h5>
+                    <p style="font-size: 11px; color: var(--text-dim);">Sıralama ödülleri bu hafta dağıtılıyor. Yerini almayı unutma!</p>
+                </div>
+                <div style="border-left: 3px solid var(--warning); padding-left: 15px;">
+                    <h5 style="font-size: 14px; margin-bottom: 5px;">Bakım Çalışması</h5>
+                    <p style="font-size: 11px; color: var(--text-dim);">Salı gecesi saat 03:00'te sunucumuz kısa süreli bakıma girecektir.</p>
+                </div>
+            </div>
+        </div>
+    </aside>
 </div>
 
+<footer>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <div class="logo-text" style="margin-bottom: 20px;">AVENOR<span>CRAFT</span></div>
+            <p>Türkiye'nin en gelişmiş Minecraft altyapısıyla oyuncularımıza kesintisiz ve adil bir oyun deneyimi sunuyoruz. BoxMining, Survival ve daha fazlası burada!</p>
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <i class="fab fa-discord" style="font-size: 20px; color: var(--text-dim); cursor: pointer;"></i>
+                <i class="fab fa-instagram" style="font-size: 20px; color: var(--text-dim); cursor: pointer;"></i>
+                <i class="fab fa-youtube" style="font-size: 20px; color: var(--text-dim); cursor: pointer;"></i>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Hızlı Erişim</h4>
+            <ul style="list-style: none; color: var(--text-dim); font-size: 14px; display: grid; gap: 10px;">
+                <li>Ana Sayfa</li>
+                <li>Mağaza</li>
+                <li>Kredi Yükle</li>
+                <li>Yardım Merkezi</li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Yasal</h4>
+            <ul style="list-style: none; color: var(--text-dim); font-size: 14px; display: grid; gap: 10px;">
+                <li>Kullanıcı Sözleşmesi</li>
+                <li>Gizlilik Politikası</li>
+                <li>Satış Sözleşmesi</li>
+                <li>KVKK Aydınlatma</li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Sunucu Durumu</h4>
+            <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 15px; text-align: center;">
+                <div style="color: var(--success); font-weight: 800; font-size: 18px;">AKTIF</div>
+                <small style="color: var(--text-dim);">mc.avenorcraft.com</small>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div>&copy; 2026 Avenor Craft. Tüm hakları saklıdır.</div>
+        <div>Powered by <b style="color: white;">LeaderOS</b></div>
+    </div>
+</footer>
+
 <script>
-    function addFriend() {
-        const nameInput = document.getElementById('friendName');
-        const name = nameInput.value.trim();
+/* ========================================
+   SOCIAL ENGINE JAVASCRIPT
+   ========================================
+*/
+const socialEngine = {
+    // İstek Kabul Etme
+    accept: function(elementId, userName) {
+        const item = document.getElementById(elementId);
+        item.style.transform = 'translateX(50px)';
+        item.style.opacity = '0';
         
-        if (name === "") {
-            alert("Lütfen bir isim girin!");
+        setTimeout(() => {
+            item.remove();
+            this.updateCounters();
+            this.addFriendToList(userName);
+            
+            Swal.fire({
+                title: 'Harika!',
+                text: userName + ' ile artık arkadaşsınız.',
+                icon: 'success',
+                background: '#111',
+                color: '#fff',
+                confirmButtonColor: '#6366f1'
+            });
+        }, 300);
+    },
+
+    // İstek Reddetme
+    reject: function(elementId) {
+        const item = document.getElementById(elementId);
+        item.style.opacity = '0';
+        setTimeout(() => {
+            item.remove();
+            this.updateCounters();
+        }, 300);
+    },
+
+    // Yeni İstek Gönderme
+    sendRequest: function() {
+        const input = document.getElementById('addFriendInput');
+        const name = input.value.trim();
+        
+        if(name.length < 3) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata',
+                text: 'Lütfen geçerli bir oyuncu adı girin.',
+                background: '#111',
+                color: '#fff'
+            });
             return;
         }
 
-        const friendList = document.getElementById('friendList');
-        
-        // Yeni arkadaş elementi oluşturma
-        const div = document.createElement('div');
-        div.className = 'friend-item';
-        div.innerHTML = `
-            <img src="https://minotar.net/avatar/${name}/50" class="friend-avatar" onerror="this.src='https://minotar.net/avatar/Steve/50'">
-            <div class="friend-info">
-                <span class="friend-name">${name}</span>
-                <span class="friend-status">🟡 Yeni Eklendi</span>
-            </div>
-            <div class="remove-btn" onclick="this.parentElement.remove()"><i class="fas fa-trash"></i></div>
-        `;
+        Swal.fire({
+            title: 'İstek Gönderiliyor...',
+            html: '<b>' + name + '</b> oyuncusuna davet iletiliyor.',
+            timer: 1500,
+            didOpen: () => { Swal.showLoading() }
+        }).then(() => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Başarılı',
+                text: 'İsteğiniz başarıyla iletildi!',
+                background: '#111',
+                color: '#fff'
+            });
+            input.value = "";
+        });
+    },
 
-        friendList.prepend(div);
-        nameInput.value = "";
+    // Arkadaş Listesine Ekleme
+    addFriendToList: function(name) {
+        const container = document.getElementById('friendsContainer');
+        const newFriend = document.createElement('div');
+        newFriend.className = 'user-item animate__animated animate__fadeInLeft';
+        newFriend.innerHTML = `
+            <img src="https://minotar.net/avatar/${name}/50" class="user-avatar" alt="">
+            <div class="user-details">
+                <h4>${name}</h4>
+                <p><span class="user-status-dot online"></span> Çevrimiçi - Yeni Katıldı</p>
+            </div>
+            <button class="btn-action btn-reject" onclick="socialEngine.removeFriend(this)"><i class="fas fa-user-minus"></i></button>
+        `;
+        container.prepend(newFriend);
+        this.updateCounters();
+    },
+
+    // Arkadaş Silme
+    removeFriend: function(btn) {
+        Swal.fire({
+            title: 'Emin misiniz?',
+            text: "Bu oyuncuyu arkadaş listenizden kaldırmak üzeresiniz.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#333',
+            confirmButtonText: 'Evet, Sil!',
+            background: '#111',
+            color: '#fff'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                btn.closest('.user-item').remove();
+                this.updateCounters();
+            }
+        });
+    },
+
+    // Sayaçları Güncelleme
+    updateCounters: function() {
+        const reqCount = document.getElementById('requestContainer').children.length;
+        const friendCount = document.getElementById('friendsContainer').children.length;
         
-        // Başarı mesajı (SweetAlert yerine basit alert)
-        console.log(name + " eklendi!");
+        document.getElementById('reqCounter').innerText = reqCount;
+        document.getElementById('friendCounter').innerText = friendCount;
+
+        if(reqCount === 0) {
+            document.getElementById('requestSection').style.display = 'none';
+        }
     }
+};
+
+// Market Butonları İçin Basit Dinleyici
+document.querySelectorAll('.product-card .btn-action').forEach(btn => {
+    btn.addEventListener('click', function() {
+        Swal.fire({
+            title: 'Satın Al',
+            text: 'Bu ürünü kredilerinizle satın almak istiyor musunuz?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Satın Al',
+            cancelButtonText: 'Vazgeç',
+            background: '#111',
+            color: '#fff'
+        }).then((res) => {
+            if(res.isConfirmed) {
+                Swal.fire('Hata', 'Yeterli krediniz bulunmamaktadır.', 'error');
+            }
+        });
+    });
+});
 </script>
 
 </body>
