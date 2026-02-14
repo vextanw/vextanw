@@ -1,322 +1,1267 @@
 <!DOCTYPE html>
+
 <html lang="tr">
+
 <head>
+
     <meta charset="utf-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>AVENOR CRAFT | Profesyonel Sosyal Ağ & Yönetim Paneli</title>
+
     
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+
+
 
     <style>
+
+        /* ========================================
+
+           CORE VARIABLES (LeaderOS & Gale Style)
+
+           ========================================
+
+        */
+
         :root {
+
             --primary: #6366f1;
+
             --primary-hover: #4f46e5;
+
             --primary-glow: rgba(99, 102, 241, 0.35);
+
             --bg-deep: #060606;
+
             --bg-card: #111111;
+
             --bg-card-hover: #161616;
+
             --bg-input: #0a0a0a;
+
             --text-main: #f8fafc;
+
             --text-dim: #94a3b8;
+
             --text-muted: #64748b;
+
             --success: #10b981;
+
             --danger: #ef4444;
+
             --warning: #f59e0b;
+
             --border: rgba(255, 255, 255, 0.06);
+
             --radius-lg: 18px;
+
             --radius-md: 12px;
+
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+
+
+        /* ========================================
+
+           BASE RESET & SCROLLBAR
+
+           ========================================
+
+        */
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+            outline: none;
+
+            -webkit-tap-highlight-color: transparent;
+
+        }
+
+
+
+        ::-webkit-scrollbar { width: 6px; }
+
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; transition: var(--transition); }
+
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+
 
         body {
+
             font-family: 'Inter', sans-serif;
+
             background-color: var(--bg-deep);
+
             color: var(--text-main);
+
+            line-height: 1.6;
+
             overflow-x: hidden;
+
+            -webkit-font-smoothing: antialiased;
+
         }
+
+
 
         /* ========================================
-           DDOS PROTECTION & LOADER
-           ======================================== */
-        #ddos-screen {
+
+           HEADER & NAVIGATION
+
+           ========================================
+
+        */
+
+        header {
+
             position: fixed;
-            inset: 0;
-            background: var(--bg-deep);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
 
-        .shield-icon {
-            font-size: 80px;
-            color: var(--primary);
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 20px var(--primary-glow));
-            animation: pulse 2s infinite;
-        }
+            top: 0;
 
-        /* ========================================
-           LOGIN SYSTEM
-           ======================================== */
-        #login-screen {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, #111 0%, #060606 100%);
-            z-index: 9000;
-            display: none; /* JS ile açılacak */
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .login-card {
             width: 100%;
-            max-width: 450px;
-            background: rgba(17, 17, 17, 0.8);
+
+            height: 90px;
+
+            background: rgba(8, 8, 8, 0.85);
+
             backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            z-index: 2000;
+
         }
 
-        .login-input {
-            width: 100%;
-            background: var(--bg-input);
-            border: 1px solid var(--border);
-            padding: 15px 20px;
-            border-radius: var(--radius-md);
-            color: white;
-            margin-bottom: 20px;
-            transition: var(--transition);
-        }
 
-        .login-input:focus { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
 
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary);
-            border: none;
-            border-radius: var(--radius-md);
-            color: white;
-            font-weight: 800;
+        .logo-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
             cursor: pointer;
-            transition: var(--transition);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+
         }
 
-        .login-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+
+        .logo-area img { height: 55px; filter: drop-shadow(0 0 10px var(--primary-glow)); }
+
+
+
+        .logo-text {
+
+            font-size: 22px;
+
+            font-weight: 900;
+
+            text-transform: uppercase;
+
+            letter-spacing: -0.5px;
+
+        }
+
+
+
+        .logo-text span { color: var(--primary); }
+
+
+
+        nav ul {
+
+            display: flex;
+
+            list-style: none;
+
+            gap: 30px;
+
+        }
+
+
+
+        nav ul li a {
+
+            text-decoration: none;
+
+            color: var(--text-dim);
+
+            font-weight: 600;
+
+            font-size: 14px;
+
+            text-transform: uppercase;
+
+            transition: var(--transition);
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+
+        nav ul li a:hover, nav ul li a.active {
+
+            color: var(--primary);
+
+            text-shadow: 0 0 10px var(--primary-glow);
+
+        }
+
+
+
+        .auth-zone {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
 
         /* ========================================
-           MAIN CONTENT (HIDDEN BY DEFAULT)
-           ======================================== */
-        #main-app { display: none; }
 
-        /* Mevcut Stillerin Devamı (Header, Hero, Cards...) */
-        header { position: fixed; top: 0; width: 100%; height: 90px; background: rgba(8, 8, 8, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 6%; z-index: 2000; }
-        .logo-area { display: flex; align-items: center; gap: 15px; cursor: pointer; }
-        .logo-area img { height: 55px; filter: drop-shadow(0 0 10px var(--primary-glow)); }
-        .logo-text { font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; }
-        .logo-text span { color: var(--primary); }
-        nav ul { display: flex; list-style: none; gap: 30px; }
-        nav ul li a { text-decoration: none; color: var(--text-dim); font-weight: 600; font-size: 14px; text-transform: uppercase; transition: var(--transition); }
-        nav ul li a:hover, nav ul li a.active { color: var(--primary); }
-        .auth-zone { display: flex; align-items: center; gap: 20px; }
-        
-        .hero-banner { position: relative; height: 550px; width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; background: linear-gradient(rgba(6,6,6,0.5), var(--bg-deep)), url('https://images.alphacoders.com/132/1327116.jpeg'); background-attachment: fixed; background-size: cover; background-position: center; padding-top: 90px; }
-        .hero-content h1 { font-size: 4.5rem; font-weight: 900; margin-bottom: 15px; }
-        
-        .main-wrapper { max-width: 1400px; margin: -80px auto 100px; padding: 0 30px; display: grid; grid-template-columns: 320px 1fr 350px; gap: 30px; position: relative; z-index: 100; }
-        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 25px; transition: var(--transition); margin-bottom: 25px; }
-        .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
-        .card-header h3 { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+           HERO & PARALLAX
+
+           ========================================
+
+        */
+
+        .hero-banner {
+
+            position: relative;
+
+            height: 550px;
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            background: linear-gradient(rgba(6,6,6,0.5), var(--bg-deep)), url('https://images.alphacoders.com/132/1327116.jpeg');
+
+            background-attachment: fixed;
+
+            background-size: cover;
+
+            background-position: center;
+
+            padding-top: 90px;
+
+        }
+
+
+
+        .hero-content h1 {
+
+            font-size: 4.5rem;
+
+            font-weight: 900;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 15px;
+
+            animation: fadeInUp 1s ease;
+
+        }
+
+
+
+        .hero-content p {
+
+            color: var(--text-dim);
+
+            font-size: 1.25rem;
+
+            max-width: 700px;
+
+            margin: 0 auto 35px;
+
+            animation: fadeInUp 1.2s ease;
+
+        }
+
+
+
+        /* ========================================
+
+           MAIN CONTAINER SYSTEM
+
+           ========================================
+
+        */
+
+        .main-wrapper {
+
+            max-width: 1400px;
+
+            margin: -80px auto 100px;
+
+            padding: 0 30px;
+
+            display: grid;
+
+            grid-template-columns: 320px 1fr 350px;
+
+            gap: 30px;
+
+            position: relative;
+
+            z-index: 100;
+
+        }
+
+
+
+        .card {
+
+            background: var(--bg-card);
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius-lg);
+
+            padding: 25px;
+
+            transition: var(--transition);
+
+            margin-bottom: 25px;
+
+            overflow: hidden;
+
+            position: relative;
+
+        }
+
+
+
+        .card:hover {
+
+            border-color: rgba(99, 102, 241, 0.25);
+
+            background: var(--bg-card-hover);
+
+            transform: translateY(-5px);
+
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+
+        }
+
+
+
+        .card-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+
+            border-bottom: 1px solid var(--border);
+
+            padding-bottom: 15px;
+
+        }
+
+
+
+        .card-header h3 {
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+
         .card-header h3 i { color: var(--primary); }
-        
-        .user-list { display: flex; flex-direction: column; gap: 12px; }
-        .user-item { display: flex; align-items: center; gap: 15px; padding: 12px; background: rgba(255,255,255,0.02); border-radius: var(--radius-md); transition: var(--transition); }
-        .user-avatar { width: 50px; height: 50px; border-radius: 10px; }
-        .btn-action { cursor: pointer; border: none; transition: var(--transition); display: flex; align-items: center; justify-content: center; }
-        .btn-accept { background: rgba(16, 185, 129, 0.1); color: var(--success); width: 35px; height: 35px; border-radius: 8px; }
-        .btn-reject { background: rgba(239, 68, 68, 0.1); color: var(--danger); width: 35px; height: 35px; border-radius: 8px; }
 
-        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .product-card { background: #0a0a0a; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px; text-align: center; }
-        .product-price { color: var(--warning); font-weight: 800; margin: 5px 0; }
 
-        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+
+        .badge-count {
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 11px;
+
+            padding: 2px 8px;
+
+            border-radius: 6px;
+
+            font-weight: 800;
+
+        }
+
+
+
+        /* ========================================
+
+           FRIENDSHIP ENGINE (Gelişmiş İstek & Liste)
+
+           ========================================
+
+        */
+
+        .input-box {
+
+            position: relative;
+
+            margin-bottom: 25px;
+
+        }
+
+
+
+        .input-box input {
+
+            width: 100%;
+
+            background: var(--bg-input);
+
+            border: 1px solid var(--border);
+
+            padding: 14px 20px;
+
+            border-radius: var(--radius-md);
+
+            color: white;
+
+            font-weight: 500;
+
+            transition: var(--transition);
+
+        }
+
+
+
+        .input-box input:focus {
+
+            border-color: var(--primary);
+
+            box-shadow: 0 0 15px var(--primary-glow);
+
+        }
+
+
+
+        .user-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+
+        }
+
+
+
+        .user-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 12px;
+
+            background: rgba(255,255,255,0.02);
+
+            border-radius: var(--radius-md);
+
+            transition: var(--transition);
+
+            border: 1px solid transparent;
+
+        }
+
+
+
+        .user-item:hover {
+
+            background: rgba(255,255,255,0.05);
+
+            border-color: var(--border);
+
+        }
+
+
+
+        .user-avatar {
+
+            width: 50px;
+
+            height: 50px;
+
+            border-radius: 10px;
+
+            object-fit: cover;
+
+            background: #222;
+
+            flex-shrink: 0;
+
+            border: 2px solid transparent;
+
+            transition: var(--transition);
+
+        }
+
+
+
+        .user-item:hover .user-avatar { border-color: var(--primary); }
+
+
+
+        .user-details { flex: 1; }
+
+        .user-details h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+
+        .user-details p { font-size: 12px; color: var(--text-dim); }
+
+
+
+        .user-status-dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            border-radius: 50%;
+
+            display: inline-block;
+
+            margin-right: 5px;
+
+        }
+
+        .online { background: var(--success); box-shadow: 0 0 8px var(--success); }
+
+        .offline { background: var(--text-muted); }
+
+
+
+        .btn-action {
+
+            width: 35px;
+
+            height: 35px;
+
+            border-radius: 8px;
+
+            border: none;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+
+        }
+
+
+
+        .btn-accept { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+
+        .btn-accept:hover { background: var(--success); color: white; }
+
+
+
+        .btn-reject { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+
+        .btn-reject:hover { background: var(--danger); color: white; }
+
+
+
+        /* ========================================
+
+           SHOP & MARKETPLACE
+
+           ========================================
+
+        */
+
+        .market-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+
+        .product-card {
+
+            background: #0a0a0a;
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius-md);
+
+            padding: 20px;
+
+            text-align: center;
+
+        }
+
+
+
+        .product-card img {
+
+            width: 110px;
+
+            height: 110px;
+
+            object-fit: contain;
+
+            margin-bottom: 15px;
+
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+
+        }
+
+
+
+        .product-price {
+
+            color: var(--warning);
+
+            font-weight: 800;
+
+            font-size: 18px;
+
+            margin: 10px 0;
+
+        }
+
+
+
+        /* ========================================
+
+           ANIMATIONS
+
+           ========================================
+
+        */
+
+        @keyframes fadeInUp {
+
+            from { opacity: 0; transform: translateY(30px); }
+
+            to { opacity: 1; transform: translateY(0); }
+
+        }
+
+
+
+        @keyframes pulseGlow {
+
+            0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+
+            70% { box-shadow: 0 0 0 15px rgba(99, 102, 241, 0); }
+
+            100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+
+        }
+
+
+
+        /* ========================================
+
+           FOOTER
+
+           ========================================
+
+        */
+
+        footer {
+
+            background: #080808;
+
+            border-top: 1px solid var(--border);
+
+            padding: 60px 6% 30px;
+
+            margin-top: 50px;
+
+        }
+
+
+
+        .footer-grid {
+
+            display: grid;
+
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+
+            gap: 50px;
+
+            margin-bottom: 50px;
+
+        }
+
+
+
+        .footer-col h4 {
+
+            color: white;
+
+            margin-bottom: 25px;
+
+            text-transform: uppercase;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+        }
+
+
+
+        .footer-col p { color: var(--text-dim); font-size: 14px; }
+
+
+
+        .footer-bottom {
+
+            padding-top: 30px;
+
+            border-top: 1px solid rgba(255,255,255,0.03);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            color: var(--text-muted);
+
+            font-size: 13px;
+
+        }
+
     </style>
+
 </head>
+
 <body>
 
-<div id="ddos-screen">
-    <div class="shield-icon"><i class="fas fa-shield-halved"></i></div>
-    <h2 style="letter-spacing: 2px;">GÜVENLİK TARAMASI</h2>
-    <p style="color: var(--text-dim); margin-top: 10px;">IP Adresiniz doğrulanıyor: <span id="user-ip" style="color: var(--primary);">...</span></p>
-    <div style="margin-top: 30px; width: 200px; height: 4px; background: #222; border-radius: 10px; overflow: hidden;">
-        <div id="progress-bar" style="width: 0%; height: 100%; background: var(--primary); transition: 0.5s;"></div>
-    </div>
-</div>
 
-<div id="login-screen">
-    <div class="login-card animate__animated animate__zoomIn">
-        <div style="text-align: center; margin-bottom: 30px;">
-            <img src="https://avenorcraft.com/assets/core/images/uploads/59a78fcd28e2a280769bc1538eef106a.png?cache=1745847284" height="60" alt="Logo">
-            <h2 style="margin-top: 15px; font-weight: 900;">HOŞ GELDİNİZ</h2>
-            <p style="color: var(--text-dim); font-size: 14px;">Panele erişmek için giriş yapın.</p>
-        </div>
-        <input type="text" id="login-user" class="login-input" placeholder="Kullanıcı Adı (Syvex)">
-        <input type="password" id="login-pass" class="login-input" placeholder="Şifre (123456)">
-        <button class="login-btn" onclick="appEngine.handleLogin()">Sisteme Giriş Yap</button>
-        <p style="text-align: center; margin-top: 20px; font-size: 12px; color: var(--text-muted);">Avenor Craft &copy; 2026</p>
-    </div>
-</div>
 
-<div id="main-app">
-    <header>
-        <div class="logo-area" onclick="location.reload()">
-            <img src="https://avenorcraft.com/assets/core/images/uploads/59a78fcd28e2a280769bc1538eef106a.png?cache=1745847284" alt="Logo">
-            <div class="logo-text">AVENOR<span>CRAFT</span></div>
+<header>
+
+    <div class="logo-area" onclick="location.reload()">
+
+        <img src="https://avenorcraft.com/assets/core/images/uploads/59a78fcd28e2a280769bc1538eef106a.png?cache=1745847284" alt="Logo">
+
+        <div class="logo-text">AVENOR<span>CRAFT</span></div>
+
+    </div>
+
+    
+
+    <nav>
+
+        <ul>
+
+            <li><a href="#" class="active">Panel</a></li>
+
+            <li><a href="#">Mağaza</a></li>
+
+            <li><a href="#">Kredi Yükle</a></li>
+
+            <li><a href="#">Sıralama</a></li>
+
+            <li><a href="#">Destek</a></li>
+
+        </ul>
+
+    </nav>
+
+
+
+    <div class="auth-zone">
+
+        <div style="text-align: right; margin-right: 15px;">
+
+            <div style="font-weight: 800; font-size: 14px; color: white;">Syvex</div>
+
+            <div style="font-size: 12px; color: var(--warning); font-weight: 600;">1.450,00 ⛁</div>
+
         </div>
-        <nav>
-            <ul>
-                <li><a href="#" class="active">Panel</a></li>
-                <li><a href="#">Mağaza</a></li>
-                <li><a href="#">Destek</a></li>
-            </ul>
-        </nav>
-        <div class="auth-zone">
-            <div style="text-align: right;">
-                <div style="font-weight: 800; font-size: 14px;" id="display-name">Syvex</div>
-                <div style="font-size: 12px; color: var(--warning);">1.450,00 ⛁</div>
+
+        <img src="https://minotar.net/avatar/Syvex/45" style="border-radius: 10px; border: 2px solid var(--primary);" alt="User">
+
+    </div>
+
+</header>
+
+
+
+<section class="hero-banner">
+
+    <div class="hero-content">
+
+        <h1>SOSYAL HUB</h1>
+
+        <p>Avenor Craft dünyasındaki arkadaşlarını yönet, onlara hediye gönder ve sunucunun nabzını tut.</p>
+
+        <div style="display: flex; gap: 15px; justify-content: center;">
+
+            <button class="btn-action" style="width: auto; padding: 0 30px; background: var(--primary); color: white; font-weight: 700; border-radius: 12px;">
+
+                MARKETİ GEZ
+
+            </button>
+
+            <button class="btn-action" style="width: auto; padding: 0 30px; background: rgba(255,255,255,0.05); color: white; font-weight: 700; border-radius: 12px; border: 1px solid var(--border);">
+
+                DİSCORD KATIL
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<div class="main-wrapper">
+
+    
+
+    <aside class="left-col">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h3><i class="fas fa-user-circle"></i> PROFILIM</h3>
+
             </div>
-            <img src="https://minotar.net/avatar/Syvex/45" style="border-radius: 10px; border: 2px solid var(--primary);">
-        </div>
-    </header>
 
-    <section class="hero-banner">
-        <div class="hero-content">
-            <h1>SOSYAL HUB</h1>
-            <p>Avenor Craft dünyasındaki arkadaşlarını yönet ve sunucunun nabzını tut.</p>
-        </div>
-    </section>
+            <div style="text-align: center; margin-bottom: 20px;">
 
-    <div class="main-wrapper">
-        <aside>
-            <div class="card">
-                <div class="card-header"><h3><i class="fas fa-user"></i> PROFIL</h3></div>
+                <img src="https://mc-heads.net/body/Syvex/150" alt="Body" style="filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">
+
+                <h2 style="margin-top: 15px;">Syvex</h2>
+
+                <span style="background: rgba(99,102,241,0.1); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; letter-spacing: 1px;">YÖNETİCİ</span>
+
+            </div>
+
+            <div style="background: #080808; border-radius: 12px; padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+
                 <div style="text-align: center;">
-                    <img src="https://mc-heads.net/body/Syvex/130">
-                    <h2 id="profile-name">Syvex</h2>
-                    <span style="background: rgba(99,102,241,0.1); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800;">YÖNETİCİ</span>
-                </div>
-            </div>
-        </aside>
 
-        <main>
-            <div class="card">
-                <div class="card-header">
-                    <h3><i class="fas fa-user-friends"></i> ARKADAŞLAR</h3>
-                    <span style="background: var(--primary); padding: 2px 8px; border-radius: 5px; font-size: 12px;" id="friendCount">2</span>
-                </div>
-                <div class="user-list" id="friendsContainer">
-                    <div class="user-item">
-                        <img src="https://minotar.net/avatar/LeaderOS/50" class="user-avatar">
-                        <div style="flex:1"><h4>LeaderOS</h4><p style="font-size: 12px; color: var(--success);">Çevrimiçi</p></div>
-                        <button class="btn-action btn-reject" onclick="this.parentElement.remove()"><i class="fas fa-user-minus"></i></button>
-                    </div>
-                </div>
-            </div>
-        </main>
+                    <small style="color: var(--text-dim); display: block;">Öldürme</small>
 
-        <aside>
-            <div class="card">
-                <div class="card-header"><h3><i class="fas fa-shopping-cart"></i> MARKET</h3></div>
-                <div class="market-grid">
-                    <div class="product-card">
-                        <img src="https://mc-heads.net/head/MHF_Chest/60">
-                        <div style="font-size: 12px; font-weight: bold;">KASA</div>
-                        <div class="product-price">50 ⛁</div>
-                    </div>
-                    <div class="product-card">
-                        <img src="https://mc-heads.net/head/MHF_TNT/60">
-                        <div style="font-size: 12px; font-weight: bold;">BOOST</div>
-                        <div class="product-price">100 ⛁</div>
-                    </div>
+                    <b style="color: var(--success);">1.245</b>
+
                 </div>
+
+                <div style="text-align: center;">
+
+                    <small style="color: var(--text-dim); display: block;">Ölme</small>
+
+                    <b style="color: var(--danger);">412</b>
+
+                </div>
+
             </div>
-        </aside>
-    </div>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h3><i class="fas fa-gem"></i> VIP DURUMU</h3>
+
+            </div>
+
+            <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 15px;">Mevcut Rütbeniz: <b>OYUNCU</b></p>
+
+            <div style="width: 100%; height: 6px; background: #222; border-radius: 10px; margin-bottom: 10px;">
+
+                <div style="width: 0%; height: 100%; background: var(--primary); border-radius: 10px;"></div>
+
+            </div>
+
+            <small style="color: var(--text-muted);">Sıradaki rütbe için 250 kredi gerekli.</small>
+
+        </div>
+
+    </aside>
+
+
+
+    <main class="center-col">
+
+        <div class="card" id="requestSection">
+
+            <div class="card-header">
+
+                <h3><i class="fas fa-envelope-open-text"></i> GELEN DAVETLER</h3>
+
+                <span class="badge-count" id="reqCounter">2</span>
+
+            </div>
+
+            <div class="user-list" id="requestContainer">
+
+                <div class="user-item" id="req_1">
+
+                    <img src="https://minotar.net/avatar/Vortex_MC/50" class="user-avatar" alt="">
+
+                    <div class="user-details">
+
+                        <h4>Vortex_MC</h4>
+
+                        <p>Seni arkadaş olarak eklemek istiyor.</p>
+
+                    </div>
+
+                    <div style="display: flex; gap: 8px;">
+
+                        <button class="btn-action btn-accept" onclick="socialEngine.accept('req_1', 'Vortex_MC')"><i class="fas fa-check"></i></button>
+
+                        <button class="btn-action btn-reject" onclick="socialEngine.reject('req_1')"><i class="fas fa-times"></i></button>
+
+                    </div>
+
+                </div>
+
+                <div class="user-item" id="req_2">
+
+                    <img src="https://minotar.net/avatar/LavaQueen/50" class="user-avatar" alt="">
+
+                    <div class="user-details">
+
+                        <h4>LavaQueen</h4>
+
+                        <p>Seni arkadaş olarak eklemek istiyor.</p>
+
+                    </div>
+
+                    <div style="display: flex; gap: 8px;">
+
+                        <button class="btn-action btn-accept" onclick="socialEngine.accept('req_2', 'LavaQueen')"><i class="fas fa-check"></i></button>
+
+                        <button class="btn-action btn-reject" onclick="socialEngine.reject('req_2')"><i class="fas fa-times"></i></button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h3><i class="fas fa-user-friends"></i> ARKADAŞLARIM</h3>
+
+                <span class="badge-count" id="friendCounter">3</span>
+
+            </div>
+
+            
+
+            <div class="input-box">
+
+                <input type="text" id="addFriendInput" placeholder="Eklemek istediğin oyuncunun adı...">
+
+                <button class="btn-action" onclick="socialEngine.sendRequest()" style="position: absolute; right: 8px; top: 8px; background: var(--primary); color: white; width: 80px; border-radius: 8px; font-weight: 700; font-size: 11px;">
+
+                    GÖNDER
+
+                </button>
+
+            </div>
+
+
+
+            <div class="user-list" id="friendsContainer">
+
+                <div class="user-item">
+
+                    <img src="https://minotar.net/avatar/Ordek58/50" class="user-avatar" alt="">
+
+                    <div class="user-details">
+
+                        <h4>Ordek58</h4>
+
+                        <p><span class="user-status-dot online"></span> Çevrimiçi - Survival</p>
+
+                    </div>
+
+                    <button class="btn-action btn-reject" onclick="socialEngine.removeFriend(this)"><i class="fas fa-user-minus"></i></button>
+
+                </div>
+
+                <div class="user-item">
+
+                    <img src="https://minotar.net/avatar/GodAzO/50" class="user-avatar" alt="">
+
+                    <div class="user-details">
+
+                        <h4>GodAzO</h4>
+
+                        <p><span class="user-status-dot offline"></span> Çevrimdışı (2 saat önce)</p>
+
+                    </div>
+
+                    <button class="btn-action btn-reject" onclick="socialEngine.removeFriend(this)"><i class="fas fa-user-minus"></i></button>
+
+                </div>
+
+                <div class="user-item">
+
+                    <img src="https://minotar.net/avatar/LeaderOS/50" class="user-avatar" alt="">
+
+                    <div class="user-details">
+
+                        <h4>LeaderOS</h4>
+
+                        <p><span class="user-status-dot online"></span> Çevrimiçi - Skyblock</p>
+
+                    </div>
+
+                    <button class="btn-action btn-reject" onclick="socialEngine.removeFriend(this)"><i class="fas fa-user-minus"></i></button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <aside class="right-col">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h3><i class="fas fa-shopping-cart"></i> HAFTALIK MARKET</h3>
+
+            </div>
+
+            <div class="market-grid">
+
+                <div class="product-card">
+
+                    <img src="https://mc-heads.net/head/MHF_Chest/100" alt="">
+
+                    <div style="font-weight: 700; font-size: 13px;">GİZEMLİ KUTU</div>
+
+                    <div class="product-price">75 ⛁</div>
+
+                    <button class="btn-action" style="width: 100%; background: var(--primary); color: white; border-radius: 6px; font-size: 11px;">SATIN AL</button>
+
+                </div>
+
+                <div class="product-card">
+
+                    <img src="https://mc-heads.net/head/MHF_TNT/100" alt="">
+
+                    <div style="font-weight: 700; font-size: 13px;">BOOST PAKETİ</div>
+
+                    <div class="product-price">120 ⛁</div>
+
+                    <button class="btn-action" style="width: 100%; background: var(--primary); color: white; border-radius: 6px; font-size: 11px;">SATIN AL</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="card" style="background: linear-gradient(135deg, #111 0%, #060606 100%);">
+
+            <div class="card-header">
+
+                <h3><i class="fas fa-newspaper"></i> HABERLER</h3>
+
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+
+                <div style="border-left: 3px solid var(--primary); padding-left: 15px;">
+
+                    <h5 style="font-size: 14px; margin-bottom: 5px;">Sezon Sonu Yaklaşıyor!</h5>
+
+                    <p style="font-size: 11px; color: var(--text-dim);">Sıralama ödülleri bu hafta dağıtılıyor. Yerini almayı unutma!</p>
+
+                </div>
+
+                <div style="border-left: 3px solid var(--warning); padding-left: 15px;">
+
+                    <h5 style="font-size: 14px; margin-bottom: 5px;">Bakım Çalışması</h5>
+
+                    <p style="font-size: 11px; color: var(--text-dim);">Salı gecesi saat 03:00'te sunucumuz kısa süreli bakıma girecektir.</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
 </div>
 
-<script>
-const appEngine = {
-    // 1. IP Simülasyonu ve DDoS Taraması
-    initProtection: function() {
-        // Rastgele IP oluşturma (Görsellik için)
-        const fakeIp = Array.from({length: 4}, () => Math.floor(Math.random() * 256)).join('.');
-        document.getElementById('user-ip').innerText = fakeIp;
 
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += Math.random() * 30;
-            document.getElementById('progress-bar').style.width = progress + '%';
-            
-            if(progress >= 100) {
-                clearInterval(interval);
-                document.getElementById('ddos-screen').classList.add('animate__animated', 'animate__fadeOut');
-                setTimeout(() => {
-                    document.getElementById('ddos-screen').style.display = 'none';
-                    document.getElementById('login-screen').style.display = 'flex';
-                }, 500);
-            }
-        }, 400);
-    },
 
-    // 2. Login İşlemi
-    handleLogin: function() {
-        const user = document.getElementById('login-user').value.trim();
-        const pass = document.getElementById('login-pass').value.trim();
+<footer>
 
-        if(user === "" || pass === "") {
-            Swal.fire({ icon: 'error', title: 'Hata', text: 'Tüm alanları doldurun!', background: '#111', color: '#fff' });
-            return;
-        }
+    <div class="footer-grid">
 
-        // Simüle giriş (Kullanıcı: Syvex, Şifre: 123456)
-        if(user.toLowerCase() === "syvex" && pass === "123456") {
-            Swal.fire({
-                title: 'Başarılı!',
-                text: 'Güvenli tünel oluşturuldu, yönlendiriliyorsunuz.',
-                icon: 'success',
-                timer: 1500,
-                showConfirmButton: false,
-                background: '#111',
-                color: '#fff'
-            }).then(() => {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                document.getElementById('display-name').innerText = user;
-                document.getElementById('profile-name').innerText = user;
-            });
-        } else {
-            Swal.fire({ icon: 'error', title: 'Giriş Başarısız', text: 'Kullanıcı adı veya şifre hatalı!', background: '#111', color: '#fff' });
-        }
-    }
-};
+        <div class="footer-col">
 
-// Sayfa yüklendiğinde korumayı başlat
-window.onload = appEngine.initProtection;
-</script>
+            <div class="logo-text" style="margin-bottom: 20px;">AVENOR<span>CRAFT</span></div>
 
-</body>
-</html>
+            <p>Türkiye'nin en gelişmiş Minecraft altyapısıyla oyuncularımıza kesintisiz ve adil bir oyun deneyimi sunuyoruz. BoxMining, Survival ve daha fazlası burada!</p>
+
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+
+                <i class="fab fa-discord" style="font-size: 20px; color: var(--text-dim); cursor: pointer;"></i>
+
+                <i class="fab fa-instagram" style="font-size: 20px; color: var(--text-dim); cursor: pointer;"></i>
+
+                <i class="fab fa-youtube" style="font-size: 20px; color: var(--text-dim); cursor: pointer;"></i>
+
+            </div>
+
+        </div>
+
+        <div class="footer-col">
+
+            <h4>Hızlı Erişim</h4>
+
+            <ul style="list-style: none; color: var(--text-dim); font-size: 14px; display: grid; gap: 10px;">
+
+                <li>Ana Sayfa</li>
+
+                <li>Mağaza</li>
+
+                <li>Kredi Yükle</li>
+
+                <li>Yardım Merkezi</li>
+
+            </ul>
+
+        </div>
+
+        <div class="footer-col">
+
+            <h4>Yasal</h4>
+
+            <ul style="list-style: none; color: var(--text-dim); font-size: 14px; display: grid; gap: 10px;">
+
+                <li>Kullanıcı Sözleşmesi</li>
+
+                <li>Gizlilik Politikası</li>
+
+                <li>Satış Sözleşmesi</li>
+
+                <li>KVKK Aydınlatma</li>
+
+            </ul>
+
+        </div>
+
+        <div class="footer-col">
+
+            <h4>Sunucu Durumu</h4>
+
+            <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 15px; text-align: center;">
+
+                <div style="color: var(--success); font-weight: 800; font-size: 18px;">AKTIF</div>
+
+                <small style="color: var(--text-dim);">mc.avenorcraft.com</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <div>&copy; 2026 Avenor Craft. Tüm hakları saklıdır.</div>
+
+        <div>Powered by <b style="color:
