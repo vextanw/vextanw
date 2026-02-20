@@ -3,181 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vantyx Client | Login</title>
+    <title>Vantyx Client | Premium Experience</title>
     <style>
-        /* Modern Karanlık Tema ve Animasyonlar */
         :root {
-            --primary: #7289da;
-            --secondary: #2c2f33;
-            --bg: #23272a;
-            --text: #ffffff;
-            --accent: #00ff88;
+            --primary-green: #00ff41;
+            --dark-bg: #050505;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: none; /* Standart mouse gizlendi */
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- ARKA PLAN ANİMASYONU --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* --- ÖZEL MOUSE VE IŞIK --- */
+        #custom-cursor {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.1s ease;
+        }
+
+        #cursor-glow {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(0, 255, 65, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        /* --- NAVIGATION & DİL --- */
+        nav {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
         }
 
-        /* Giriş Kartı Animasyonu */
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary-green);
+            text-shadow: 0 0 10px var(--primary-green);
         }
 
+        .lang-switcher select {
+            background: black;
+            color: var(--primary-green);
+            border: 1px solid var(--primary-green);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        /* --- ANA PANEL / LOGIN --- */
         .container {
-            background: var(--secondary);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 80px);
             text-align: center;
-            animation: slideIn 0.8s ease-out;
         }
 
-        h1 { color: var(--primary); margin-bottom: 1.5rem; }
-        
+        .card {
+            background: var(--glass-bg);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 65, 0.1);
+            backdrop-filter: blur(10px);
+            width: 350px;
+        }
+
         input {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
-            border-radius: 5px;
-            border: none;
-            background: #40444b;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 65, 0.3);
             color: white;
-            box-sizing: border-box;
+            border-radius: 5px;
         }
 
         button {
             width: 100%;
             padding: 12px;
+            background: var(--primary-green);
             border: none;
-            border-radius: 5px;
-            background: var(--primary);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-
-        button:hover { background: #5b6eae; transform: scale(1.02); }
-
-        .hidden { display: none !important; }
-
-        /* Panel Sayfası */
-        #panel {
-            width: 80%;
-            max-width: 800px;
-            background: var(--secondary);
-            padding: 2rem;
-            border-radius: 15px;
-        }
-
-        .admin-box {
-            border: 2px solid var(--accent);
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 10px;
-            background: rgba(0, 255, 136, 0.1);
-        }
-
-        .download-btn {
-            background: var(--accent);
             color: black;
-            font-size: 1.2rem;
-            text-decoration: none;
-            display: inline-block;
-            padding: 15px 30px;
-            border-radius: 8px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            box-shadow: 0 0 20px var(--primary-green);
+            transform: scale(1.02);
+        }
+
+        /* --- DOWNLOAD SECTION (GİZLİ) --- */
+        #download-section {
+            display: none;
+        }
+
+        .download-box {
+            padding: 50px;
+            border: 2px dashed var(--primary-green);
+            border-radius: 20px;
             margin-top: 20px;
         }
+
+        /* RTL Desteği (Arapça için) */
+        [dir="rtl"] { text-align: right; }
+        [dir="rtl"] nav { flex-direction: row-reverse; }
     </style>
 </head>
 <body>
 
-    <div id="login-container" class="container">
-        <h1>VANTYX</h1>
-        <div id="auth-forms">
+    <div id="custom-cursor"></div>
+    <div id="cursor-glow"></div>
+    <canvas id="bg-canvas"></canvas>
+
+    <nav>
+        <div class="logo">V</div>
+        <div class="lang-switcher">
+            <select id="langSelect" onchange="updateLanguage()">
+                <option value="tr">TR</option>
+                <option value="en">EN</option>
+                <option value="ru">RU</option>
+                <option value="ar">AR</option>
+            </select>
+        </div>
+    </nav>
+
+    <div class="container" id="login-section">
+        <div class="card">
+            <h2 id="txt-title">Vantyx Giriş</h2>
             <input type="text" id="username" placeholder="Kullanıcı Adı">
             <input type="password" id="password" placeholder="Şifre">
-            <button onclick="handleLogin()">Giriş Yap</button>
-            <p style="font-size: 0.8rem; cursor: pointer; color: #aaa;" onclick="handleRegister()">Hesabın yok mu? Kayıt Ol</p>
+            <button onclick="handleLogin()" id="txt-btn">Giriş Yap</button>
+            <p id="login-msg" style="margin-top: 15px; font-size: 12px; color: #ff4444;"></p>
         </div>
     </div>
 
-    <div id="panel" class="hidden">
-        <h1>Hoş geldin, <span id="display-name"></span>!</h1>
-        <p>Vantyx Client indirme sayfasına başarıyla eriştin.</p>
-        
-        <a href="#" class="download-btn">📥 Vantyx Client İndir (v1.0)</a>
-
-        <div id="admin-panel" class="hidden admin-box">
-            <h2 style="color: var(--accent);">⚡ Yönetici Paneli (Syvex Özel)</h2>
-            <p>Sistem durumu: Aktif</p>
-            <button style="background: #ff4444;" onclick="alert('Veritabanı sıfırlandı! (Simülasyon)')">Tüm Kayıtları Sil</button>
+    <div class="container" id="download-section">
+        <h1 id="txt-welcome">Hoş geldin!</h1>
+        <div class="download-box">
+            <p id="txt-ready">Vantyx Client İndirilmeye Hazır</p>
+            <button onclick="alert('İndirme Başladı!')" style="font-size: 20px;">DOWNLOAD NOW</button>
         </div>
-
-        <button onclick="logout()" style="width: auto; margin-top: 50px; background: #444;">Çıkış Yap</button>
+        <p id="admin-panel" style="margin-top: 20px; color: var(--primary-green); display: none;">
+            Yönetici Paneli Aktif: Hoş geldin Syvex!
+        </p>
     </div>
 
     <script>
-        // Veritabanı simülasyonu (LocalStorage)
-        if(!localStorage.getItem('users')) {
-            localStorage.setItem('users', JSON.stringify([{user: "Syvex", pass: "123"}]));
-        }
+        // 1. DİL DESTEĞİ VERİLERİ
+        const translations = {
+            tr: { title: "Vantyx Giriş", btn: "Giriş Yap", welcome: "Hoş geldin!", ready: "Vantyx Client İndirilmeye Hazır", dir: "ltr" },
+            en: { title: "Vantyx Login", btn: "Login", welcome: "Welcome!", ready: "Vantyx Client Ready to Download", dir: "ltr" },
+            ru: { title: "Вход Vantyx", btn: "Войти", welcome: "Добро пожаловать!", ready: "Vantyx Client готов к загрузке", dir: "ltr" },
+            ar: { title: "تسجيل الدخول", btn: "دخول", welcome: "أهلاً بك!", ready: "Vantyx Client جاهز للتحميل", dir: "rtl" }
+        };
 
-        function handleRegister() {
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
+        function updateLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            const data = translations[lang];
             
-            if(u && p) {
-                let users = JSON.parse(localStorage.getItem('users'));
-                if(users.find(x => x.user === u)) return alert("Bu kullanıcı zaten var!");
-                
-                users.push({user: u, pass: p});
-                localStorage.setItem('users', JSON.stringify(users));
-                alert("Kayıt başarılı! Şimdi giriş yapabilirsin.");
-            } else {
-                alert("Lütfen alanları doldur.");
-            }
+            document.getElementById('txt-title').innerText = data.title;
+            document.getElementById('txt-btn').innerText = data.btn;
+            document.getElementById('txt-welcome').innerText = data.welcome;
+            document.getElementById('txt-ready').innerText = data.ready;
+            document.documentElement.dir = data.dir;
         }
 
+        // 2. MOUSE TAKİBİ
+        const cursor = document.getElementById('custom-cursor');
+        const glow = document.getElementById('cursor-glow');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // 3. LOGIN KONTROLÜ (DATABASE SİMÜLASYONU)
         function handleLogin() {
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-            let users = JSON.parse(localStorage.getItem('users'));
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const msg = document.getElementById('login-msg');
 
-            const userFound = users.find(x => x.user === u && x.pass === p);
+            if (user === "" || pass === "") {
+                msg.innerText = "Lütfen alanları doldurun!";
+                return;
+            }
 
-            if(userFound) {
-                showPanel(u);
-            } else {
-                alert("Hatalı kullanıcı adı veya şifre!");
+            // Başarılı giriş
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('download-section').style.display = 'flex';
+
+            // Syvex Kontrolü
+            if (user.toLowerCase() === "syvex") {
+                document.getElementById('admin-panel').style.display = 'block';
             }
         }
 
-        function showPanel(username) {
-            document.getElementById('login-container').classList.add('hidden');
-            document.getElementById('panel').classList.remove('hidden');
-            document.getElementById('display-name').innerText = username;
+        // 4. ARKA PLAN ANİMASYONU (Matrix/Yeşil Akış)
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
 
-            // ÖZEL YETKİ KONTROLÜ
-            if(username.toLowerCase() === 'syvex') {
-                document.getElementById('admin-panel').classList.remove('hidden');
-            }
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        for(let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                speed: Math.random() * 2 + 0.5,
+                opacity: Math.random()
+            });
         }
 
-        function logout() {
-            location.reload(); // Sayfayı yenileyerek oturumu kapatır
+        function animate() {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00ff41';
+            particles.forEach(p => {
+                p.y += p.speed;
+                if(p.y > canvas.height) p.y = 0;
+                ctx.globalAlpha = p.opacity;
+                ctx.fillRect(p.x, p.y, 2, 2);
+            });
+            
+            requestAnimationFrame(animate);
         }
+        animate();
     </script>
 </body>
 </html>
