@@ -3,398 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6. Sınıf Bilişim Oyunları</title>
+    <title>Vexta Network | Elite Gaming Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; flex-direction: column; }
-        #main-menu, #game-container, #hangman-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 80%; max-width: 600px; text-align: center; margin-bottom: 20px; }
-        .unit-title { color: #2c3e50; font-size: 1.2em; margin-bottom: 10px; font-weight: bold; }
-        .question { font-size: 1.4em; margin-bottom: 20px; color: #34495e; }
-        .options { display: grid; gap: 10px; }
-        button { padding: 15px; font-size: 1em; cursor: pointer; border: none; border-radius: 8px; background: #3498db; color: white; transition: 0.3s; margin-top: 10px; }
-        button:hover { background: #2980b9; transform: scale(1.02); }
-        #feedback { margin-top: 20px; font-weight: bold; padding: 10px; border-radius: 5px; display: none; }
-        .score { position: absolute; top: 20px; right: 20px; background: #2ecc71; color: white; padding: 10px 20px; border-radius: 20px; z-index: 100; }
-        #main-menu h2 { color: #2c3e50; margin-bottom: 25px; }
-        #game-container, #hangman-container { display: none; }
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Outfit:wght@300;400;600;900&display=swap');
 
-        /* Adam Asmaca Özel Stilleri */
-        #hangman-drawing { margin-top: 20px; font-size: 2em; line-height: 1; min-height: 100px; color: #e74c3c; font-family: monospace; }
-        #hangman-question { font-size: 1.3em; margin-bottom: 15px; color: #34495e; }
-        #hangman-options { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 20px; }
-        #hangman-options button { padding: 10px 15px; font-size: 0.9em; background: #9b59b6; }
-        #hangman-options button:hover { background: #8e44ad; }
-        #hangman-options button:disabled { background: #ccc; cursor: not-allowed; }
-        #hangman-message { margin-top: 20px; font-weight: bold; padding: 10px; border-radius: 5px; display: none; }
-        .correct-answer { background: #d4edda; color: #155724; }
-        .wrong-answer { background: #f8d7da; color: #721c24; }
-        .hint-text { font-style: italic; color: #7f8c8d; margin-top: 10px; font-size: 0.9em; }
+        :root { 
+            --v-green: #37FF00; 
+            --v-dark: #020202; 
+            --v-card: rgba(15, 15, 15, 0.7);
+        }
+
+        body, html {
+            background-color: var(--v-dark);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Arka Plan Animasyonu */
+        .bg-mesh {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #112200 0%, #020202 70%);
+            z-index: -1;
+        }
+
+        /* Sayfa Yapısı - Tamamen İzole */
+        .page-node {
+            display: none;
+            min-height: 100vh;
+            width: 100%;
+            padding-top: 100px;
+            animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .active-page { display: block !important; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* Profesyonel Bileşenler */
+        .glass-card {
+            background: var(--v-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(55, 255, 0, 0.1);
+            border-radius: 24px;
+            transition: 0.4s;
+        }
+        .glass-card:hover {
+            border-color: var(--v-green);
+            box-shadow: 0 0 40px rgba(55, 255, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .vexta-text {
+            font-family: 'Syncopate', sans-serif;
+            background: linear-gradient(180deg, #fff 30%, var(--v-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .btn-pro {
+            background: var(--v-green);
+            color: #000;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 18px 40px;
+            border-radius: 12px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-pro:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--v-green);
+        }
+
+        .nav-item {
+            font-size: 13px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; color: #888; transition: 0.3s;
+        }
+        .nav-item:hover { color: var(--v-green); }
+
+        input {
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px; border-radius: 12px; color: white; width: 100%;
+        }
+        input:focus { border-color: var(--v-green); outline: none; }
     </style>
 </head>
 <body>
 
-<div class="score">Puan: <span id="score-val">0</span></div>
+    <div class="bg-mesh"></div>
 
-<div id="main-menu">
-    <h2>Bilişim Kahramanları Okulu</h2>
-    <p>Hangi oyunu oynamak istersin?</p>
-    <button onclick="startGame('quiz')">1. Bilişim Kahramanı: Kodlama Yolculuğu</button>
-    <button onclick="startGame('hangman')">2. Kurtarma Görevi: Bilişim Adam Asmaca</button>
-</div>
-
-<div id="game-container">
-    <div id="unit-info" class="unit-title"></div>
-    <div id="question-text" class="question"></div>
-    <div id="options-container" class="options"></div>
-    <div id="feedback"></div>
-    <button onclick="showMainMenu()">Ana Menüye Dön</button>
-</div>
-
-<div id="hangman-container">
-    <h2>Kurtarma Görevi: Bilişim Adam Asmaca</h2>
-    <div id="hangman-drawing"></div>
-    <div id="hangman-question"></div>
-    <div id="hangman-word"></div>
-    <div id="hangman-options"></div>
-    <div id="hangman-message"></div>
-    <div class="hint-text" id="hangman-hint"></div>
-    <button onclick="showMainMenu()">Ana Menüye Dön</button>
-</div>
-
-<script>
-    // Ortak Fonksiyonlar
-    function showMainMenu() {
-        document.getElementById('main-menu').style.display = 'block';
-        document.getElementById('game-container').style.display = 'none';
-        document.getElementById('hangman-container').style.display = 'none';
-        // Skor sıfırlama veya farklı bir işlem yapılabilir
-        score = 0;
-        document.getElementById('score-val').innerText = score;
-    }
-
-    function startGame(mode) {
-        document.getElementById('main-menu').style.display = 'none';
-        if (mode === 'quiz') {
-            document.getElementById('game-container').style.display = 'block';
-            resetQuizGame();
-            loadQuizQuestion();
-        } else if (mode === 'hangman') {
-            document.getElementById('hangman-container').style.display = 'block';
-            resetHangmanGame();
-            loadHangmanQuestion();
-        }
-    }
-
-    // Quiz Oyununun Verileri
-    const quizQuestions = [
-        {
-            unit: "1. Hafta: Haydi Veri Toplama",
-            q: "Bir araştırma için kişilere yöneltilen soruların tümüne ne denir?",
-            options: ["Anket", "Değişken", "Algoritma", "Sabit"],
-            correct: 0,
-            hint: "Veri toplamak için en yaygın yöntemdir."
-        },
-        {
-            unit: "2. Hafta: Sabit mi? Değişken mi?",
-            q: "Bir program çalışırken değeri hiç değişmeyen ifadelere ne denir?",
-            options: ["Değişken", "Sabit", "Döngü", "Veri"],
-            correct: 1,
-            hint: "Adı üstünde, hep aynı kalır!"
-        },
-        {
-            unit: "3. Hafta: Böl Parçala Çöz",
-            q: "Karmaşık bir problemi daha küçük ve yönetilebilir parçalara ayırmaya ne denir?",
-            options: ["Birleştirme", "Problem Ayrıştırma", "Kodlama", "Veri Girişi"],
-            correct: 1,
-            hint: "Büyük lokmayı küçük parçalara bölmek gibi düşün."
-        },
-        {
-            unit: "4. Hafta: Problem Çözmek Benim İşim",
-            q: "Bir problemin çözümü için takip edilen adım adım yola ne denir?",
-            options: ["Sabit", "Donanım", "Algoritma", "Yazılım"],
-            correct: 2,
-            hint: "Yemek tarifleri de birer örneğidir."
-        },
-        {
-            unit: "5. Hafta: Farklı Yollardan Aynı Çözüme",
-            q: "Aynı sonuca ulaşan farklı algoritmalardan hangisi 'en iyi' kabul edilir?",
-            options: ["En uzun olan", "En karmaşık olan", "En az adımda ve hızlı çözen", "Rengi güzel olan"],
-            correct: 2,
-            hint: "Verimlilik her zaman önemlidir."
-        }
-    ];
-
-    let currentQuizQ = 0;
-    let score = 0;
-
-    function resetQuizGame() {
-        currentQuizQ = 0;
-        score = 0;
-        document.getElementById('score-val').innerText = score;
-    }
-
-    function loadQuizQuestion() {
-        const qData = quizQuestions[currentQuizQ];
-        document.getElementById('unit-info').innerText = qData.unit;
-        document.getElementById('question-text').innerText = qData.q;
-        const optionsDiv = document.getElementById('options-container');
-        optionsDiv.innerHTML = '';
-        document.getElementById('feedback').style.display = 'none';
-
-        qData.options.forEach((opt, index) => {
-            const btn = document.createElement('button');
-            btn.innerText = opt;
-            btn.onclick = () => checkQuizAnswer(index);
-            optionsDiv.appendChild(btn);
-        });
-    }
-
-    function checkQuizAnswer(choice) {
-        const feedback = document.getElementById('feedback');
-        feedback.style.display = 'block';
+    <nav class="fixed top-0 w-full z-[1000] px-10 py-6 flex justify-between items-center bg-black/40 backdrop-blur-lg border-b border-white/5">
+        <div class="text-2xl vexta-text cursor-pointer" onclick="navigate('home')">VEXTA</div>
         
-        if(choice === quizQuestions[currentQuizQ].correct) {
-            feedback.innerText = "Tebrikler! Doğru cevap. 🎉";
-            feedback.className = "correct-answer"; // Stil için sınıf ekle
-            score += 20;
-            document.getElementById('score-val').innerText = score;
+        <div class="hidden md:flex space-x-12">
+            <a href="#" onclick="navigate('home')" class="nav-item">Core</a>
+            <a href="#" onclick="guard('store')" class="nav-item">Market</a>
+            <a href="#" onclick="guard('support')" class="nav-item">Agency</a>
+        </div>
+
+        <div id="auth-zone" class="flex items-center gap-6">
+            <button onclick="navigate('login')" class="text-white font-bold text-xs uppercase hover:text-green-500 transition">Sign In</button>
+            <button onclick="navigate('register')" class="btn-pro !py-3 !px-6 !text-[10px]">Join Now</button>
+        </div>
+    </nav>
+
+    <div id="main-content">
+
+        <section id="home-page" class="page-node active-page flex flex-col items-center justify-center text-center px-6">
+            <div class="mb-4 inline-block px-4 py-1 rounded-full border border-green-500/30 bg-green-500/5 text-green-500 text-[10px] font-black uppercase tracking-[4px]">
+                The Next Gen BoxPvP
+            </div>
+            <h1 class="text-6xl md:text-[120px] font-black leading-tight mb-8">
+                UNLEASH <br> <span class="vexta-text">THE POWER</span>
+            </h1>
+            <div class="flex flex-wrap justify-center gap-6 mt-4">
+                <button onclick="guard('store')" class="btn-pro">Start Journey</button>
+                <div class="px-8 py-5 rounded-xl border border-white/10 glass-card font-mono text-xl">
+                    <span class="text-green-500">play.</span>vextanw.com
+                </div>
+            </div>
+        </section>
+
+        <section id="login-page" class="page-node">
+            <div class="flex items-center justify-center min-h-[70vh]">
+                <div class="glass-card p-12 w-full max-w-md">
+                    <h2 class="text-3xl font-black mb-8 vexta-text">AUTHENTICATION</h2>
+                    <div class="space-y-6">
+                        <input type="text" id="log-user" placeholder="Username">
+                        <input type="password" id="log-pass" placeholder="Password">
+                        <button onclick="handleLogin()" class="btn-pro w-full mt-4">Login to System</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="store-page" class="page-node px-10">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-16">
+                    <h2 class="text-5xl font-black mb-2 uppercase italic">Marketplace</h2>
+                    <p class="text-gray-500 tracking-[5px] uppercase text-xs">Upgrade your hardware</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-card p-10 group">
+                        <div class="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition">
+                            <i class="fas fa-crown text-green-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-black mb-4 uppercase">Vexta VIP+</h3>
+                        <p class="text-gray-500 text-sm mb-8 leading-relaxed">Sınırsız uçuş, özel başlangıç kitleri ve isminin yanında parlayan özel bir tag.</p>
+                        <div class="flex justify-between items-center pt-6 border-t border-white/5">
+                            <span class="text-3xl font-black">₺150</span>
+                            <button class="btn-pro !py-3 !px-6">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="admin-page" class="page-node px-10">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-end mb-12">
+                    <h2 class="text-6xl font-black vexta-text">COMMANDER</h2>
+                    <div class="text-right">
+                        <p class="text-xs text-red-500 font-bold tracking-[3px] uppercase">Level 10 Access</p>
+                        <p class="text-gray-500">Welcome, Syvex</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                    <div class="glass-card p-6 border-l-4 border-green-500">
+                        <p class="text-gray-500 text-[10px] font-bold uppercase">Today's Sales</p>
+                        <p class="text-3xl font-black">₺4,250</p>
+                    </div>
+                    <div class="glass-card p-6 border-l-4 border-blue-500">
+                        <p class="text-gray-500 text-[10px] font-bold uppercase">Active Players</p>
+                        <p class="text-3xl font-black">124</p>
+                    </div>
+                </div>
+                <div class="glass-card p-10">
+                    <p class="text-gray-500 italic">"No pending tickets. System status: Operational."</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const ADMIN_NAME = "Syvex";
+        const ADMIN_PASS = "131014";
+        let currentUser = null;
+
+        function navigate(id) {
+            document.querySelectorAll('.page-node').forEach(p => p.classList.remove('active-page'));
+            const target = document.getElementById(id + '-page');
+            if(target) {
+                target.classList.add('active-page');
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function guard(id) {
+            if(!currentUser) {
+                alert("Unauthorized! Please sign in first.");
+                navigate('login');
+            } else {
+                navigate(id);
+            }
+        }
+
+        function handleLogin() {
+            const u = document.getElementById('log-user').value;
+            const p = document.getElementById('log-pass').value;
+
+            if(u === ADMIN_NAME && p === ADMIN_PASS) {
+                loginDone(u, true);
+            } else if(u && p) {
+                loginDone(u, false);
+            } else {
+                alert("Invalid Credentials");
+            }
+        }
+
+        function loginDone(name, isAdmin) {
+            currentUser = name;
+            let html = `
+                <div class="flex items-center gap-4">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-[9px] text-gray-500 font-bold uppercase tracking-widest">Operator</p>
+                        <p class="text-sm font-black text-green-500 uppercase">${name}</p>
+                    </div>
+                    <div class="h-10 w-10 rounded-full border border-green-500/30 overflow-hidden bg-white/5">
+                        <img src="https://mc-heads.net/avatar/${name}" class="w-full h-full">
+                    </div>`;
             
-            setTimeout(() => {
-                currentQuizQ++;
-                if(currentQuizQ < quizQuestions.length) {
-                    loadQuizQuestion();
-                } else {
-                    showQuizFinal();
-                }
-            }, 1500);
-        } else {
-            feedback.innerText = "Hatalı! İpucu: " + quizQuestions[currentQuizQ].hint;
-            feedback.className = "wrong-answer"; // Stil için sınıf ekle
-        }
-    }
-
-    function showQuizFinal() {
-        document.getElementById('game-container').innerHTML = `
-            <h2>Oyun Bitti! 🏆</h2>
-            <p>6. Sınıf Bilişim konularını başarıyla tamamladın.</p>
-            <h3>Toplam Puanın: ${score}</h3>
-            <button onclick="startGame('quiz')">Tekrar Oyna</button>
-            <button onclick="showMainMenu()">Ana Menüye Dön</button>
-        `;
-    }
-
-    // Adam Asmaca Oyununun Verileri
-    const hangmanQuestions = [
-        {
-            q: "Veri toplamak için kullanılan, belirli bir konuda insanlara sorulan sorular bütünü.",
-            answer: "ANKET",
-            hint: "Bu kelime 'A' ile başlar."
-        },
-        {
-            q: "Program çalışırken değeri değişmeyen ifade.",
-            answer: "SABİT",
-            hint: "Bu kelime 'S' ile başlar."
-        },
-        {
-            q: "Büyük bir problemi küçük parçalara ayırma tekniği.",
-            answer: "AYRIŞTIRMA",
-            hint: "Bu kelime 'A' ile başlar."
-        },
-        {
-            q: "Bir problemi çözmek için adım adım izlenen yol.",
-            answer: "ALGORİTMA",
-            hint: "Bu kelime 'A' ile başlar."
-        },
-        {
-            q: "Bir program çalışırken değeri değişebilen ifade.",
-            answer: "DEĞİŞKEN",
-            hint: "Bu kelime 'D' ile başlar."
-        }
-    ];
-
-    const hangmanParts = [
-        `
-        -----
-        |   |
-        |
-        |
-        |
-        |
-        -------
-        `,
-        `
-        -----
-        |   |
-        |   O
-        |
-        |
-        |
-        -------
-        `,
-        `
-        -----
-        |   |
-        |   O
-        |   |
-        |
-        |
-        -------
-        `,
-        `
-        -----
-        |   |
-        |   O
-        |  /|
-        |
-        |
-        -------
-        `,
-        `
-        -----
-        |   |
-        |   O
-        |  /|\\
-        |
-        |
-        -------
-        `,
-        `
-        -----
-        |   |
-        |   O
-        |  /|\\
-        |  /
-        |
-        -------
-        `,
-        `
-        -----
-        |   |
-        |   O
-        |  /|\\
-        |  / \\
-        |
-        -------
-        `
-    ];
-
-    let currentHangmanQ = 0;
-    let wrongGuesses = 0;
-    let guessedWord = [];
-    let correctWord = "";
-    let hangmanScore = 0; // Adam asmaca için ayrı puan
-
-    function resetHangmanGame() {
-        currentHangmanQ = 0;
-        wrongGuesses = 0;
-        hangmanScore = 0;
-        document.getElementById('score-val').innerText = hangmanScore;
-        loadHangmanQuestion();
-    }
-
-    function loadHangmanQuestion() {
-        const qData = hangmanQuestions[currentHangmanQ];
-        correctWord = qData.answer.toUpperCase();
-        guessedWord = Array(correctWord.length).fill('_');
-        
-        document.getElementById('hangman-question').innerText = qData.q;
-        document.getElementById('hangman-hint').innerText = "İpucu: " + qData.hint;
-        document.getElementById('hangman-message').style.display = 'none';
-        document.getElementById('hangman-drawing').innerText = hangmanParts[wrongGuesses];
-        renderHangmanWord();
-        createHangmanAlphabetButtons();
-    }
-
-    function renderHangmanWord() {
-        document.getElementById('hangman-word').innerText = guessedWord.join(' ').replace(/_/g, ' _ ');
-    }
-
-    function createHangmanAlphabetButtons() {
-        const optionsDiv = document.getElementById('hangman-options');
-        optionsDiv.innerHTML = '';
-        for (let i = 65; i <= 90; i++) { // A-Z harfleri
-            const char = String.fromCharCode(i);
-            const btn = document.createElement('button');
-            btn.innerText = char;
-            btn.onclick = () => checkHangmanLetter(char, btn);
-            optionsDiv.appendChild(btn);
-        }
-    }
-
-    function checkHangmanLetter(letter, button) {
-        button.disabled = true; // Basılan harfi devre dışı bırak
-        const hangmanMessage = document.getElementById('hangman-message');
-        hangmanMessage.style.display = 'block';
-
-        if (correctWord.includes(letter)) {
-            for (let i = 0; i < correctWord.length; i++) {
-                if (correctWord[i] === letter) {
-                    guessedWord[i] = letter;
-                }
+            if(isAdmin) {
+                html += `<button onclick="navigate('admin')" class="bg-red-600 px-4 py-2 rounded-lg text-[10px] font-black uppercase shadow-lg shadow-red-600/20">Panel</button>`;
             }
-            renderHangmanWord();
-            hangmanMessage.innerText = `Doğru! '${letter}' harfi kelimede var. 🎉`;
-            hangmanMessage.className = "correct-answer";
-            hangmanScore += 5; // Her doğru harf için puan
-            document.getElementById('score-val').innerText = hangmanScore;
 
-            if (!guessedWord.includes('_')) {
-                // Kelime tamamlandı
-                setTimeout(() => {
-                    hangmanMessage.innerText = `Tebrikler! Kelimeyi bildin: ${correctWord} 🎉`;
-                    hangmanMessage.className = "correct-answer";
-                    hangmanScore += 25; // Kelimeyi bilme bonusu
-                    document.getElementById('score-val').innerText = hangmanScore;
-                    setTimeout(nextHangmanQuestion, 2000);
-                }, 500);
-            }
-        } else {
-            wrongGuesses++;
-            document.getElementById('hangman-drawing').innerText = hangmanParts[wrongGuesses];
-            hangmanMessage.innerText = `Yanlış tahmin! '${letter}' harfi kelimede yok. 😥`;
-            hangmanMessage.className = "wrong-answer";
-            hangmanScore -= 2; // Yanlış tahmin için puan düşüşü
-            document.getElementById('score-val').innerText = hangmanScore;
-
-            if (wrongGuesses >= hangmanParts.length - 1) {
-                // Adam asıldı
-                setTimeout(() => {
-                    hangmanMessage.innerText = `Oyun bitti! Adam asıldı. ☠️ Doğru kelime: ${correctWord}`;
-                    hangmanMessage.className = "wrong-answer";
-                    disableAllHangmanButtons();
-                    setTimeout(showHangmanFinal, 2000);
-                }, 500);
-            }
+            html += `<button onclick="location.reload()" class="text-gray-600 hover:text-white"><i class="fas fa-sign-out-alt"></i></button></div>`;
+            
+            document.getElementById('auth-zone').innerHTML = html;
+            navigate('home');
         }
-    }
 
-    function disableAllHangmanButtons() {
-        const buttons = document.querySelectorAll('#hangman-options button');
-        buttons.forEach(btn => btn.disabled = true);
-    }
-
-    function nextHangmanQuestion() {
-        currentHangmanQ++;
-        if (currentHangmanQ < hangmanQuestions.length) {
-            wrongGuesses = 0; // Yeni soruya geçince yanlış tahminleri sıfırla
-            loadHangmanQuestion();
-        } else {
-            showHangmanFinal();
-        }
-    }
-
-    function showHangmanFinal() {
-        document.getElementById('hangman-container').innerHTML = `
-            <h2>Görev Tamamlandı! </h2>
-            <p>Bilişim adam asmaca maceran sona erdi.</p>
-            <h3>Toplam Puanın: ${hangmanScore}</h3>
-            <button onclick="startGame('hangman')">Tekrar Oyna</button>
-            <button onclick="showMainMenu()">Ana Menüye Dön</button>
-        `;
-    }
-
-    // Sayfa yüklendiğinde ana menüyü göster
-    showMainMenu();
-</script>
-
+        // Initialize
+        window.onload = () => navigate('home');
+    </script>
 </body>
 </html>
