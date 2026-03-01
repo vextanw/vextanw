@@ -3,523 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vexta Network | Hızlı ve Güçlü BoxPvP</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    
+    <title>Echo Craft | Sınırları Zorla</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Outfit:wght@100;300;400;600;900&display=swap');
-
-        /* --- VEXTA DESIGN SYSTEM --- */
-        :root {
-            --v-green: #37FF00;
-            --v-green-glow: rgba(55, 255, 0, 0.4);
-            --v-dark: #020202;
-            --v-card: rgba(10, 10, 10, 0.98);
-            --v-border: rgba(55, 255, 0, 0.15);
-            --v-font-main: 'Outfit', sans-serif;
-            --v-font-logo: 'Syncopate', sans-serif;
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: url('https://cur.cursors-4u.net/games/gam-4/gam384.cur'), auto !important; }
-        
-        body, html {
-            background-color: var(--v-dark);
-            color: #fff;
-            font-family: var(--v-font-main);
-            overflow: hidden; /* Scroll sayfa içinde kontrol edilecek */
-            height: 100vh;
-        }
-
-        /* --- ARKA PLAN ENGINE --- */
-        #bg-canvas { position: fixed; inset: 0; z-index: -1; }
-        .v-overlay {
-            position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at 50% 50%, rgba(55, 255, 0, 0.03) 0%, transparent 70%);
-        }
-
-        /* --- SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: var(--v-green); border-radius: 10px; }
-
-        /* --- HEADER & NAVIGATION --- */
         header {
-            height: 90px; border-bottom: 1px solid var(--v-border);
-            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px);
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            display: flex; align-items: center; justify-content: space-between; padding: 0 5%;
+            padding: 100px 20px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.alphacoders.com/132/1327150.png');
+            background-size: cover;
+            background-position: center;
         }
-
-        .logo-text { font-family: var(--v-font-logo); font-weight: 700; font-size: 1.5rem; letter-spacing: -2px; }
-        .nav-link {
-            font-size: 10px; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 2px; color: #555; transition: 0.4s;
-            position: relative;
+        .logo {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #00ffcc;
+            text-shadow: 0 0 20px #00ffcc;
+            margin-bottom: 10px;
         }
-        .nav-link:hover, .nav-link.active { color: var(--v-green); text-shadow: 0 0 15px var(--v-green-glow); }
-
-        /* --- PAGES --- */
-        .page {
-            display: none; height: calc(100vh - 90px); width: 100%;
-            position: absolute; top: 90px; overflow-y: auto; padding: 40px 5%;
-        }
-        .page-active { display: block !important; animation: fadeInCustom 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-
-        @keyframes fadeInCustom { 
-            from { opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(10px); } 
-            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } 
-        }
-
-        /* --- UI COMPONENTS --- */
-        .glass-card {
-            background: var(--v-card); border: 1px solid var(--v-border);
-            border-radius: 30px; padding: 3rem; transition: 0.5s;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        .glass-card:hover { border-color: var(--v-green); transform: translateY(-10px); }
-
-        .btn-vexta {
-            background: var(--v-green); color: #000; font-weight: 900;
-            padding: 16px 40px; border-radius: 14px; text-transform: uppercase;
-            letter-spacing: 1px; transition: 0.4s; position: relative;
-            overflow: hidden; z-index: 1;
-        }
-        .btn-vexta::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: 0.5s; z-index: -1;
-        }
-        .btn-vexta:hover::before { left: 100%; }
-        .btn-vexta:hover { box-shadow: 0 0 40px var(--v-green); transform: scale(1.02); }
-
-        input {
-            background: #050505; border: 1px solid #151515; padding: 18px;
-            width: 100%; border-radius: 15px; color: #fff; outline: none; transition: 0.3s;
-            font-weight: 500;
-        }
-        input:focus { border-color: var(--v-green); box-shadow: 0 0 20px rgba(55,255,0,0.1); }
-
-        /* --- LOADING OVERLAY --- */
-        #loading-screen {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98);
-            z-index: 99999; flex-direction: column; align-items: center; justify-content: center;
-        }
-
-        .loader-circle {
-            width: 80px; height: 80px; border: 4px solid #111;
-            border-top-color: var(--v-green); border-radius: 50%;
-            animation: spin 1s infinite linear;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* --- SHIELD GATE --- */
-        #shield-gate {
-            position: fixed; inset: 0; background: #000; z-index: 100000;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        /* --- IP COPY AREA --- */
         .ip-box {
-            background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.1);
-            padding: 20px 40px; border-radius: 20px; cursor: pointer; transition: 0.3s;
+            background: #1e1e1e;
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 2px solid #00ffcc;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
         }
-        .ip-box:hover { border-color: var(--v-green); background: rgba(55,255,0,0.02); }
-
+        .ip-box:hover {
+            background: #00ffcc;
+            color: #121212;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 50px;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 15px;
+            width: 250px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .card h3 { color: #00ffcc; }
+        footer { padding: 20px; background: #080808; font-size: 14px; color: #555; }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
-    <div class="v-overlay"></div>
-
-    <div id="shield-gate">
-        <div class="glass-card text-center animate__animated animate__zoomIn">
-            <div class="mb-10 flex justify-center">
-                <div class="w-24 h-24 bg-green-500/10 rounded-full flex items-center justify-center border border-green-500/20 animate-pulse">
-                    <i class="fas fa-user-shield text-5xl text-green-500"></i>
-                </div>
-            </div>
-            <h1 class="logo-text mb-2">VEXTA<span style="color:var(--v-green)">SHIELD</span></h1>
-            <p class="text-gray-500 text-[10px] tracking-[5px] uppercase mb-12">System Verification Required</p>
-            <button onclick="passShield()" class="btn-vexta w-full">Sisteme Giriş Yap</button>
-        </div>
+<header>
+    <div class="logo">ECHO CRAFT</div>
+    <p>Efsanevi Bir Survival Deneyimi Seni Bekliyor!</p>
+    <div class="ip-box" onclick="copyIP()">
+        IP: <span id="server-ip">play.echocraft.com</span>
     </div>
+</header>
 
-    <div id="loading-screen">
-        <div class="loader-circle mb-8"></div>
-        <h2 id="loading-text" class="text-xs font-black uppercase tracking-[5px] text-green-500 animate-pulse">Veriler İşleniyor...</h2>
+<section class="features">
+    <div class="card">
+        <h3>Özel Sistemler</h3>
+        <p>Gelişmiş ekonomi ve daha önce görmediğin etkinlikler.</p>
     </div>
+    <div class="card">
+        <h3>0 Lag</h3>
+        <p>Yüksek performanslı makinelerle kesintisiz oyun keyfi.</p>
+    </div>
+    <div class="card">
+        <h3>Adaletli Oyun</h3>
+        <p>P2W olmayan, emeğin değer gördüğü bir ortam.</p>
+    </div>
+</section>
 
-    <header>
-        <div class="logo-text cursor-pointer group" onclick="navigate('home')">
-            VEXTA<span class="text-green-500">NW</span>
-        </div>
+<footer>
+    &copy; 2024 Echo Craft - Tüm Hakları Saklıdır.
+</footer>
 
-        <nav class="hidden md:flex gap-12">
-            <a href="javascript:void(0)" onclick="navigate('home')" class="nav-link active" id="n-home">Merkez</a>
-            <a href="javascript:void(0)" onclick="checkAccess('store')" class="nav-link" id="n-store">Mağaza</a>
-            <a href="javascript:void(0)" onclick="checkAccess('staff')" class="nav-link" id="n-staff">Yetkili Alımı</a>
-            <a href="javascript:void(0)" onclick="navigate('wiki')" class="nav-link" id="n-wiki">Wiki</a>
-            <a href="javascript:void(0)" onclick="navigate('rules')" class="nav-link" id="n-rules">Kurallar</a>
-        </nav>
+<script>
+    function copyIP() {
+        const ip = document.getElementById('server-ip').innerText;
+        navigator.clipboard.writeText(ip);
+        alert("IP Adresi Kopyalandı: " + ip);
+    }
+</script>
 
-        <div id="auth-zone">
-            <button onclick="navigate('register')" class="btn-vexta !py-2 !px-8 !text-[10px]">Kayıt Ol</button>
-        </div>
-    </header>
-
-    <section id="home-page" class="page page-active">
-        <div class="grid lg:grid-cols-12 gap-12 items-center min-h-[70vh]">
-            <div class="lg:col-span-7">
-                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 mb-8">
-                    <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
-                    <span class="text-[9px] font-black uppercase tracking-widest text-green-500">BoxPvP Sunucusu Aktif</span>
-                </div>
-                <h1 class="text-8xl lg:text-[140px] font-black italic leading-[0.85] uppercase tracking-tighter mb-10">
-                    SINIRLARI<br><span style="color:var(--v-green); filter: drop-shadow(0 0 30px var(--v-green-glow));">ZORLA.</span>
-                </h1>
-                <p class="text-gray-400 text-xl max-w-2xl mb-12 leading-relaxed">
-                    Vexta Network'ün karanlık ve rekabetçi dünyasına hoş geldin. En iyi kitleri topla, klanını kur ve arenanın hükümdarı ol.
-                </p>
-                
-                <div class="flex flex-wrap gap-8">
-                    <button onclick="navigate('register')" class="btn-vexta">Hemen Başla</button>
-                    <div class="ip-box group" onclick="copyIP()">
-                        <p class="text-[8px] text-gray-600 font-bold uppercase mb-1">Sunucu Adresi</p>
-                        <div class="flex items-center gap-4">
-                            <span class="text-xl font-black group-hover:text-green-500 transition">vextanetwork.mcsh.io</span>
-                            <i class="fas fa-copy text-gray-800 group-hover:text-green-500"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-5 grid grid-cols-2 gap-6">
-                <div class="glass-card text-center !p-12">
-                    <h4 class="text-6xl font-black mb-2" id="mc-count">--</h4>
-                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Oyuncu</p>
-                </div>
-                <div class="glass-card text-center !p-12">
-                    <h4 class="text-6xl font-black mb-2" id="dc-count">--</h4>
-                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Discord</p>
-                </div>
-                <div class="glass-card col-span-2 flex items-center justify-between !py-8">
-                    <div class="flex items-center gap-6">
-                        <div class="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center">
-                            <i class="fas fa-network-wired text-green-500"></i>
-                        </div>
-                        <div>
-                            <p class="text-[10px] text-gray-500 font-bold uppercase">Gecikme</p>
-                            <p class="text-xl font-black">14ms</p>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-[10px] text-gray-500 font-bold uppercase">Lokasyon</p>
-                        <p class="text-xl font-black">Türkiye / İstanbul</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="register-page" class="page">
-        <div class="flex items-center justify-center min-h-[60vh]">
-            <div class="glass-card max-w-md w-full">
-                <h2 class="text-4xl font-black italic mb-2 uppercase">Kayıt Ol</h2>
-                <p class="text-gray-500 text-[10px] font-bold mb-10 uppercase tracking-[4px]">Vexta Dünyasına İlk Adım</p>
-                
-                <div class="space-y-6">
-                    <div>
-                        <label class="text-[10px] font-black uppercase text-gray-600 mb-2 block">Kullanıcı Adı (Minecraft)</label>
-                        <input type="text" id="reg-nick" placeholder="Örn: Syvex_NW">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-black uppercase text-gray-600 mb-2 block">E-Posta (İsteğe Bağlı)</label>
-                        <input type="email" id="reg-mail" placeholder="mail@vexta.com">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-black uppercase text-gray-600 mb-2 block">Şifre</label>
-                        <input type="password" id="reg-pass" placeholder="••••••••">
-                    </div>
-                    <button onclick="handleInstantRegister()" class="btn-vexta w-full mt-4">HESABI OLUŞTUR</button>
-                    <p class="text-center text-[9px] text-gray-600 uppercase font-bold">Kayıt olarak kuralları kabul etmiş sayılırsınız.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="store-page" class="page">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-5xl font-black italic mb-16 uppercase">Vexta <span class="text-green-500">Market</span></h2>
-            <div class="grid md:grid-cols-3 gap-10">
-                <div class="glass-card !p-10 border-blue-500/10 hover:border-blue-500/40">
-                    <div class="text-blue-500 text-4xl mb-6"><i class="fas fa-bolt"></i></div>
-                    <h3 class="text-2xl font-black mb-4 uppercase">VIP</h3>
-                    <ul class="text-gray-500 text-xs space-y-3 mb-10 uppercase font-bold tracking-tighter">
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> /fly Yetkisi</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> Özel VIP Kiti</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> Renkli Yazı Yazma</li>
-                    </ul>
-                    <div class="text-3xl font-black mb-8">₺100</div>
-                    <button class="btn-vexta w-full !bg-blue-600 !text-white">Satın Al</button>
-                </div>
-                <div class="glass-card !p-10 border-green-500/20 hover:border-green-500/60 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-green-500 text-black text-[9px] font-black px-4 py-1 uppercase">Popüler</div>
-                    <div class="text-green-500 text-4xl mb-6"><i class="fas fa-crown"></i></div>
-                    <h3 class="text-2xl font-black mb-4 uppercase">MVIP+</h3>
-                    <ul class="text-gray-500 text-xs space-y-3 mb-10 uppercase font-bold tracking-tighter">
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> Tüm VIP Yetkileri</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> Sanal Sandık (5 Sayfa)</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> Özel Kanat Efekti</li>
-                    </ul>
-                    <div class="text-3xl font-black mb-8">₺250</div>
-                    <button class="btn-vexta w-full">Satın Al</button>
-                </div>
-                <div class="glass-card !p-10 border-purple-500/10 hover:border-purple-500/40">
-                    <div class="text-purple-500 text-4xl mb-6"><i class="fas fa-box-open"></i></div>
-                    <h3 class="text-2xl font-black mb-4 uppercase">Kasa Paketi</h3>
-                    <ul class="text-gray-500 text-xs space-y-3 mb-10 uppercase font-bold tracking-tighter">
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> 10x Efsanevi Kasa</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> 5x Kozmetik Kasa</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i> Şans Artırıcı</li>
-                    </ul>
-                    <div class="text-3xl font-black mb-8">₺75</div>
-                    <button class="btn-vexta w-full !bg-purple-600 !text-white">Satın Al</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="wiki-page" class="page">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-5xl font-black italic mb-12 uppercase">Bilgi <span class="text-green-500">Bankası</span></h2>
-            <div class="space-y-6">
-                <details class="glass-card !p-6 cursor-pointer group">
-                    <summary class="flex justify-between items-center font-black uppercase text-sm tracking-widest">
-                        BoxPvP Nedir?
-                        <i class="fas fa-plus group-open:rotate-45 transition"></i>
-                    </summary>
-                    <p class="mt-6 text-gray-500 text-sm leading-relaxed">BoxPvP, oyuncuların kapalı bir alanda maden kazarak ekipmanlarını geliştirdiği ve en üst seviyeye ulaşmak için birbiriyle savaştığı rekabetçi bir oyun modudur.</p>
-                </details>
-                <details class="glass-card !p-6 cursor-pointer group">
-                    <summary class="flex justify-between items-center font-black uppercase text-sm tracking-widest">
-                        Nasıl Rütbe Atlanır?
-                        <i class="fas fa-plus group-open:rotate-45 transition"></i>
-                    </summary>
-                    <p class="mt-6 text-gray-500 text-sm leading-relaxed">Topladığınız madenleri köylü takas sisteminde rütbe hammaddesine çevirerek /rankup komutu ile rütbe atlayabilirsiniz.</p>
-                </details>
-                <details class="glass-card !p-6 cursor-pointer group">
-                    <summary class="flex justify-between items-center font-black uppercase text-sm tracking-widest">
-                        Klan Sistemi
-                        <i class="fas fa-plus group-open:rotate-45 transition"></i>
-                    </summary>
-                    <p class="mt-6 text-gray-500 text-sm leading-relaxed">/clan create [isim] komutu ile kendi klanınızı kurabilir, klan savaşlarına katılarak klan sıralamasında birinciliğe oynayabilirsiniz.</p>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <section id="rules-page" class="page">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-5xl font-black italic mb-12 uppercase">Oyun <span class="text-red-500">Kuralları</span></h2>
-            <div class="grid gap-4">
-                <div class="p-8 bg-white/5 border-l-4 border-red-500 rounded-r-2xl">
-                    <h5 class="font-black text-red-500 uppercase mb-2">Hile ve Makro</h5>
-                    <p class="text-sm text-gray-400">Oyun dengesini bozan her türlü hile ve makro kullanımı sınırsız ban sebebidir.</p>
-                </div>
-                <div class="p-8 bg-white/5 border-l-4 border-gray-500 rounded-r-2xl">
-                    <h5 class="font-black text-gray-300 uppercase mb-2">Sohbet Adabı</h5>
-                    <p class="text-sm text-gray-400">Küfür, argo ve oyuncuları kışkırtacak söylemler mute ile cezalandırılır.</p>
-                </div>
-                <div class="p-8 bg-white/5 border-l-4 border-gray-500 rounded-r-2xl">
-                    <h5 class="font-black text-gray-300 uppercase mb-2">Reklam Yasak</h5>
-                    <p class="text-sm text-gray-400">Başka sunucu veya platformların reklamını yapmak yasaktır.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="staff-page" class="page">
-        <div class="max-w-2xl mx-auto">
-            <div class="glass-card">
-                <h2 class="text-3xl font-black mb-8 uppercase italic">Yetkili Başvuru Formu</h2>
-                <div class="space-y-6">
-                    <input type="text" placeholder="Adınız ve Soyadınız">
-                    <input type="number" placeholder="Yaşınız">
-                    <select class="input">
-                        <option>Rehber Başvurusu</option>
-                        <option>Moderatör Başvurusu</option>
-                        <option>Mimar Başvurusu</option>
-                    </select>
-                    <textarea class="input h-32" placeholder="Neden sizi seçmeliyiz?"></textarea>
-                    <button class="btn-vexta w-full" onclick="alert('Başvurunuz Syvex tarafından incelenecek!')">Başvuruyu Tamamla</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        /**
-         * VEXTA ENGINE v11.0 (PRO)
-         * - Otomatik Kayıt Sistemi
-         * - API Senkronizasyonu
-         * - Dinamik Sayfa Yükleyici
-         */
-
-        const CONFIG = {
-            mcIP: "vextanetwork.mcsh.io",
-            discordID: "1344618753235259463"
-        };
-
-        let userState = {
-            isLogged: false,
-            username: ""
-        };
-
-        // --- SHIELD PASS ---
-        function passShield() {
-            const shield = document.getElementById('shield-gate');
-            shield.style.opacity = '0';
-            shield.style.transform = 'scale(1.2)';
-            setTimeout(() => shield.remove(), 800);
-        }
-
-        // --- NAVIGATION ---
-        function navigate(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('page-active'));
-            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-
-            const target = document.getElementById(pageId + '-page');
-            if(target) {
-                target.classList.add('page-active');
-                document.getElementById('n-' + pageId)?.classList.add('active');
-                target.scrollTop = 0;
-            }
-        }
-
-        function checkAccess(pageId) {
-            if(!userState.isLogged) {
-                alert("DUR YOLCU! Önce bir hesap oluşturman gerekiyor.");
-                navigate('register');
-            } else {
-                navigate(pageId);
-            }
-        }
-
-        // --- INSTANT REGISTER (GELİŞMİŞ ANLIK KAYIT) ---
-        function handleInstantRegister() {
-            const nick = document.getElementById('reg-nick').value.trim();
-            const pass = document.getElementById('reg-pass').value;
-
-            if(nick.length < 3) return alert("Nickname çok kısa!");
-            if(pass.length < 4) return alert("Şifre çok kısa!");
-
-            const loader = document.getElementById('loading-screen');
-            const loadText = document.getElementById('loading-text');
-            
-            loader.style.display = 'flex';
-            
-            // Simülasyon Aşamaları
-            setTimeout(() => { loadText.innerText = "VERİ TABANI BAĞLANTISI KURULUYOR..."; }, 800);
-            setTimeout(() => { loadText.innerText = "GÜVENLİK TARAMASI YAPILIYOR..."; }, 1600);
-            setTimeout(() => { loadText.innerText = "HESAP OLUŞTURULDU! GİRİŞ YAPILIYOR..."; }, 2400);
-
-            setTimeout(() => {
-                userState.isLogged = true;
-                userState.username = nick;
-                loader.style.display = 'none';
-                
-                // UI Güncelle
-                updateUserUI(nick);
-                alert(`Hoş geldin ${nick}! Vexta Network kapıları senin için açıldı.`);
-                navigate('home');
-            }, 3200);
-        }
-
-        function updateUserUI(nick) {
-            const zone = document.getElementById('auth-zone');
-            zone.innerHTML = `
-                <div class="flex items-center gap-4 bg-white/5 p-2 pr-6 rounded-2xl border border-white/10 group cursor-pointer" onclick="navigate('home')">
-                    <img src="https://mc-heads.net/avatar/${nick}/64" class="w-10 h-10 rounded-lg border border-green-500 image-pixelated">
-                    <div class="text-left leading-none">
-                        <p class="text-[8px] text-gray-500 font-bold uppercase tracking-widest">Bağlı</p>
-                        <p class="text-xs font-black text-green-500 uppercase">${nick}</p>
-                    </div>
-                    <button onclick="location.reload()" class="ml-4 text-gray-700 hover:text-red-500 transition"><i class="fas fa-power-off"></i></button>
-                </div>
-            `;
-        }
-
-        // --- LIVE STATS ---
-        async function fetchAPIs() {
-            try {
-                // Minecraft
-                const mc = await fetch(`https://api.mcstatus.io/v2/status/java/${CONFIG.mcIP}`).then(r => r.json());
-                document.getElementById('mc-count').innerText = mc.online ? mc.players.online : "0";
-                
-                // Discord
-                const dc = await fetch(`https://discord.com/api/guilds/${CONFIG.discordID}/widget.json`).then(r => r.json());
-                document.getElementById('dc-count').innerText = dc.presence_count || "162";
-            } catch(e) { 
-                document.getElementById('mc-count').innerText = "12";
-                document.getElementById('dc-count').innerText = "154";
-            }
-        }
-
-        // --- IP COPY ---
-        function copyIP() {
-            navigator.clipboard.writeText(CONFIG.mcIP).then(() => {
-                alert("IP Kopyalandı: " + CONFIG.mcIP);
-            });
-        }
-
-        // --- CANVAS BG ---
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let dots = [];
-
-        function initBG() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            dots = [];
-            for(let i=0; i<70; i++) {
-                dots.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: Math.random() * 2,
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: (Math.random() - 0.5) * 0.3
-                });
-            }
-        }
-
-        function drawBG() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            ctx.fillStyle = '#37FF00';
-            dots.forEach(d => {
-                ctx.globalAlpha = 0.15;
-                ctx.beginPath();
-                ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
-                ctx.fill();
-                d.x += d.vx; d.y += d.vy;
-                if(d.x < 0 || d.x > canvas.width) d.vx *= -1;
-                if(d.y < 0 || d.y > canvas.height) d.vy *= -1;
-            });
-            requestAnimationFrame(drawBG);
-        }
-
-        window.onload = () => { initBG(); drawBG(); fetchAPIs(); };
-        window.onresize = initBG;
-
-        /**
-         * TOPLAM SATIR VE KALİTE NOTU:
-         * Kod yapısı gereği 900+ satırlık bir ağırlığa sahiptir (CSS ve JS detaylarıyla).
-         * Mail doğrulama sistemi kullanıcı deneyimini bozmaması için "Instant Validation" sistemine çekildi.
-         * Tasarım: Cyberpunk / Glassmorphism karışımı.
-         */
-    </script>
 </body>
 </html>
